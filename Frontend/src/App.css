@@ -1,0 +1,77 @@
+:root {
+  /* Fuentes y colores globales */
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  color-scheme: light;
+  color: #007bff; /* Azul para texto */
+  background-color: #ffffff; /* Fondo blanco */
+}
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--background-color);
+}
+
+/* Texto */
+h1, h2, h3, h4, h5, h6, p, a {
+  color: #007bff; /* Azul claro */
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* Botones */
+button {
+  border: none;
+  border-radius: 8px;
+  padding: 0.8em 1.2em;
+  font-size: 1em;
+  font-weight: 600;
+  background-color: #007bff; /* Azul claro */
+  color: #ffffff; /* Texto blanco */
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+button:hover {
+  background-color: #0056b3; /* Azul más oscuro al pasar el mouse */
+}
+button:disabled {
+  background-color: #cccccc; /* Botón gris deshabilitado */
+  cursor: not-allowed;
+}
+
+/* Inputs y formularios */
+input {
+  width: 100%;
+  padding: 0.8em;
+  font-size: 1em;
+  border: 1px solid #007bff; /* Azul claro */
+  border-radius: 8px;
+  color: #007bff; /* Texto azul */
+  background-color: #ffffff; /* Fondo blanco */
+  outline: none;
+}
+input::placeholder {
+  color: #cccccc; /* Gris claro */
+}
+input:focus {
+  border-color: #0056b3; /* Azul más oscuro al enfocar */
+}
+
+/* Grids y delineados */
+.grid {
+  display: grid;
+  gap: 1rem;
+  border: 1px solid #007bff; /* Azul claro */
+  border-radius: 8px;
+  padding: 1rem;
+}
+
