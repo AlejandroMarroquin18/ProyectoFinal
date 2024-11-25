@@ -1,14 +1,43 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+// Estilo unificado para los botones
+const buttonStyle = {
+  padding: "0.5em 1em",
+  width: "100%", // Los botones ocupan todo el ancho del card
+  backgroundColor: "#007bff",
+  color: "#ffffff",
+  border: "none",
+  borderRadius: "4px",
+  cursor: "pointer",
+  fontSize: "1em",
+};
+
+// Estilo para los cards
+const cardStyle = {
+  padding: "2rem",
+  borderRadius: "8px",
+  backgroundColor: "#fff",
+  marginBottom: "2rem",
+  border: "0.5px solid #007bff",
+
+};
+
 function Home() {
-  const [showBusqueda, setShowBusqueda] = useState(true); // Alternar entre Búsqueda e Historial
+  const [showBusqueda, setShowBusqueda] = useState(true);
   const navigate = useNavigate();
 
   return (
     <div style={{ padding: "2rem" }}>
       {/* Título en la esquina superior izquierda */}
-      <h1 style={{ fontSize: "2rem", position: "absolute", top: "2rem", left: "2rem" }}>
+      <h1
+        style={{
+          fontSize: "2rem",
+          position: "absolute",
+          top: "2rem",
+          left: "2rem",
+        }}
+      >
         ASISTENTE VIRTUAL
       </h1>
 
@@ -26,68 +55,76 @@ function Home() {
         <button
           onClick={() => navigate("/")}
           style={{
-            padding: "0.6em 1.2em",
-            fontSize: "1em",
+            padding: "0.5em 1em",
+            width: "50%",
             backgroundColor: "#007bff",
             color: "#ffffff",
             border: "none",
             borderRadius: "4px",
             cursor: "pointer",
+            fontSize: "1em",
           }}
         >
           Cerrar sesión
         </button>
       </div>
 
-      {/* Botones de Búsqueda e Historial */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: "2rem",
-          marginTop: "1rem", // Espacio desde arriba
-        }}
-      >
-        <button
-          onClick={() => setShowBusqueda(true)}
+      {/* Card de los botones de Búsqueda e Historial */}
+      <div style={cardStyle}>
+        <div
           style={{
-            padding: "1em 2em",
-            fontSize: "1.2em",
-            backgroundColor: "#007bff",
-            color: "#ffffff",
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer",
+            display: "flex",
+            justifyContent: "center",
+            gap: "2rem",
           }}
         >
-          Búsqueda
-        </button>
-        <button
-          onClick={() => setShowBusqueda(false)}
-          style={{
-            padding: "1em 2em",
-            fontSize: "1.2em",
-            backgroundColor: "#007bff",
-            color: "#ffffff",
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer",
-          }}
-        >
-          Historial
-        </button>
+          <button onClick={() => setShowBusqueda(true)} style={buttonStyle}>
+            Búsqueda
+          </button>
+          <button onClick={() => setShowBusqueda(false)} style={buttonStyle}>
+            Historial
+          </button>
+        </div>
       </div>
 
-      {/* Contenido de Búsqueda o Historial */}
-      <div className="content" style={{ marginTop: "2rem" }}>
-        {showBusqueda ? <Busqueda /> : <Historial />}
-      </div>
+      {/* Card de los criterios de búsqueda */}
+      {showBusqueda && (
+        <div style={cardStyle}>
+          <div className="content" style={{ display: "flex", gap: "2rem" }}>
+            <div style={{ width: "50%" }}>
+              <Busqueda />
+            </div>
 
-      {/* Espacio para el asistente virtual */}
-      <div className="assistant-placeholder" style={{ marginTop: "3rem" }}>
-        <h2>Asistente Virtual</h2>
-        <p>Espacio reservado para la IA</p>
-      </div>
+            {/* Resultados solo se muestran en la vista de búsqueda */}
+            <div
+              style={{
+                width: "45%",
+                borderLeft: "2px solid #ccc",
+                paddingLeft: "2rem",
+              }}
+            >
+              <h2>Resultados</h2>
+              <p>Las mejores opciones según tus criterios</p>
+              {/* Aquí irían los resultados */}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Card del Asistente Virtual solo se muestra en la vista de Búsqueda */}
+      {showBusqueda && (
+        <div style={cardStyle}>
+          <h2>Asistente Virtual</h2>
+          <p>Espacio reservado para la IA</p>
+        </div>
+      )}
+
+      {/* Card para el Historial */}
+      {!showBusqueda && (
+        <div style={cardStyle}>
+          <Historial />
+        </div>
+      )}
     </div>
   );
 }
@@ -99,14 +136,37 @@ function Busqueda() {
 
   return (
     <div className="busqueda">
-      <h2>Búsqueda</h2>
-      <input type="text" placeholder="Presupuesto máximo" />
-      <input type="text" placeholder="Categoría" />
-      <input type="text" placeholder="Marca" />
-      <button onClick={handleBuscar}>Buscar</button>
+      <h2>Criterios de búsqueda</h2>
+      <p>Define tus preferencias para encontrar la mejor opción</p>
+      <input type="text" placeholder="Presupuesto máximo" style={inputStyle} />
+      <input type="text" placeholder="Categoría" style={inputStyle} />
+      <input type="text" placeholder="Marca" style={inputStyle} />
+      <button
+        onClick={handleBuscar}
+        style={{
+          padding: "0.5em 1em",
+          width: "50%",
+          backgroundColor: "#007bff",
+          color: "#ffffff",
+          border: "none",
+          borderRadius: "4px",
+          cursor: "pointer",
+          fontSize: "1em",
+        }}
+      >
+        Buscar
+      </button>
     </div>
   );
 }
+
+const inputStyle = {
+  marginBottom: "1rem",
+  padding: "0.75rem",
+  width: "100%",
+  borderRadius: "4px",
+  border: "1px solid #ccc",
+};
 
 function Historial() {
   const historial = ["Búsqueda 1", "Búsqueda 2", "Búsqueda 3"];
@@ -116,11 +176,19 @@ function Historial() {
   };
 
   return (
-    <div className="historial">
+    <div className="historial" style={{ textAlign: "center" }}>
       <h2>Historial</h2>
-      <ul>
+      <ul style={{ listStyleType: "none", padding: "0" }}>
         {historial.map((item, index) => (
-          <li key={index} onClick={() => handleSeleccionarBusqueda(item)}>
+          <li
+            key={index}
+            onClick={() => handleSeleccionarBusqueda(item)}
+            style={{
+              padding: "0.5rem",
+              cursor: "pointer",
+              borderBottom: "1px solid #ccc",
+            }}
+          >
             {item}
           </li>
         ))}
