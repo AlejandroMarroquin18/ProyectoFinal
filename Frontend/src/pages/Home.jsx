@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-// Estilo unificado para los botones
 const buttonStyle = {
   padding: "0.5em 1em",
-  width: "100%", // Los botones ocupan todo el ancho del card
+  width: "100%",
   backgroundColor: "#007bff",
   color: "#ffffff",
   border: "none",
@@ -13,14 +12,12 @@ const buttonStyle = {
   fontSize: "1em",
 };
 
-// Estilo para los cards
 const cardStyle = {
   padding: "2rem",
   borderRadius: "8px",
   backgroundColor: "#fff",
   marginBottom: "2rem",
   border: "0.5px solid #007bff",
-
 };
 
 function Home() {
@@ -29,7 +26,6 @@ function Home() {
 
   return (
     <div style={{ padding: "2rem" }}>
-      {/* Título en la esquina superior izquierda */}
       <h1
         style={{
           fontSize: "2rem",
@@ -95,7 +91,6 @@ function Home() {
               <Busqueda />
             </div>
 
-            {/* Resultados solo se muestran en la vista de búsqueda */}
             <div
               style={{
                 width: "45%",
@@ -111,7 +106,7 @@ function Home() {
         </div>
       )}
 
-      {/* Card del Asistente Virtual solo se muestra en la vista de Búsqueda */}
+      {/* Card del Asistente Virtual*/}
       {showBusqueda && (
         <div style={cardStyle}>
           <h2>Asistente Virtual</h2>
