@@ -22,6 +22,7 @@ const cardStyle = {
 
 function Home() {
   const [showBusqueda, setShowBusqueda] = useState(true);
+  const [resultados, setResultados] = useState("");
   const navigate = useNavigate();
 
   return (
@@ -83,12 +84,11 @@ function Home() {
         </div>
       </div>
 
-      {/* Card de los criterios de búsqueda */}
       {showBusqueda && (
         <div style={cardStyle}>
           <div className="content" style={{ display: "flex", gap: "2rem" }}>
             <div style={{ width: "50%" }}>
-              <Busqueda />
+              <Busqueda setResultados={setResultados} />
             </div>
 
             <div
@@ -99,8 +99,8 @@ function Home() {
               }}
             >
               <h2>Resultados</h2>
-              <p>Las mejores opciones según tus criterios</p>
-              {/* Aquí irían los resultados */}
+              <p>Las mejores opciones según tus criterios:</p>
+              <p>{resultados}</p>
             </div>
           </div>
         </div>
@@ -124,31 +124,70 @@ function Home() {
   );
 }
 
-function Busqueda() {
-  const handleBuscar = () => {
-    alert("Resultados de ejemplo generados.");
+function Busqueda({ setResultados }) {
+  const [maxBudget, setMaxBudget] = useState("");
+  const [category, setCategory] = useState("");
+  const [preferredBrand, setPreferredBrand] = useState("");
+
+  const handleBuscar = async () => {
+    if (!maxBudget || !category) {
+      alert("Por favor, ingresa el presupuesto y la categoría.");
+      return;
+    }
+
+    const requestBody = {
+      maxBudget: Number(maxBudget),
+      category,
+      preferredBrand,
+    };
+
+    try {
+      const response = await fetch("http://localhost:3000/recommend-pc", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (!response.ok) {
+        throw new Error("Error al comunicarse con el servidor.");
+      }
+
+      const data = await response.json();
+      setResultados(data.message); // Actualizar el estado con el mensaje del backend
+    } catch (error) {
+      console.error("Error:", error);
+      setResultados("Hubo un problema al procesar la solicitud.");
+    }
   };
 
   return (
     <div className="busqueda">
       <h2>Criterios de búsqueda</h2>
       <p>Define tus preferencias para encontrar la mejor opción</p>
-      <input type="text" placeholder="Presupuesto máximo" style={inputStyle} />
-      <input type="text" placeholder="Categoría" style={inputStyle} />
-      <input type="text" placeholder="Marca" style={inputStyle} />
-      <button
-        onClick={handleBuscar}
-        style={{
-          padding: "0.5em 1em",
-          width: "50%",
-          backgroundColor: "#007bff",
-          color: "#ffffff",
-          border: "none",
-          borderRadius: "4px",
-          cursor: "pointer",
-          fontSize: "1em",
-        }}
-      >
+      <input
+        type="text"
+        placeholder="Presupuesto máximo"
+        style={inputStyle}
+        value={maxBudget}
+        onChange={(e) => setMaxBudget(e.target.value)}
+      />
+      <input
+        type="text"
+        placeholder="Categoría"
+        style={inputStyle}
+        value={category}
+        onChange={(e) => setCategory(e.target.value)}
+      />
+      <input
+        type="text"
+        placeholder="Marca"
+        style={inputStyle}
+        value={preferredBrand}
+        onChange={(e) => setPreferredBrand(e.target.value)}
+      />
+      <button onClick={handleBuscar} style={buttonStyle}>
         Buscar
       </button>
     </div>
