@@ -1,11 +1,4 @@
-const { GoogleGenerativeAI } = require('@google/generative-ai');
-const dotenv = require('dotenv');
-
-dotenv.config();
-
-// Inicializar Gemini con la clave API
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
+const model = require('../config/geminiConfig');
 
 async function generateRecommendation(maxBudget, category, preferredBrand) {
     const prompt = `
