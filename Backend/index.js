@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const routes = require('./routes');
+const routes = require('./routes/routes');
 
 dotenv.config();
 
@@ -11,9 +11,10 @@ const PORT = 3000;
 // Cors
 app.use(cors({
     origin: "http://localhost:5173",
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "DELETE"],
     allowedHeaders: ["Content-Type"],
 }));
+
 app.use(express.json());
 
 app.use(routes);
