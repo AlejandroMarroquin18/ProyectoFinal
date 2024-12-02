@@ -2,11 +2,11 @@
  * @file recommendationRoutes.js
  * @description Definición de la ruta para generar recomendaciones personalizadas de PCs utilizando Gemini.
  * @requires express Framework web para definir y manejar rutas.
- * @requires ../controllers/geminiController Controladores para manejar las recomendaciones de PCs.
+ * @requires ./recommendationController Controladores para manejar las recomendaciones de PCs.
  */
 
 const express = require('express');
-const recommendationController = require('../controllers/recommendationController')
+const recommendationController = require('./recommendationController')
 
 const router = express.Router();
 

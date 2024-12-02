@@ -1,10 +1,10 @@
 /**
  * @file chatController.js
  * @description Controladores para manejar operaciones CRUD en chats utilizando los servicios de chat.
- * @requires ../services/chatService Servicios relacionados con la gestión de chats en Firebase Realtime Database.
+ * @requires ./chatService Servicios relacionados con la gestión de chats en Firebase Realtime Database.
  */
 
-const { createChat, getChat, updateChat, deleteChat } = require('../services/chatService')
+const { createChat, getChat, updateChat, deleteChat } = require('./chatService')
 
 /**
  * Controlador para crear un nuevo chat.

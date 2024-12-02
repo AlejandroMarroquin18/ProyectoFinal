@@ -142,7 +142,7 @@ function Busqueda({ setResultados }) {
     };
 
     try {
-      const response = await fetch("http://localhost:3000/gemini/recommend-pc", {
+      const response = await fetch("http://localhost:3000/recommendation/recommend-pc", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

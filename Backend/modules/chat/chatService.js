@@ -1,10 +1,10 @@
 /**
  * @file chatService.js
  * @description Servicio para manejar operaciones CRUD de chats en Firebase Realtime Database.
- * @requires ../config/firebaseConfig Configuración de Firebase. 
+ * @requires ../../config/firebaseConfig Configuración de Firebase. 
  */
 
-const { db } = require('../config/firebaseConfig')
+const { db } = require('../../config/firebaseConfig')
 
 /**
  * Crea un nuevo chat en la base de datos.
