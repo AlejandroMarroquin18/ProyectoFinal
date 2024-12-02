@@ -2,11 +2,11 @@
  * @file authRoutes.js
  * @description Definición de las rutas para manejar la autenticación de usuarios en la aplicación.
  * @requires express Framework web para definir y manejar rutas.
- * @requires ../controllers/authController Controladores para manejar las operaciones de autenticación.
+ * @requires ./authController Controladores para manejar las operaciones de autenticación.
  */
 
 const express = require('express');
-const authController = require('../controllers/authController');
+const authController = require('./authController');
 
 const router = express.Router();
 

@@ -1,10 +1,10 @@
 /**
  * @file listController.js
  * @description Controladores para manejar operaciones CRUD en listas utilizando los servicios correspondientes.
- * @requires ../services/listService Servicios relacionados con la gestión de listas en Firebase Realtime Database.
+ * @requires ./listService Servicios relacionados con la gestión de listas en Firebase Realtime Database.
  */
 
-const { createList, addItemToList, deleteList, getList, removeItemFromList } = require('../services/listService')
+const { createList, addItemToList, deleteList, getList, removeItemFromList } = require('./listService')
 
 /**
  * Controlador para crear una nueva lista.

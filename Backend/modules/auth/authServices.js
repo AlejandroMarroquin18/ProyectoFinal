@@ -1,11 +1,11 @@
 /**
  * @file authService.js
  * @description Servicio para manejar la autenticación de usuarios utilizando Firebase Authentication.
- * @requires ../config/firebaseConfig Configuración de Firebase Admin SDK.
+ * @requires ../../config/firebaseConfig Configuración de Firebase Admin SDK.
  * @requires firebase/auth Funciones de autenticación del cliente de Firebase.
 */
 
-const { auth } = require('../config/firebaseConfig');
+const { auth } = require('../../config/firebaseConfig');
 
 /**
  * Crea un nuevo usuario en Firebase Authentication.

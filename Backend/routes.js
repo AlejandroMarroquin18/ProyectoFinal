@@ -2,18 +2,18 @@
  * @file routes.js
  * @description Configuración del enrutador principal de la aplicación, que agrupa todas las rutas relacionadas con los diferentes módulos.
  * @requires express Framework web para definir y manejar rutas.
- * @requires ./recommendationRoutes Rutas relacionadas con las recomendaciones personalizadas utilizando Gemini.
- * @requires ./listRoutes Rutas relacionadas con la gestión de listas.
- * @requires ./chatRoutes Rutas relacionadas con la gestión de chats.
- * @requires ./authRoutes Rutas relacionadas con la autenticación de usuarios.
+ * @requires ./modules/auth/authRoutes Rutas relacionadas con la autenticación de usuarios.
+ * @requires ./modules/chat/chatRoutes Rutas relacionadas con la gestión de chats.
+ * @requires ./modules/list/listRoutes Rutas relacionadas con la gestión de listas.
+ * @requires ./modules/recommendation/recommendationRoutes Rutas relacionadas con las recomendaciones personalizadas utilizando Gemini.
  */
 
 const express = require('express');
 
-const recommendationRoutes = require('./recommendationRoutes');
-const listRoutes = require('./listRoutes');
-const chatRoutes = require('./chatRoutes');
-const authRoutes = require('./authRoutes');
+const authRoutes = require('./modules/auth/authRoutes');
+const chatRoutes = require('./modules/chat/chatRoutes');
+const listRoutes = require('./modules/list/listRoutes');
+const recommendationRoutes = require('./modules/recommendation/recommendationRoutes');
 
 const router = express.Router();
 

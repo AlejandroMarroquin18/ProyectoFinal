@@ -1,10 +1,10 @@
 /**
  * @file recommendationService.js
  * @description Servicio para generar recomendaciones personalizadas de PCs utilizando un modelo generativo de Gemini.
- * @requires ../config/geminiConfig Configuración del LLM Gemini.
+ * @requires ../../config/geminiConfig Configuración del LLM Gemini.
  */
 
-const model = require('../config/geminiConfig');
+const model = require('../../config/geminiConfig');
 
 /**
  * Genera una recomendación personalizada de un PC basado en las especificaciones del usuario.

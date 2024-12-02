@@ -2,11 +2,11 @@
  * @file listRoutes.js
  * @description Definición de las rutas para manejar operaciones CRUD en listas y sus ítems.
  * @requires express Framework web para definir y manejar rutas.
- * @requires ../controllers/listController Controladores para manejar las operaciones de listas.
+ * @requires ./listController Controladores para manejar las operaciones de listas.
  */
 
 const express = require('express');
-const listController = require('../controllers/listController');
+const listController = require('./listController');
 
 const router = express.Router();
 

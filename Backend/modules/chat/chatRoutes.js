@@ -2,11 +2,11 @@
  * @file chatRoutes.js
  * @description Definición de las rutas para manejar las operaciones CRUD de chats en la aplicación.
  * @requires express Framework web para definir y manejar rutas.
- * @requires ../controllers/chatController Controladores para manejar las operaciones de chat.
+ * @requires ./chatController Controladores para manejar las operaciones de chat.
  */
 
 const express = require('express');
-const chatController = require('../controllers/chatController');
+const chatController = require('./chatController');
 
 const router = express.Router();
 

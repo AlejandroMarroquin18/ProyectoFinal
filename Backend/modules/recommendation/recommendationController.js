@@ -1,10 +1,10 @@
 /**
  * @file recommendationController.js
  * @description Controlador para generar recomendaciones personalizadas de PCs utilizando el servicio de recomendación basado en Gemini.
- * @requires ../services/geminiService Servicio para interactuar con el LLM Gemini.
+ * @requires ./recommendationService Servicio para interactuar con el LLM Gemini.
  */
 
-const { generateRecommendation } = require('../services/recommendationService');
+const { generateRecommendation } = require('./recommendationService');
 
 /**
  * Controlador para generar una recomendación personalizada de PCs.

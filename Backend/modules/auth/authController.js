@@ -1,10 +1,10 @@
 /**
  * @file authController.js
  * @description Controlador para manejar la creación de usuarios en la aplicación utilizando el servicio de autenticación.
- * @requires ../services/authServices Servicio para la gestión de usuarios en Firebase Authentication.
+ * @requires ./authServices Servicio para la gestión de usuarios en Firebase Authentication.
  */
 
-const { createUser } = require('../services/authServices')
+const { createUser } = require('./authServices')
 
 /**
  * Controlador para crear un nuevo usuario.

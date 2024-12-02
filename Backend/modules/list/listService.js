@@ -1,10 +1,10 @@
 /**
  * @file listService.js
  * @description Servicio para manejar operaciones CRUD en listas de artículos utilizando Firebase Realtime Database.
- * @requires ../config/firebaseConfig Configuración de Firebase.
+ * @requires ../../config/firebaseConfig Configuración de Firebase.
  */
 
-const { db } = require('../config/firebaseConfig')
+const { db } = require('../../config/firebaseConfig')
 
 /**
  * Crea una nueva lista en la base de datos.
