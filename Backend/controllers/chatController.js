@@ -51,7 +51,7 @@ const deleteChatController = async (req, res) => {
   const { chatName } = req.body;
 
   try {
-    const message = await deleteList(chatName);
+    const message = await deleteChat(chatName);
     return res.status(200).json({ message });
   } catch (error) {
     console.error("Error en el controlador deleteChat:", error);

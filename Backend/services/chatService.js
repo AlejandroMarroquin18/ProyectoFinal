@@ -1,4 +1,4 @@
-const { db } = require('../config/dbConfig')
+const { db } = require('../config/firebaseConfig')
 
 // Creacion del chat
 async function createChat(chatName) {
@@ -65,7 +65,7 @@ async function updateChat(chatName, message) {
     console.log(`Mensaje agregado al chat con ID ${chatName}`);
     return `Mensaje agregado al chat ${chatName} exitosamente.`;
   } catch (error) {
-    console.error('Error al agregar el mensaje al chat:', error);
+    console.error('Error al agregar el mensaje al chat:', error.message);
     throw error;
   }
 }
@@ -84,7 +84,7 @@ async function deleteChat(chatName) {
     console.log(`Chat '${chatName}' eliminado exitosamente`);
     return `Chat '${chatName}' eliminado exitosamente`;
   } catch (error) {
-    console.error("Error en la función deleteChat:", error);
+    console.error("Error en la función deleteChat:", error.message);
     throw error;
   }
 }

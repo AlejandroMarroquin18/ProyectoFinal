@@ -1,4 +1,4 @@
-const { db } = require('../config/dbConfig')
+const { db } = require('../config/firebaseConfig')
 
 // Creacion de lista para articulos del usuario
 async function createList(listName) {
@@ -19,7 +19,7 @@ async function createList(listName) {
     console.log(`Lista '${listName}' creada exitosamente`);
     return `Lista '${listName}' creada exitosamente`;
   } catch (error) {
-    console.error("Error en la función createList:", error);
+    console.error("Error en la función createList:", error.message);
     throw error;
   }
 }
@@ -47,7 +47,7 @@ async function getList(listName) {
     return listFull;
 
   } catch (error) {
-    console.error("Error en la función getList:", error);
+    console.error("Error en la función getList:", error.message);
     throw error;
   }
 }
@@ -68,7 +68,7 @@ async function addItemToList(listName, item) {
     console.log(`Elemento agregado a la lista con ID ${listName}`);
     return `Elemento agregado a la lista ${listName} exitosamente.`;
   } catch (error) {
-    console.error('Error al agregar el item a la lista:', error);
+    console.error('Error al agregar el item a la lista:', error.message);
     throw error;
   }
 }
@@ -88,7 +88,7 @@ async function deleteList(listName) {
     console.log(`Lista '${listName}' eliminada exitosamente`);
     return `Lista '${listName}' eliminada exitosamente`;
   } catch (error) {
-    console.error("Error en la función removeList:", error);
+    console.error("Error en la función removeList:", error.message);
     throw error;
   }
 }
@@ -119,7 +119,7 @@ async function removeItemFromList(listName, item) {
     console.log(`Ítem con valor '${item}' eliminado de la lista '${listName}'`);
     return `Ítem con valor '${item}' eliminado de la lista '${listName}'`;
   } catch (error) {
-    console.error("Error en la función removeItemFromList:", error);
+    console.error("Error en la función removeItemFromList:", error.message);
     throw error;
   }
 }

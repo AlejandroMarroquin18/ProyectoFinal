@@ -1,4 +1,3 @@
-
 const { createList, addItemToList, deleteList, getList, removeItemFromList } = require('../services/listService')
 
 const createListController = async (req, res) => {

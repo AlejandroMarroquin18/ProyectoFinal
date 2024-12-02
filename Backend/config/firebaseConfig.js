@@ -1,4 +1,5 @@
 const dotenv = require('dotenv');
+
 dotenv.config();
 
 const admin = require('firebase-admin');
@@ -11,5 +12,6 @@ admin.initializeApp({
 })
 
 const db = admin.database();
+const auth = admin.auth();
 
-module.exports = { db };
+module.exports = { db, auth };
