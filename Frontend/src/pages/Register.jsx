@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Icono from "../components/icon.png";
 
 function Register() {
   const navigate = useNavigate();
@@ -67,12 +68,24 @@ function Register() {
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
+        padding:"1rem",
+        flexDirection:"column",
       }}
     >
+      <img
+        src={Icono}
+        alt="Asistente Virtual Icono"
+        style={{
+          width: "100px",
+          height: "100px",
+          marginBottom:"1rem",
+        }}
+      />
       {/* Card */}
       <div
         style={{
-          width: "400px",
+          width: "100%",
+          maxWidth:"400px",
           padding: "2rem",
           borderRadius: "8px",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
@@ -93,7 +106,7 @@ function Register() {
             name="fullName"
             value={formData.fullName}
             onChange={handleChange}
-            style={{ marginBottom: "1.5rem", padding: "0.75rem", width: "80%" }}
+            style={{ marginBottom: "1.5rem", padding: "0.75rem", width: "100%", boxSizing:"border-box" }}
             required
           />
 
@@ -104,7 +117,7 @@ function Register() {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            style={{ marginBottom: "1.5rem", padding: "0.75rem", width: "80%" }}
+            style={{ marginBottom: "1.5rem", padding: "0.75rem", width: "100%", boxSizing:"border-box" }}
             required
           />
 
@@ -115,7 +128,7 @@ function Register() {
             name="password"
             value={formData.password}
             onChange={handleChange}
-            style={{ marginBottom: "1.5rem", padding: "0.75rem", width: "80%" }}
+            style={{ marginBottom: "1.5rem", padding: "0.75rem", width: "100%", boxSizing:"border-box" }}
             required
           />
 
@@ -126,7 +139,7 @@ function Register() {
             name="confirmPassword"
             value={formData.confirmPassword}
             onChange={handleChange}
-            style={{ marginBottom: "1.5rem", padding: "0.75rem", width: "80%" }}
+            style={{ marginBottom: "1.5rem", padding: "0.75rem", width: "100%", boxSizing:"border-box" }}
             required
           />
 
@@ -140,13 +153,14 @@ function Register() {
             type="submit"
             style={{
               padding: "0.5em 1em",
-              width: "50%",
+              width: "100%",
               backgroundColor: "#007bff",
               color: "#ffffff",
               border: "none",
               borderRadius: "4px",
               cursor: "pointer",
               fontSize: "1em",
+              marginBottom:"1.5rem",
             }}
           >
             Registrar
@@ -169,6 +183,7 @@ function Register() {
               border: "none",
               borderRadius: "4px",
               cursor: "pointer",
+              width:"100%"
             }}
           >
             Inicia sesión

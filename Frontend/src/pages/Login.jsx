@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Icono from "../components/icon.png";
 
 function Login() {
   const navigate = useNavigate();
@@ -30,18 +31,31 @@ function Login() {
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
+        padding:"1rem",
+        flexDirection: "column",
       }}
     >
+      <img
+        src={Icono}
+        alt="Asistente Virtual Icono"
+        style={{
+          width: "100px",
+          height: "100px",
+          marginBottom: "1rem",
+        }}
+      />
       {/* Card */}
       <div
         style={{
-          width: "400px",
+          width: "100%",
+          maxWidth: "400px",
           padding: "2rem",
           borderRadius: "8px",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
           backgroundColor: "#fff",
           textAlign: "center",
           border: "0.5px solid #007bff",
+          
         }}
       >
         {/* Título */}
@@ -55,7 +69,7 @@ function Login() {
             placeholder="Correo electrónico"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            style={{ marginBottom: "1.5rem", padding: "0.75rem", width: "80%" }}
+            style={{ marginBottom: "1.5rem", padding: "0.75rem", width: "100%", boxSizing: "border-box", }}
             required
           />
 
@@ -65,7 +79,7 @@ function Login() {
             placeholder="Contraseña"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            style={{ marginBottom: "1.5rem", padding: "0.75rem", width: "80%" }}
+            style={{ marginBottom: "1.5rem", padding: "0.75rem", width: "100%", boxSizing: "border-box", }}
             required
           />
 
@@ -77,13 +91,14 @@ function Login() {
             type="submit"
             style={{
               padding: "0.5em 1em",
-              width: "50%",
+              width: "50%", //cambiar a 50% dado el caso
               backgroundColor: "#007bff",
               color: "#ffffff",
               border: "none",
               borderRadius: "4px",
               cursor: "pointer",
               fontSize: "1em",
+              marginBottom: "1.5rem",
             }}
           >
             Iniciar Sesión
@@ -123,6 +138,7 @@ function Login() {
               border: "none",
               borderRadius: "4px",
               cursor: "pointer",
+              width: "50%", //Quitar dado el caso
             }}
           >
             Regístrate

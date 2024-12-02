@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Icono from "../components/icon.png";
 
 const buttonStyle = {
   padding: "0.5em 1em",
@@ -26,45 +27,72 @@ function Home() {
   const navigate = useNavigate();
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h1
-        style={{
-          fontSize: "2rem",
-          position: "absolute",
-          top: "2rem",
-          left: "2rem",
-        }}
-      >
-        ASISTENTE VIRTUAL
-      </h1>
-
-      {/* Bienvenido usuario y Cerrar sesión */}
+    <div style={{ padding: "5%" }}>
       <div
-        style={{
-          position: "absolute",
-          top: "2rem",
-          right: "2rem",
-          display: "flex",
-          alignItems: "center",
-        }}
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        padding: "1rem",
+        gap: "1rem",
+        marginBottom: "2rem", // Espacio entre el encabezado y el cardStyle
+        flexWrap: "wrap", // Permite que los elementos salten de línea en pantallas pequeñas
+      }}
       >
-        <span style={{ marginRight: "1rem" }}>Bienvenido usuario</span>
+      {/* Icono y texto Asistente Virtual */}
+      <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+        <img
+          src={Icono}
+          alt="Icono"
+          style={{
+            width: "3rem",
+            height: "3rem",
+          }}
+        />
+        <h1
+          style={{
+            fontSize: "2rem",
+            margin: "0",
+            whiteSpace: "nowrap", // Evita que el texto se corte en pantallas pequeñas
+          }}
+        >
+          ASISTENTE VIRTUAL
+        </h1>
+      </div>
+
+        {/* Bienvenido Usuario y botón Cerrar Sesión */}
+        <div
+        style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "1rem",
+        }}
+        >
+        <span
+          style={{
+            fontSize: "1rem",
+            whiteSpace: "nowrap", // Evita que el texto se divida en varias líneas
+          }}
+        >
+          Bienvenido usuario
+        </span>
         <button
           onClick={() => navigate("/")}
           style={{
-            padding: "0.5em 1em",
-            width: "50%",
-            backgroundColor: "#007bff",
-            color: "#ffffff",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-            fontSize: "1em",
+          padding: "0.5em 1em",
+          backgroundColor: "#007bff",
+          color: "#ffffff",
+          border: "none",
+          borderRadius: "4px",
+          cursor: "pointer",
+          fontSize: "1rem",
           }}
         >
           Cerrar sesión
         </button>
       </div>
+    </div>
+
 
       {/* Card de los botones de Búsqueda e Historial */}
       <div style={cardStyle}>
@@ -86,16 +114,16 @@ function Home() {
 
       {showBusqueda && (
         <div style={cardStyle}>
-          <div className="content" style={{ display: "flex", gap: "2rem" }}>
-            <div style={{ width: "50%" }}>
+          <div className="content" style={{ display: "flex", gap: "4%" }}>
+            <div style={{ flex: "1" }}>
               <Busqueda setResultados={setResultados} />
             </div>
 
             <div
               style={{
-                width: "45%",
+                flex: "2",
                 borderLeft: "2px solid #ccc",
-                paddingLeft: "2rem",
+                paddingLeft: "1rem",
               }}
             >
               <h2>Resultados</h2>
@@ -165,24 +193,36 @@ function Busqueda({ setResultados }) {
   return (
     <div className="busqueda">
       <h2>Criterios de búsqueda</h2>
-      <p>Define tus preferencias para encontrar la mejor opción</p>
+      <p style={{ marginBottom: "10px" }}>Define tus preferencias para encontrar la mejor opción</p>
       <input
-        type="text"
+        type="number"
         placeholder="Presupuesto máximo"
         style={inputStyle}
         value={maxBudget}
         onChange={(e) => setMaxBudget(e.target.value)}
+        required
       />
-      <input
-        type="text"
-        placeholder="Categoría"
+      <select
         style={inputStyle}
         value={category}
         onChange={(e) => setCategory(e.target.value)}
-      />
+        required
+      >
+        <option value="" disabled>
+          Selecciona una categoría
+        </option>
+        <option value="computadoras">Computadoras y laptops</option>
+        <option value="smartphones">Smartphones</option>
+        <option value="tablets">Tablets</option>
+        <option value="monitores">Monitores</option>
+        <option value="accesorios">Accesorios</option>
+        <option value="componentes">Componentes de PC</option>
+        <option value="gadgets">Gadgets</option>
+        <option value="redes">Redes</option>
+      </select>
       <input
         type="text"
-        placeholder="Marca"
+        placeholder="Marca (opcional)"
         style={inputStyle}
         value={preferredBrand}
         onChange={(e) => setPreferredBrand(e.target.value)}

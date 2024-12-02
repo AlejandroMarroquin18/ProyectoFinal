@@ -75,3 +75,78 @@ input:focus {
   padding: 1rem;
 }
 
+@media (max-width: 768px) {
+  body {
+    padding: 5%;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  button {
+    font-size: 0.9rem; /* Reduce el tamaño del botón */
+    padding: 0.4em 0.8em;
+  }
+
+  img {
+    width: 2.5rem; /* Reduce el tamaño del icono */
+    height: 2.5rem;
+  }
+
+  div {
+    flex-wrap: wrap; /* Permite que los elementos salten de línea */
+  }
+
+  .busqueda input, .busqueda button {
+    width: 100%;
+  }
+
+  .content {
+    flex-direction: column;
+  }
+
+  .content > div {
+    width: 100%;
+  }
+}
+
+/* Ajustes para pantallas medianas */
+@media (max-width: 1024px) {
+  .busqueda input {
+    font-size: 0.9rem;
+  }
+
+  button {
+    font-size: 0.9rem;
+  }
+}
+
+/* Ajustes para pantallas grandes */
+@media (min-width: 1025px) {
+  .content {
+    flex-direction: row;
+  }
+
+  .content > div {
+    width: 45%;
+  }
+}
+
+@media (max-width: 768px) {
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  input,
+  button {
+    font-size: 0.9rem;
+  }
+}
+
+/* Para pantallas grandes */
+@media (min-width: 1025px) {
+  h2 {
+    font-size: 1.8rem;
+  }
+}
