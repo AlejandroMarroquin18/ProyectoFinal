@@ -1,5 +1,19 @@
+/**
+ * @file recommendationService.js
+ * @description Servicio para generar recomendaciones personalizadas de PCs utilizando un modelo generativo de Gemini.
+ * @requires ../config/geminiConfig Configuración del LLM Gemini.
+ */
+
 const model = require('../config/geminiConfig');
 
+/**
+ * Genera una recomendación personalizada de un PC basado en las especificaciones del usuario.
+ * @function generateRecommendation
+ * @param {number} maxBudget - Presupuesto máximo del usuario en USD.
+ * @param {string} category - Categoría deseada (por ejemplo, "gaming", "oficina").
+ * @param {string} [preferredBrand] - Marca preferida del usuario (opcional).
+ * @returns {Promise<string>} Respuesta generada por el modelo, con una recomendación clara y profesional.
+ */
 async function generateRecommendation(maxBudget, category, preferredBrand) {
     const prompt = `
     Toma el rol de un experto en computadores. Tu objetivo es ayudar a los usuarios a encontrar un PC adecuado según las siguientes especificaciones:

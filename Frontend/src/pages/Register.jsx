@@ -20,7 +20,7 @@ function Register() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Verificar si las contraseñas coinciden
@@ -32,8 +32,32 @@ function Register() {
     // Limpiar el error si las contraseñas coinciden
     setError("");
 
-    // Aquí se enviaría el formulario a un servidor (actualmente solo lo mostramos en consola)
-    console.log(formData);
+    const requestBody = {
+      displayName: formData.fullName,
+      email: formData.email,
+      password: formData.password,
+    }
+
+    try {
+      const response = await fetch("http://localhost:3000/auth/create-user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (!response.ok) {
+        throw new Error("Error al comunicarse con el servidor.");
+      }
+
+      const data = await response.json();
+      setResultados(data.message); // Actualizar el estado con el mensaje del backend
+    } catch (error) {
+      console.error("Error:", error);
+      setResultados("Hubo un problema al procesar la solicitud.");
+    }
+
   };
 
   return (

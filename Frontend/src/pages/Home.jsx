@@ -142,7 +142,6 @@ function Busqueda({ setResultados }) {
     };
 
     try {
-
       const response = await fetch("http://localhost:3000/gemini/recommend-pc", {
         method: "POST",
         headers: {
