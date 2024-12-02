@@ -1,6 +1,17 @@
+/**
+ * @file listService.js
+ * @description Servicio para manejar operaciones CRUD en listas de artículos utilizando Firebase Realtime Database.
+ * @requires ../config/firebaseConfig Configuración de Firebase.
+ */
+
 const { db } = require('../config/firebaseConfig')
 
-// Creacion de lista para articulos del usuario
+/**
+ * Crea una nueva lista en la base de datos.
+ * @function createList
+ * @param {string} listName - Nombre de la lista a crear.
+ * @returns {Promise<string>} Mensaje de éxito al crear la lista.
+ */
 async function createList(listName) {
   try {
     const listRef = db.ref('lists');
@@ -25,7 +36,12 @@ async function createList(listName) {
 }
 
 
-// Leer lista
+/**
+* Obtiene la información de una lista por su nombre.
+* @function getList
+* @param {string} listName - Nombre de la lista a buscar.
+* @returns {Promise<Object>} Objeto con los datos de la lista (id, name, createdAt, items).
+*/
 async function getList(listName) {
   try {
     const listRef = db.ref('lists');
@@ -54,6 +70,13 @@ async function getList(listName) {
 
 
 // Añadir item (pendiente a cambios en el tipo de item)
+/**
+ * Agrega un ítem a una lista existente.
+ * @function addItemToList
+ * @param {string} listName - Nombre de la lista a actualizar.
+ * @param {string|Object} item - Ítem a agregar (puede ser texto o un objeto más complejo).
+ * @returns {Promise<string>} Mensaje de éxito al agregar el ítem.
+ */
 async function addItemToList(listName, item) {
   try {
     const listRef = db.ref('lists');
@@ -74,7 +97,12 @@ async function addItemToList(listName, item) {
 }
 
 
-// Eliminar lista
+/**
+ * Elimina una lista existente por su nombre.
+ * @function deleteList
+ * @param {string} listName - Nombre de la lista a eliminar.
+ * @returns {Promise<string>} Mensaje de éxito al eliminar la lista.
+ */
 async function deleteList(listName) {
   try {
     const listRef = db.ref('lists');
@@ -94,7 +122,13 @@ async function deleteList(listName) {
 }
 
 
-// Eliminar item
+/**
+ * Elimina un ítem específico de una lista.
+ * @function removeItemFromList
+ * @param {string} listName - Nombre de la lista que contiene el ítem.
+ * @param {string|Object} item - Ítem a eliminar (puede ser texto o un objeto más complejo).
+ * @returns {Promise<string>} Mensaje de éxito al eliminar el ítem.
+ */
 async function removeItemFromList(listName, item) {
   try {
     const listRef = db.ref('lists');

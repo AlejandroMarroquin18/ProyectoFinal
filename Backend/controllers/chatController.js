@@ -1,5 +1,20 @@
+/**
+ * @file chatController.js
+ * @description Controladores para manejar operaciones CRUD en chats utilizando los servicios de chat.
+ * @requires ../services/chatService Servicios relacionados con la gestión de chats en Firebase Realtime Database.
+ */
+
 const { createChat, getChat, updateChat, deleteChat } = require('../services/chatService')
 
+/**
+ * Controlador para crear un nuevo chat.
+ * @function createChatController
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} req.body - Contiene los datos enviados en la solicitud.
+ * @param {string} req.body.chatName - Nombre del chat a crear.
+ * @param {Object} res - Objeto de respuesta de Express.
+ * @returns {void} Devuelve una respuesta HTTP con el resultado de la operación.
+ */
 const createChatController = async (req, res) => {
   const { chatName } = req.body; 
 
@@ -17,6 +32,15 @@ const createChatController = async (req, res) => {
 }
 
 
+/**
+ * Controlador para obtener la información de un chat.
+ * @function getChatController
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} req.query - Contiene los parámetros de consulta enviados en la solicitud.
+ * @param {string} req.query.chatName - Nombre del chat a buscar.
+ * @param {Object} res - Objeto de respuesta de Express.
+ * @returns {void} Devuelve una respuesta HTTP con la información del chat.
+ */
 const getChatController = async (req, res) => {
   const { chatName } = req.query;
   
@@ -30,6 +54,16 @@ const getChatController = async (req, res) => {
 }
 
 
+/**
+ * Controlador para actualizar un chat añadiendo un mensaje.
+ * @function updateChatController
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} req.body - Contiene los datos enviados en la solicitud.
+ * @param {string} req.body.chatName - Nombre del chat a actualizar.
+ * @param {string|Object} req.body.message - Mensaje a agregar al chat.
+ * @param {Object} res - Objeto de respuesta de Express.
+ * @returns {void} Devuelve una respuesta HTTP con el resultado de la operación.
+ */
 const updateChatController = async (req, res) => {
   const { chatName, message } = req.body;
 
@@ -47,6 +81,15 @@ const updateChatController = async (req, res) => {
 }
 
 
+/**
+ * Controlador para eliminar un chat.
+ * @function deleteChatController
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} req.body - Contiene los datos enviados en la solicitud.
+ * @param {string} req.body.chatName - Nombre del chat a eliminar.
+ * @param {Object} res - Objeto de respuesta de Express.
+ * @returns {void} Devuelve una respuesta HTTP con el resultado de la operación.
+ */
 const deleteChatController = async (req, res) => {
   const { chatName } = req.body;
 

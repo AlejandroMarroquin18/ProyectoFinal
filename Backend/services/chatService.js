@@ -1,6 +1,17 @@
+/**
+ * @file chatService.js
+ * @description Servicio para manejar operaciones CRUD de chats en Firebase Realtime Database.
+ * @requires ../config/firebaseConfig Configuración de Firebase. 
+ */
+
 const { db } = require('../config/firebaseConfig')
 
-// Creacion del chat
+/**
+ * Crea un nuevo chat en la base de datos.
+ * @function createChat
+ * @param {string} chatName - Nombre del chat a crear.
+ * @returns {Promise<string>} Mensaje de éxito al crear el chat.
+  */
 async function createChat(chatName) {
   try {
     const chatRef = db.ref('chats');
@@ -21,7 +32,12 @@ async function createChat(chatName) {
 }
 
 
-// Leer chat
+/**
+ * Obtiene la información de un chat por su nombre.
+ * @function getChat
+ * @param {string} chatName - Nombre del chat a buscar.
+ * @returns {Promise<Object>} Objeto con los datos del chat (id, name, createdAt, messages).
+ */
 async function getChat(chatName) {
   console.log('ingreso getChat')
   try {
@@ -50,7 +66,13 @@ async function getChat(chatName) {
 }
 
 
-// Modificar chat
+/**
+ * Agrega un mensaje a un chat existente.
+ * @function updateChat
+ * @param {string} chatName - Nombre del chat a actualizar.
+ * @param {string|Object} message - Mensaje a agregar al chat (puede ser texto o un objeto más complejo).
+ * @returns {Promise<string>} Mensaje de éxito al agregar el mensaje.
+ */
 async function updateChat(chatName, message) {
   try {
     const chatRef = db.ref('chats');
@@ -70,7 +92,13 @@ async function updateChat(chatName, message) {
   }
 }
 
-// Eliminar chat
+
+/**
+ * Elimina un chat existente por su nombre.
+ * @function deleteChat
+ * @param {string} chatName - Nombre del chat a eliminar.
+ * @returns {Promise<string>} Mensaje de éxito al eliminar el chat.
+ */
 async function deleteChat(chatName) {
   try {
     const chatRef = db.ref('chats');

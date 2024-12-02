@@ -1,3 +1,9 @@
+/**
+ * @file jest.config.js
+ * @description Configuración de Jest para realizar pruebas en el proyecto.
+ * @see https://jestjs.io/docs/configuration Documentación oficial de configuración de Jest.
+ */
+
 module.exports = {
   verbose: true,
   testEnvironment: 'node', 

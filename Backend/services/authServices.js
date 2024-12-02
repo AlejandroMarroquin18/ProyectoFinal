@@ -1,15 +1,21 @@
+/**
+ * @file authService.js
+ * @description Servicio para manejar la autenticación de usuarios utilizando Firebase Authentication.
+ * @requires ../config/firebaseConfig Configuración de Firebase Admin SDK.
+ * @requires firebase/auth Funciones de autenticación del cliente de Firebase.
+*/
+
 const { auth } = require('../config/firebaseConfig');
-const { createUserWithEmailAndPassword, updateProfile } = require('firebase/auth');
 
 /**
  * Crea un nuevo usuario en Firebase Authentication.
+ * @function
  * @param {string} displayName - El nombre del usuario.
  * @param {string} email - El correo electrónico del usuario.
  * @param {string} password - La contraseña del usuario.
  * @returns {Object} - Información del usuario creado.
  */
 async function createUser (displayName, email, password) {
-  console.log(displayName, email, password);
   try {
     const userRecord = await auth.createUser({
       email: email,
@@ -24,5 +30,6 @@ async function createUser (displayName, email, password) {
     throw error;
   }
 };
+
 
 module.exports = { createUser }
