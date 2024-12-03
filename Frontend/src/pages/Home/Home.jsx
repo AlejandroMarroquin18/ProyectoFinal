@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import Icono from "../../assets/images/icon.png";
 import { auth } from "../../../config/firebaseConfigF";
 import { signOut } from "firebase/auth";
+import Asistente from "./Asistente";
 import Busqueda from "./Busqueda";
 import Historial from "./Historial";
 import { buttonStyle, cardStyle } from "./styles";
@@ -54,7 +55,7 @@ function Home() {
             }}
           />
           <h1 style={{ fontSize: "2rem", margin: "0", whiteSpace: "nowrap" }}>
-            ASISTENTE VIRTUAL
+            SmartSetup
           </h1>
         </div>
 
@@ -103,8 +104,9 @@ function Home() {
 
       {showBusqueda && (
         <div style={cardStyle}>
-          <h2>Asistente Virtual</h2>
           <p>Espacio reservado para la IA</p>
+          <h2>Asistente Virtual</h2>
+          <Asistente/>
         </div>
       )}
 
