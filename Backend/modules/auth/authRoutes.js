@@ -24,4 +24,18 @@ const router = express.Router();
  */
 router.post('/create-user', authController.createUserController);
 
+
+/**
+ * POST /validate-user
+ * @description Ruta para validar un token de usuario.
+ * @access Público
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} req.headers - Contiene los encabezados de la solicitud.
+ * @param {string} req.headers.authorization - El encabezado de autorización con el token de ID.
+ * @param {Object} res - Objeto de respuesta de Express.
+ * @returns {void} Devuelve una respuesta HTTP con el resultado de la validación del token.
+ * @throws {Object} Si el token no es proporcionado o es inválido, devuelve un objeto con el mensaje de error.
+ */
+router.post('/validate-user', authController.verifyTokenController);
+
 module.exports = router;

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Icono from "../components/icon.png";
+import { auth } from "../../config/firebaseConfigF"
+import { signOut } from 'firebase/auth' 
 
 const buttonStyle = {
   padding: "0.5em 1em",
@@ -25,6 +27,11 @@ function Home() {
   const [showBusqueda, setShowBusqueda] = useState(true);
   const [resultados, setResultados] = useState("");
   const navigate = useNavigate();
+
+  const CerrarSesion = async () => {
+    await signOut(auth)
+    navigate("/")
+  }
 
   return (
     <div style={{ padding: "5%" }}>
@@ -77,7 +84,7 @@ function Home() {
           Bienvenido usuario
         </span>
         <button
-          onClick={() => navigate("/")}
+          onClick={CerrarSesion}
           style={{
           padding: "0.5em 1em",
           backgroundColor: "#007bff",

@@ -32,4 +32,19 @@ async function createUser (displayName, email, password) {
 };
 
 
-module.exports = { createUser }
+/**
+ * Verifica un token de ID de Firebase y decodifica su contenido.
+ * @function
+ * @param {string} idToken - El token de ID de Firebase a verificar.
+ * @returns {Object} - El token decodificado con la información del usuario.
+ */
+async function verifyToken(idToken) {
+  try {
+    const decodedToken = await auth.verifyIdToken(idToken);
+    return decodedToken;  // Si el token es válido, retorna los datos decodificados
+  } catch (error) {
+    throw new Error('Token inválido o expirado');
+  }
+}
+
+module.exports = { createUser, verifyToken }
