@@ -1,0 +1,238 @@
+/* 
+  @file app.css
+  @description Estilos globales de la aplicación. Este archivo define los estilos principales, incluyendo fuentes, colores, botones,
+  formularios y reglas para adaptarse a diferentes tamaños de pantalla (responsive design).
+*/
+
+/* ------------------------------------------------------
+    Estilos globales
+------------------------------------------------------ */
+
+/* 
+  Definición de fuentes, colores y fondo globales. 
+  Establece el esquema de colores a 'light' para un modo claro predeterminado.
+*/
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif; /* Fuente predeterminada */
+  color-scheme: light; /* Modo claro */
+  color: #007bff; /* Azul para el texto principal */
+  background-color: #ffffff; /* Fondo blanco para modo claro */
+}
+
+/* ------------------------------------------------------
+    Estilos para el cuerpo de la página
+------------------------------------------------------ */
+
+/* 
+  Diseño del cuerpo de la página con Flexbox para centrar los elementos en el contenedor principal.
+  El fondo se define en :root para permitir cambios fáciles.
+*/
+body {
+  margin: 0; /* Elimina márgenes predeterminados */
+  display: flex; /* Usa Flexbox para el diseño */
+  justify-content: center; /* Centra los elementos horizontalmente */
+  align-items: center; /* Centra los elementos verticalmente */
+  min-height: 100vh; /* Asegura que el contenido ocupe al menos el alto de la pantalla */
+  background-color: var(--background-color); /* Usa el color de fondo global definido */
+}
+
+/* ------------------------------------------------------
+    Estilos para el texto
+------------------------------------------------------ */
+
+/* 
+  Define el color para todos los encabezados, párrafos y enlaces en la aplicación.
+  Se utiliza azul claro (#007bff) como color principal para el texto.
+*/
+h1, h2, h3, h4, h5, h6, p, a {
+  color: #007bff; /* Azul claro */
+  margin: 0; /* Elimina márgenes predeterminados */
+}
+
+/* ------------------------------------------------------
+    Estilos para los enlaces
+------------------------------------------------------ */
+
+/* 
+  Elimina la subrayado predeterminada de los enlaces y agrega un subrayado al pasar el ratón.
+*/
+a {
+  text-decoration: none; /* Elimina la subrayado */
+}
+
+a:hover {
+  text-decoration: underline; /* Subraya el enlace al pasar el ratón */
+}
+
+/* ------------------------------------------------------
+    Estilos para los botones
+------------------------------------------------------ */
+
+/* 
+  Define los estilos de los botones, incluyendo color de fondo, bordes redondeados, y transiciones al hacer hover.
+*/
+button {
+  border: none; /* Elimina el borde por defecto */
+  border-radius: 8px; /* Bordes redondeados */
+  padding: 0.8em 1.2em; /* Relleno */
+  font-size: 1em; /* Tamaño de la fuente */
+  font-weight: 600; /* Peso de la fuente */
+  background-color: #007bff; /* Fondo azul claro */
+  color: #ffffff; /* Texto blanco */
+  cursor: pointer; /* Cambia el cursor a puntero */
+  transition: background-color 0.3s ease-in-out; /* Transición suave para el cambio de color de fondo */
+}
+
+/* 
+  Cambia el color de fondo del botón cuando el ratón está sobre él.
+*/
+button:hover {
+  background-color: #0056b3; /* Azul más oscuro al hacer hover */
+}
+
+/* 
+  Estilo para los botones deshabilitados.
+*/
+button:disabled {
+  background-color: #cccccc; /* Fondo gris para botones deshabilitados */
+  cursor: not-allowed; /* Cursor de no permitido */
+}
+
+/* ------------------------------------------------------
+    Estilos para los inputs y formularios
+------------------------------------------------------ */
+
+/* 
+  Estilos para los campos de entrada, ajustando tamaño, bordes y colores.
+*/
+input {
+  width: 100%; /* Ancho completo */
+  padding: 0.8em; /* Relleno */
+  font-size: 1em; /* Tamaño de la fuente */
+  border: 1px solid #007bff; /* Borde azul claro */
+  border-radius: 8px; /* Bordes redondeados */
+  color: #007bff; /* Texto azul */
+  background-color: #ffffff; /* Fondo blanco */
+  outline: none; /* Elimina el borde de enfoque por defecto */
+}
+
+/* 
+  Estilo para el texto del placeholder en los inputs, con color gris claro.
+*/
+input::placeholder {
+  color: #cccccc; /* Gris claro */
+}
+
+/* 
+  Estilo para los inputs cuando reciben el foco, cambiando el borde a un azul más oscuro.
+*/
+input:focus {
+  border-color: #0056b3; /* Borde azul más oscuro al enfocar */
+}
+
+/* ------------------------------------------------------
+    Estilos para contenedores con grid
+------------------------------------------------------ */
+
+/* 
+  Define un contenedor de tipo grid para organizar elementos.
+*/
+.grid {
+  display: grid; /* Usamos grid para disposición de los elementos */
+  gap: 1rem; /* Espacio entre los elementos */
+  border: 1px solid #007bff; /* Borde azul claro */
+  border-radius: 8px; /* Bordes redondeados */
+  padding: 1rem; /* Relleno dentro del contenedor */
+}
+
+/* ------------------------------------------------------
+    Estilos responsivos (Adaptación a distintos tamaños de pantalla)
+------------------------------------------------------ */
+
+/* 
+  Reglas para pantallas pequeñas (menos de 768px), ajustando tamaño de texto y otros elementos.
+*/
+@media (max-width: 768px) {
+  body {
+    padding: 5%; /* Agrega un relleno alrededor del cuerpo */
+  }
+
+  h1 {
+    font-size: 1.5rem; /* Reduce el tamaño del encabezado */
+  }
+
+  button {
+    font-size: 0.9rem; /* Reduce el tamaño del botón */
+    padding: 0.4em 0.8em; /* Ajusta el relleno de los botones */
+  }
+
+  img {
+    width: 2.5rem; /* Reduce el tamaño de las imágenes */
+    height: 2.5rem;
+  }
+
+  div {
+    flex-wrap: wrap; /* Permite que los elementos se acomoden en múltiples líneas */
+  }
+
+  .busqueda input, .busqueda button {
+    width: 100%; /* Hace que los inputs y botones de búsqueda ocupen todo el ancho disponible */
+  }
+
+  .content {
+    flex-direction: column; /* Apila los elementos en una columna */
+  }
+
+  .content > div {
+    width: 100%; /* Hace que cada div ocupe todo el ancho */
+  }
+}
+
+/* 
+  Reglas para pantallas medianas (menos de 1024px), ajustando el tamaño de los inputs y botones.
+*/
+@media (max-width: 1024px) {
+  .busqueda input {
+    font-size: 0.9rem; /* Reduce el tamaño de la fuente en inputs */
+  }
+
+  button {
+    font-size: 0.9rem; /* Reduce el tamaño de la fuente en botones */
+  }
+}
+
+/* 
+  Reglas para pantallas grandes (más de 1025px), ajustando la disposición de los elementos en fila.
+*/
+@media (min-width: 1025px) {
+  .content {
+    flex-direction: row; /* Organiza los elementos en una fila */
+  }
+
+  .content > div {
+    width: 45%; /* Cada div ocupará el 45% del ancho */
+  }
+}
+
+/* 
+  Ajustes adicionales para pantallas pequeñas (menos de 768px), cambiando tamaños de texto.
+*/
+@media (max-width: 768px) {
+  h2 {
+    font-size: 1.2rem; /* Ajuste del tamaño de h2 */
+  }
+
+  input,
+  button {
+    font-size: 0.9rem; /* Ajuste de tamaño para inputs y botones */
+  }
+}
+
+/* 
+  Estilo para pantallas grandes (más de 1025px), aumentando el tamaño de h2.
+*/
+@media (min-width: 1025px) {
+  h2 {
+    font-size: 1.8rem; /* Aumenta el tamaño del encabezado h2 */
+  }
+}

@@ -1,3 +1,12 @@
+/**
+ * @file Busqueda.jsx
+ * @description Componente de búsqueda que permite al usuario filtrar productos o resultados 
+ * según tres criterios: presupuesto, categoría y marca.
+ * @component
+ * @example
+ * return ( <Busqueda /> )
+ */
+
 function Busqueda() {
     const handleBuscar = () => {
       alert("Resultados de ejemplo generados.");

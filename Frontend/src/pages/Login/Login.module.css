@@ -1,0 +1,96 @@
+/**
+ * @file Login.module.css
+ * @description Estilos CSS específicos para la página de inicio de sesión de usuarios.
+ * Define el diseño y los estilos visuales de los elementos en el formulario de login, 
+ * como la tarjeta, los campos de entrada, botones y otros elementos interactivos.
+ */
+
+/* Estilos para el contenedor principal de la página de login */
+.container {
+  display: flex;
+  justify-content: center;  /* Centra el contenido horizontalmente */
+  align-items: center;      /* Centra el contenido verticalmente */
+  height: 100vh;            /* Altura completa de la ventana */
+  padding: 1rem;
+  flex-direction: column;   /* Organiza los elementos en una columna */
+}
+
+/* Estilo para el icono de la aplicación (ubicado en la parte superior) */
+.icon {
+  width: 100px;             /* Ancho del icono */
+  height: 100px;            /* Alto del icono */
+  margin-bottom: 1rem;      /* Espacio debajo del icono */
+}
+
+/* Estilo para la tarjeta que contiene el formulario */
+.card {
+  width: 100%;              /* Ancho completo de la tarjeta */
+  max-width: 400px;         /* Ancho máximo de la tarjeta */
+  padding: 2rem;            /* Espaciado interno */
+  border-radius: 8px;       /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  background-color: #fff;   /* Fondo blanco */
+  text-align: center;       /* Centra el texto dentro de la tarjeta */
+  border: 0.5px solid #007bff;  /* Borde azul claro */
+}
+
+/* Estilo para el título dentro de la tarjeta */
+.title {
+  margin-bottom: 2rem;      /* Espacio debajo del título */
+}
+
+/* Estilos para los campos de entrada (inputs) del formulario */
+.input {
+  margin-bottom: 1.5rem;    /* Espacio debajo de cada input */
+  padding: 0.75rem;         /* Relleno interno */
+  width: 100%;              /* Ancho completo de los inputs */
+  box-sizing: border-box;   /* Asegura que el padding no afecte el tamaño total */
+}
+
+/* Estilo para los mensajes de error */
+.error {
+  color: red;               /* Color rojo para los mensajes de error */
+  margin-bottom: 1.5rem;    /* Espacio debajo del mensaje */
+}
+
+/* Estilos para el botón de login */
+.button {
+  padding: 0.5em 1em;       /* Relleno interno del botón */
+  width: 50%;                /* Ancho del 50% del contenedor */
+  background-color: #007bff; /* Fondo azul */
+  color: #ffffff;            /* Texto blanco */
+  border: none;              /* Sin borde */
+  border-radius: 4px;        /* Bordes redondeados */
+  cursor: pointer;           /* Cursor tipo puntero al pasar por encima */
+  font-size: 1em;            /* Tamaño de fuente */
+  margin-bottom: 1.5rem;     /* Espacio debajo del botón */
+}
+
+/* Estilos para el botón de "Olvidé mi contraseña" */
+.forgotPasswordButton {
+  background: none;         /* Sin fondo */
+  color: #007bff;            /* Color azul */
+  font-size: 0.9em;          /* Tamaño de fuente más pequeño */
+  font-weight: 400;          /* Peso de fuente normal */
+  margin: 1.5em 0;           /* Espacio alrededor del botón */
+  text-decoration: underline; /* Subraya el texto */
+  border: none;              /* Sin borde */
+  cursor: pointer;           /* Cursor tipo puntero al pasar por encima */
+}
+
+/* Estilos para la sección que redirige al registro */
+.registerRedirect {
+  margin-top: 1.5rem;        /* Espacio superior */
+}
+
+/* Estilo para el botón que redirige al registro */
+.redirectButton {
+  padding: 0.5em 1em;       /* Relleno interno del botón */
+  font-size: 1em;            /* Tamaño de fuente */
+  background-color: #007bff; /* Fondo azul */
+  color: #ffffff;            /* Texto blanco */
+  border: none;              /* Sin borde */
+  border-radius: 4px;        /* Bordes redondeados */
+  cursor: pointer;           /* Cursor tipo puntero */
+  width: 50%;                /* Ancho del 50% */
+}
