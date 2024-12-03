@@ -4,7 +4,7 @@
  * @requires ./authServices Servicio para la gestión de usuarios en Firebase Authentication.
  */
 
-const { createUser } = require('./authServices')
+const { createUser, verifyToken } = require('./authServices')
 
 /**
  * Controlador para crear un nuevo usuario.
@@ -29,4 +29,29 @@ const createUserController = async (req, res) => {
   }
 } 
 
-module.exports = { createUserController }
+
+/**
+ * Controlador para verificar la validez de un token de usuario.
+ * @function verifyTokenController
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} req.headers - Contiene los encabezados de la solicitud.
+ * @param {string} req.headers.authorization - El encabezado de autorización con el token de ID.
+ * @param {Object} res - Objeto de respuesta de Express.
+ * @returns {void} Devuelve una respuesta HTTP con el resultado de la validación del token.
+ */
+const verifyTokenController = async (req, res) => {
+  const idToken = req.headers.authorization?.split(' ')[1];
+
+  if (!idToken) {
+    return res.status(400).json({ message: 'Token no proporcionado' });
+  }
+
+  try {
+    const decodedToken = await verifyToken(idToken);
+    return res.status(200).json({ message: 'Token validado correctamente', user: decodedToken });
+  } catch (error) {
+    return res.status(401).json({ message: 'Token inválido', error: error.message });
+  }  
+}
+
+module.exports = { createUserController, verifyTokenController }

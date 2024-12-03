@@ -21,7 +21,7 @@ const PORT = 3000;
 app.use(cors({
     origin: "http://localhost:5173",
     methods: ["GET", "POST", "DELETE"],
-    allowedHeaders: ["Content-Type"],
+    allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
 app.use(express.json());

@@ -1,6 +1,42 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Icono from "../components/icon.png";
+import { auth } from "../../config/firebaseConfigF"
+import { signInWithEmailAndPassword } from "firebase/auth"
+
+async function loginUser(email, password) {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user; 
+    const idToken = await user.getIdToken();
+    return idToken;
+    
+  } catch (error) {
+    console.error('Error de login:', error.message);
+  }
+}
+
+// Enviar el idToken al backend
+async function sendTokenToBackend(idToken) {
+  try {
+    const response = await fetch('http://localhost:3000/auth/validate-user', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${idToken}`
+      },
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      console.log('Token validado correctamente en el backend:', data);
+    } else {
+      console.error('Error en la validación del backend:', data.message);
+    }
+  } catch (error) {
+    console.error('Error al enviar el token al backend:', error.message);
+  }
+}
 
 function Login() {
   const navigate = useNavigate();
@@ -8,20 +44,17 @@ function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    const idToken = await loginUser(email, password);
 
-    // Aquí podrías hacer la validación con el backend, por ahora solo mostramos un error si los campos están vacíos
-    if (!email || !password) {
-      setError("Por favor, ingresa tu correo y contraseña.");
-      return;
+    if( idToken ) { 
+      sendTokenToBackend(idToken);
+      navigate("/home");
     }
-
-    // Limpiar el error si la validación es exitosa
+    
     setError("");
-
-    // Enviar al usuario a la página principal si los datos son correctos
-    navigate("/home");
   };
 
   return (

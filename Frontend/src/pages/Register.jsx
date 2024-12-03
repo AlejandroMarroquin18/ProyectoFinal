@@ -52,11 +52,8 @@ function Register() {
         throw new Error("Error al comunicarse con el servidor.");
       }
 
-      const data = await response.json();
-      setResultados(data.message); // Actualizar el estado con el mensaje del backend
     } catch (error) {
-      console.error("Error:", error);
-      setResultados("Hubo un problema al procesar la solicitud.");
+      console.error("Error:", error.message);
     }
 
   };
