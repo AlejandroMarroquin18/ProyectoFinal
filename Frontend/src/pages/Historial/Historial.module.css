@@ -1,0 +1,25 @@
+/**
+ * @file Historial.module.css
+ * @description Estilos CSS específicos para la página de historial de búsquedas.
+ * Define el diseño y los estilos visuales de los elementos que muestran el historial de búsquedas realizadas,
+ * incluyendo los estilos para los elementos de la lista y sus interacciones.
+ */
+
+/* Estilos para el contenedor principal de la página de historial */
+.historialContainer {
+  padding: 20px;  /* Relleno alrededor del contenido dentro del contenedor */
+}
+
+/* Estilos para los elementos de la lista (cada búsqueda en el historial) */
+.item {
+  cursor: pointer;        /* Cambia el cursor a tipo puntero al pasar sobre los elementos */
+  padding: 10px;           /* Espaciado interno para hacer que los elementos sean más fáciles de hacer clic */
+  margin: 5px;             /* Espacio entre los elementos de la lista */
+  background-color: #f0f0f0; /* Fondo gris claro para los elementos de la lista */
+  border-radius: 5px;      /* Bordes redondeados para los elementos */
+}
+
+/* Estilo para cuando el elemento de la lista es hover (cuando se pasa el cursor sobre él) */
+.item:hover {
+  background-color: #ddd; /* Cambio de fondo a gris más oscuro cuando el cursor pasa sobre el elemento */
+}

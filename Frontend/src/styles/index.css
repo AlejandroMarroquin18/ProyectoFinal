@@ -1,0 +1,118 @@
+/* 
+  @file index.css
+  @description Estilos globales para la aplicación. Este archivo define la apariencia de la aplicación en ambos modos (oscuro y claro),
+  establece la tipografía predeterminada y los estilos para elementos comunes como los enlaces, botones, y la disposición del cuerpo.
+  También incluye reglas para la apariencia de la interfaz en función del esquema de color preferido del usuario.
+*/
+
+/* ------------------------------------------------------
+    Estilos generales
+------------------------------------------------------ */
+
+/* Establece la fuente predeterminada y otras configuraciones generales */
+:root {
+  /* Fuentes utilizadas en la aplicación */
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5; /* Define el espaciado entre líneas */
+  font-weight: 400; /* Peso de la fuente predeterminado */
+
+  /* Define el esquema de color, adaptándose al modo claro y oscuro */
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87); /* Color del texto para el modo oscuro */
+  background-color: #242424; /* Color de fondo para el modo oscuro */
+
+  /* Mejora la legibilidad de la tipografía */
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased; /* Mejora la suavidad de las fuentes en dispositivos Apple */
+  -moz-osx-font-smoothing: grayscale; /* Mejora la suavidad de las fuentes en dispositivos Linux */
+}
+
+/* ------------------------------------------------------
+    Estilos para los enlaces
+------------------------------------------------------ */
+
+/* Estilo general para los enlaces */
+a {
+  font-weight: 500; /* Peso de la fuente en los enlaces */
+  color: #646cff; /* Color de los enlaces */
+  text-decoration: inherit; /* Hereda la decoración del texto */
+}
+
+/* Estilo para los enlaces cuando se pasan por encima */
+a:hover {
+  color: #535bf2; /* Cambio de color en hover */
+}
+
+/* ------------------------------------------------------
+    Estilos para el cuerpo
+------------------------------------------------------ */
+
+/* Estilo general para el cuerpo de la aplicación */
+body {
+  margin: 0; /* Elimina el margen predeterminado */
+  display: flex; /* Usa Flexbox para centrar los elementos */
+  place-items: center; /* Centra los elementos en ambos ejes */
+  min-width: 320px; /* Define un ancho mínimo */
+  min-height: 100vh; /* Asegura que el cuerpo tenga al menos la altura de la ventana */
+}
+
+/* ------------------------------------------------------
+    Estilos para el encabezado
+------------------------------------------------------ */
+
+/* Estilo para el título principal de la página */
+h1 {
+  font-size: 3.2em; /* Tamaño de fuente grande */
+  line-height: 1.1; /* Espaciado entre líneas */
+}
+
+/* ------------------------------------------------------
+    Estilos para los botones
+------------------------------------------------------ */
+
+/* Estilo general para los botones */
+button {
+  border-radius: 8px; /* Bordes redondeados */
+  border: 1px solid transparent; /* Borde transparente por defecto */
+  padding: 0.6em 1.2em; /* Relleno del botón */
+  font-size: 1em; /* Tamaño de la fuente */
+  font-weight: 500; /* Peso de la fuente */
+  font-family: inherit; /* Hereda la familia de fuentes del elemento padre */
+  background-color: #1a1a1a; /* Color de fondo para el modo oscuro */
+  cursor: pointer; /* Cambia el cursor a mano al pasar por encima */
+  transition: border-color 0.25s; /* Transición suave para el color del borde */
+}
+
+/* Estilo para los botones al pasar el mouse por encima */
+button:hover {
+  border-color: #646cff; /* Cambio de color del borde en hover */
+}
+
+/* Estilo para el botón cuando está enfocado */
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color; /* Agrega un anillo de enfoque accesible */
+}
+
+/* ------------------------------------------------------
+    Estilos para el modo claro (según la preferencia del usuario)
+------------------------------------------------------ */
+
+/* Aplica estilos cuando el usuario prefiere el modo claro */
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547; /* Color del texto para el modo claro */
+    background-color: #ffffff; /* Fondo blanco para el modo claro */
+  }
+  
+  /* Estilo de los enlaces en hover en modo claro */
+  a:hover {
+    color: #747bff; /* Color de los enlaces al pasar por encima en modo claro */
+  }
+
+  /* Estilo de los botones en modo claro */
+  button {
+    background-color: #f9f9f9; /* Fondo de los botones en modo claro */
+  }
+}

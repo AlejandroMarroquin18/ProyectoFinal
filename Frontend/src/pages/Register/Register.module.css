@@ -1,0 +1,83 @@
+/**
+ * @file Register.module.css
+ * @description Estilos CSS específicos para la página de registro de usuarios.
+ * Define el diseño y los estilos visuales de los elementos en el formulario de registro.
+ */
+
+/* Estilos para el contenedor principal de la página de registro */
+.container {
+  display: flex;
+  justify-content: center;  /* Centra el contenido horizontalmente */
+  align-items: center;      /* Centra el contenido verticalmente */
+  height: 100vh;            /* Altura completa de la ventana */
+  padding: 1rem;
+  flex-direction: column;   /* Coloca los elementos en una columna */
+}
+
+/* Estilo para el icono de la aplicación (ubicado en la parte superior) */
+.icon {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 1rem;  /* Espacio debajo del icono */
+}
+
+/* Estilo para la tarjeta que contiene el formulario */
+.card {
+  width: 100%;
+  max-width: 400px;               /* Ancho máximo de la tarjeta */
+  padding: 2rem;                  /* Espaciado interno */
+  border-radius: 8px;             /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para darle un efecto de profundidad */
+  background-color: #fff;         /* Fondo blanco */
+  text-align: center;             /* Centra el texto en la tarjeta */
+  border: 0.5px solid #007bff;    /* Borde azul claro */
+}
+
+/* Estilo para el título de la tarjeta */
+.title {
+  margin-bottom: 2rem;   /* Espacio debajo del título */
+}
+
+/* Estilos para los campos de entrada (inputs) del formulario */
+.input {
+  margin-bottom: 1.5rem;  /* Espacio debajo de cada input */
+  padding: 0.75rem;       /* Relleno interno para los inputs */
+  width: 100%;            /* Ancho completo de los inputs */
+  box-sizing: border-box; /* Asegura que el padding no afecte el tamaño total */
+}
+
+/* Estilo para los mensajes de error */
+.error {
+  color: red;                /* Color rojo para los mensajes de error */
+  margin-bottom: 1.5rem;     /* Espacio debajo del mensaje de error */
+}
+
+/* Estilos para el botón de registro */
+.button {
+  padding: 0.5em 1em;             /* Relleno interno del botón */
+  width: 100%;                    /* Ancho completo del botón */
+  background-color: #007bff;      /* Fondo azul */
+  color: #ffffff;                 /* Texto blanco */
+  border: none;                   /* Sin borde */
+  border-radius: 4px;             /* Bordes redondeados */
+  cursor: pointer;                /* Muestra un cursor de tipo puntero */
+  font-size: 1em;                  /* Tamaño de fuente */
+  margin-bottom: 1.5rem;          /* Espacio debajo del botón */
+}
+
+/* Estilos para la sección que redirige al login */
+.loginRedirect {
+  margin-top: 1.5rem;  /* Espacio superior */
+}
+
+/* Estilo para el botón que redirige al login */
+.redirectButton {
+  padding: 0.5em 1em;             /* Relleno interno del botón */
+  font-size: 1em;                  /* Tamaño de fuente */
+  background-color: #007bff;      /* Fondo azul */
+  color: #ffffff;                 /* Texto blanco */
+  border: none;                   /* Sin borde */
+  border-radius: 4px;             /* Bordes redondeados */
+  cursor: pointer;                /* Muestra un cursor de tipo puntero */
+  width: 100%;                    /* Ancho completo del botón */
+}

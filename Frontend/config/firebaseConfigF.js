@@ -1,4 +1,11 @@
-// Import the functions you need from the SDKs you need
+/**
+ * @file firebaseConfig.js
+ * @description Configuración e inicialización de Firebase en la aplicación.
+ * Este archivo inicializa Firebase y exporta el objeto de autenticación para ser utilizado en otras partes del proyecto.
+ * @requires firebase/app - Necesario para inicializar Firebase en la aplicación.
+ * @requires firebase/auth - Necesario para gestionar la autenticación de usuarios.
+ */
+
 import { initializeApp } from "firebase/app";
 import { getAuth } from 'firebase/auth';
 
