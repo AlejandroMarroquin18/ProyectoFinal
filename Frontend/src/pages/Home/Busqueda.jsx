@@ -6,6 +6,7 @@
 
 import React, { useState } from "react";
 import { inputStyle, buttonStyle } from "./styles";
+import request from "../../services/api";
 
 /**
  * Componente funcional Busqueda
@@ -32,20 +33,11 @@ function Busqueda({ setResultados }) {
     };
 
     try {
-      const response = await fetch("http://localhost:3000/recommendation/recommend-pc", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      });
-
-      if (!response.ok) {
-        throw new Error("Error al comunicarse con el servidor.");
-      }
-
+      console.log("busqueda")
+      const response = await request("/recommendation/recommend-pc", "POST", requestBody, null)
+ 
       const data = await response.json();
-      setResultados(data.message); // Actualizar el estado con el mensaje del backend
+      setResultados(data.message);
     } catch (error) {
       console.error("Error:", error);
       setResultados("Hubo un problema al procesar la solicitud.");

@@ -12,7 +12,7 @@ const { db } = require('../../config/firebaseConfig')
  * @param {string} listName - Nombre de la lista a crear.
  * @returns {Promise<string>} Mensaje de éxito al crear la lista.
  */
-async function createList(listName) {
+const createList = async (listName) => {
   try {
     const listRef = db.ref('lists');
     const snapshot = await listRef.orderByChild('name').equalTo(listName).once('value');
@@ -42,7 +42,8 @@ async function createList(listName) {
 * @param {string} listName - Nombre de la lista a buscar.
 * @returns {Promise<Object>} Objeto con los datos de la lista (id, name, createdAt, items).
 */
-async function getList(listName) {
+
+const getList = async (listName) => {
   try {
     const listRef = db.ref('lists');
     const snapshot = await listRef.orderByChild('name').equalTo(listName).once('value');
@@ -77,7 +78,7 @@ async function getList(listName) {
  * @param {string|Object} item - Ítem a agregar (puede ser texto o un objeto más complejo).
  * @returns {Promise<string>} Mensaje de éxito al agregar el ítem.
  */
-async function addItemToList(listName, item) {
+const addItemToList = async (listName, item) => {
   try {
     const listRef = db.ref('lists');
     const snapshot = await listRef.orderByChild('name').equalTo(listName).once('value');
@@ -103,7 +104,8 @@ async function addItemToList(listName, item) {
  * @param {string} listName - Nombre de la lista a eliminar.
  * @returns {Promise<string>} Mensaje de éxito al eliminar la lista.
  */
-async function deleteList(listName) {
+
+const deleteList = async (listName) => {
   try {
     const listRef = db.ref('lists');
     const snapshot = await listRef.orderByChild('name').equalTo(listName).once('value');
@@ -129,7 +131,7 @@ async function deleteList(listName) {
  * @param {string|Object} item - Ítem a eliminar (puede ser texto o un objeto más complejo).
  * @returns {Promise<string>} Mensaje de éxito al eliminar el ítem.
  */
-async function removeItemFromList(listName, item) {
+const removeItemFromList = async (listName, item) => {
   try {
     const listRef = db.ref('lists');
     const snapshot = await listRef.orderByChild('name').equalTo(listName).once('value');

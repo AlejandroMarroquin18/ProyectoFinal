@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../../../config/firebaseConfigF";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import LoginUI from "./LoginUI";  // Componente para la interfaz gráfica
+import request from "../../services/api";
 
 /**
  * Función para realizar el inicio de sesión del usuario utilizando Firebase Authentication.
@@ -35,13 +36,15 @@ async function loginUser(email, password) {
  */
 async function sendTokenToBackend(idToken) {
   try {
-    const response = await fetch('http://localhost:3000/auth/validate-user', {
+
+    const response = await request("/auth/validate-user", "POST", null, idToken)
+    /*const response = await fetch('http://localhost:3000/auth/validate-user', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${idToken}`,
       },
-    });
+    });*/
 
     const data = await response.json();
     if (response.ok) {

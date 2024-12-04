@@ -12,7 +12,7 @@ const { db } = require('../../config/firebaseConfig')
  * @param {string} chatName - Nombre del chat a crear.
  * @returns {Promise<string>} Mensaje de éxito al crear el chat.
   */
-async function createChat(chatName) {
+const createChat = async (chatName) => {
   try {
     const chatRef = db.ref('chats');
 
@@ -38,7 +38,7 @@ async function createChat(chatName) {
  * @param {string} chatName - Nombre del chat a buscar.
  * @returns {Promise<Object>} Objeto con los datos del chat (id, name, createdAt, messages).
  */
-async function getChat(chatName) {
+const getChat = async (chatName) => {
   console.log('ingreso getChat')
   try {
     const chatRef = db.ref('chats');
@@ -73,7 +73,7 @@ async function getChat(chatName) {
  * @param {string|Object} message - Mensaje a agregar al chat (puede ser texto o un objeto más complejo).
  * @returns {Promise<string>} Mensaje de éxito al agregar el mensaje.
  */
-async function updateChat(chatName, message) {
+const updateChat = async (chatName, message) => {
   try {
     const chatRef = db.ref('chats');
     const snapshot = await chatRef.orderByChild('name').equalTo(chatName).once('value');

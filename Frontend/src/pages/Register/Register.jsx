@@ -8,6 +8,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RegisterUI from "./RegisterUI";
+import request from "../../services/api"
 
 /**
  * Componente funcional Register
@@ -52,18 +53,8 @@ function Register() {
     };
 
     try {
-      const response = await fetch("http://localhost:3000/auth/create-user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      });
-
-      if (!response.ok) {
-        throw new Error("Error al comunicarse con el servidor.");
-      }
-
+      const response = request("/auth/create-user", "POST", requestBody, null)
+    
     } catch (error) {
       console.error("Error:", error.message);
     }

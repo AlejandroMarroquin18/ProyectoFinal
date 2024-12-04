@@ -17,7 +17,8 @@ const { generateRecommendation } = require('./recommendationService');
  * @param {Object} res - Objeto de respuesta de Express.
  * @returns {void} Devuelve una respuesta HTTP con la recomendación generada.
  */
-async function recommendPC(req, res) {
+const recommendPC = async(req, res) => {
+    console.log("INGRESO RECOMMENDPC")
     const { maxBudget, category, preferredBrand } = req.body;
 
     if (!maxBudget || !category) {
