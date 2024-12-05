@@ -19,9 +19,12 @@ const PORT = process.env.PORT || 3000;
 
 // Cors
 app.use(cors({
-    origin: "https://smart-setup.vercel.app",
-    methods: ["GET", "POST", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+  origin: [
+    "http://localhost:5173",
+    "https://smart-setup.vercel.app"
+  ],  
+  methods: ["GET", "POST", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
 app.use(express.json());

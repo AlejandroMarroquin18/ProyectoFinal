@@ -16,6 +16,7 @@ const { createChat, getChat, updateChat, deleteChat } = require('./chatService')
  * @returns {void} Devuelve una respuesta HTTP con el resultado de la operación.
  */
 const createChatController = async (req, res) => {
+  console.log("CREATE CHAT CONTROLLER")
   const { chatName } = req.body; 
 
   if (!chatName || typeof chatName !== 'string') {
@@ -42,6 +43,7 @@ const createChatController = async (req, res) => {
  * @returns {void} Devuelve una respuesta HTTP con la información del chat.
  */
 const getChatController = async (req, res) => {
+  console.log("GET CHAT CONTROLLER")
   const { chatName } = req.query;
   
   try {
@@ -65,6 +67,7 @@ const getChatController = async (req, res) => {
  * @returns {void} Devuelve una respuesta HTTP con el resultado de la operación.
  */
 const updateChatController = async (req, res) => {
+  console.log("UPDATE CHAT CONTROLLER")
   const { chatName, message } = req.body;
 
   if (!chatName || !message ) {
@@ -91,6 +94,7 @@ const updateChatController = async (req, res) => {
  * @returns {void} Devuelve una respuesta HTTP con el resultado de la operación.
  */
 const deleteChatController = async (req, res) => {
+  console.log("DELETE CHAT CONTROLLER")
   const { chatName } = req.body;
 
   try {
