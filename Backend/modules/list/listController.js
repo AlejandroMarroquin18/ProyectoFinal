@@ -16,6 +16,7 @@ const { createList, addItemToList, deleteList, getList, removeItemFromList } = r
  * @returns {void} Devuelve una respuesta HTTP con el resultado de la operación.
  */
 const createListController = async (req, res) => {
+  console.log("CREATE LIST CONTROLLER")
   const { listName } = req.body; 
 
   if (!listName || typeof listName !== 'string') {
@@ -43,6 +44,7 @@ const createListController = async (req, res) => {
  * @returns {void} Devuelve una respuesta HTTP con el resultado de la operación.
  */
 const addItemToListController = async (req, res) => {
+  console.log("ADD ITEM TO LIST CONTROLLER")
   const { listName, item } = req.body;
 
   if (!listName || !item ) {
@@ -70,7 +72,7 @@ const addItemToListController = async (req, res) => {
  * @returns {void} Devuelve una respuesta HTTP con el resultado de la operación.
  */
 const removeItemFromListController = async (req, res) => {
-  console.log('Llamada a addItemController');
+  console.log('REMOVE ITEM FROM LIST CONTROLLER');
   const { listName, item } = req.body;
 
   try {
@@ -97,6 +99,7 @@ const removeItemFromListController = async (req, res) => {
  * @returns {void} Devuelve una respuesta HTTP con el resultado de la operación.
  */
 const deleteListController = async (req, res) => {
+  console.log("DELETE LIST CONTROLLER")
   const { listName } = req.body;
 
   try {
@@ -119,6 +122,7 @@ const deleteListController = async (req, res) => {
  * @returns {void} Devuelve una respuesta HTTP con la información de la lista.
  */
 const getListController = async (req, res) => {
+  console.log("GET LIST CONTROLLER")
   const { listName } = req.query;
   
   try {

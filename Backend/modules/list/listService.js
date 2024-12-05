@@ -13,6 +13,7 @@ const { db } = require('../../config/firebaseConfig')
  * @returns {Promise<string>} Mensaje de éxito al crear la lista.
  */
 const createList = async (listName) => {
+  console.log("CREATE LIST")
   try {
     const listRef = db.ref('lists');
     const snapshot = await listRef.orderByChild('name').equalTo(listName).once('value');
@@ -44,6 +45,7 @@ const createList = async (listName) => {
 */
 
 const getList = async (listName) => {
+  console.log("GET LIST")
   try {
     const listRef = db.ref('lists');
     const snapshot = await listRef.orderByChild('name').equalTo(listName).once('value');
@@ -79,6 +81,7 @@ const getList = async (listName) => {
  * @returns {Promise<string>} Mensaje de éxito al agregar el ítem.
  */
 const addItemToList = async (listName, item) => {
+  console.log("ADD ITEM TO LIST")
   try {
     const listRef = db.ref('lists');
     const snapshot = await listRef.orderByChild('name').equalTo(listName).once('value');
@@ -104,8 +107,8 @@ const addItemToList = async (listName, item) => {
  * @param {string} listName - Nombre de la lista a eliminar.
  * @returns {Promise<string>} Mensaje de éxito al eliminar la lista.
  */
-
 const deleteList = async (listName) => {
+  console.log("DELETE LIST")
   try {
     const listRef = db.ref('lists');
     const snapshot = await listRef.orderByChild('name').equalTo(listName).once('value');
@@ -132,6 +135,7 @@ const deleteList = async (listName) => {
  * @returns {Promise<string>} Mensaje de éxito al eliminar el ítem.
  */
 const removeItemFromList = async (listName, item) => {
+  console.log("REMOVE ITEM FROM LIST")
   try {
     const listRef = db.ref('lists');
     const snapshot = await listRef.orderByChild('name').equalTo(listName).once('value');

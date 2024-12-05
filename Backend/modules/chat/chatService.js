@@ -13,6 +13,7 @@ const { db } = require('../../config/firebaseConfig')
  * @returns {Promise<string>} Mensaje de éxito al crear el chat.
   */
 const createChat = async (chatName) => {
+  console.log("CREATE CHAT")
   try {
     const chatRef = db.ref('chats');
 
@@ -39,7 +40,7 @@ const createChat = async (chatName) => {
  * @returns {Promise<Object>} Objeto con los datos del chat (id, name, createdAt, messages).
  */
 const getChat = async (chatName) => {
-  console.log('ingreso getChat')
+  console.log('GET CHAT')
   try {
     const chatRef = db.ref('chats');
     const snapshot = await chatRef.orderByChild('name').equalTo(chatName).once('value');
@@ -74,6 +75,7 @@ const getChat = async (chatName) => {
  * @returns {Promise<string>} Mensaje de éxito al agregar el mensaje.
  */
 const updateChat = async (chatName, message) => {
+  console.log("UPDATE CHAT")
   try {
     const chatRef = db.ref('chats');
     const snapshot = await chatRef.orderByChild('name').equalTo(chatName).once('value');
@@ -100,6 +102,7 @@ const updateChat = async (chatName, message) => {
  * @returns {Promise<string>} Mensaje de éxito al eliminar el chat.
  */
 async function deleteChat(chatName) {
+  console.log("DELETE CHAT")
   try {
     const chatRef = db.ref('chats');
     const snapshot = await chatRef.orderByChild('name').equalTo(chatName).once('value');

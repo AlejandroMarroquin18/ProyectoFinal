@@ -18,6 +18,7 @@ const { createUser, verifyToken } = require('./authServices')
  * @returns {void} Devuelve una respuesta HTTP con el resultado de la operación.
  */
 const createUserController = async (req, res) => {
+  console.log("CREATE USER CONTROLLER")
   const { displayName, email, password } = req.body; 
 
   try {
@@ -40,6 +41,7 @@ const createUserController = async (req, res) => {
  * @returns {void} Devuelve una respuesta HTTP con el resultado de la validación del token.
  */
 const verifyTokenController = async (req, res) => {
+  console.log("VERIFY TOKEN CONTROLLER")
   const idToken = req.headers.authorization?.split(' ')[1];
 
   if (!idToken) {

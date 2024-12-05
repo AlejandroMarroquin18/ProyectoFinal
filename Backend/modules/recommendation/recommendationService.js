@@ -15,6 +15,7 @@ const model = require('../../config/geminiConfig');
  * @returns {Promise<string>} Respuesta generada por el modelo, con una recomendación clara y profesional.
  */
 const generateRecommendation = async (maxBudget, category, preferredBrand) => {
+  console.log("GENERATE RECOMMENDATION")
   const prompt = `
   Toma el rol de un experto en computadores. Tu objetivo es ayudar a los usuarios a encontrar un PC adecuado según las siguientes especificaciones:
 

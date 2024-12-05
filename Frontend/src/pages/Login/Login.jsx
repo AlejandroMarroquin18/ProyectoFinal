@@ -7,47 +7,8 @@
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../../../config/firebaseConfigF";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import LoginUI from "./LoginUI";  // Componente para la interfaz gráfica
-import request from "../../services/api";
-
-/**
- * Función para realizar el inicio de sesión del usuario utilizando Firebase Authentication.
- * @param {string} email - El correo electrónico del usuario.
- * @param {string} password - La contraseña del usuario.
- * @returns {string|null} - Devuelve el token de identificación (idToken) si el inicio de sesión es exitoso, 
- *                          o null en caso de error.
- */
-async function loginUser(email, password) {
-  try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-    const idToken = await user.getIdToken();
-    return idToken;
-  } catch (error) {
-    console.error('Error de login:', error.message);
-  }
-}
-
-/**
- * Función para enviar el token de autenticación al backend para validarlo.
- * @param {string} idToken - El token de identificación del usuario, obtenido desde Firebase.
- */
-async function sendTokenToBackend(idToken) {
-  try {
-
-    const response = await request("/auth/validate-user", "POST", null, idToken)
-    const data = await response.json();
-    if (response.ok) {
-      console.log('Token validado correctamente en el backend:', data);
-    } else {
-      console.error('Error en la validación del backend:', data.message);
-    }
-  } catch (error) {
-    console.error('Error al enviar el token al backend:', error.message);
-  }
-}
+import LoginUI from "./LoginUI"; 
+import loginFunctions from "./LoginFunctions";
 
 /**
  * Componente funcional Login
@@ -63,13 +24,25 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const idToken = await loginUser(email, password);
+    
+    const idToken = await loginFunctions.handleEmailLogin(email, password);
+    //const idToken = await loginFunctions.handleGoogleLogin();
+    //const idToken = await loginFunctions.handleFacebookLogin();
     
     if (idToken) {
-      sendTokenToBackend(idToken);
+      loginFunctions.sendTokenToBackend(idToken);
       navigate("/home");
     }
     setError("");
+  };
+
+  const handlePassword = async (e) => {
+    try {
+      await loginFunctions.handlePasswordRecovery(email);
+    } catch (error) {
+      console.error('Error en recuperación de contraseña:', error.message);
+      setError('No se pudo enviar el correo de recuperación');
+    }
   };
 
   return (
@@ -80,6 +53,7 @@ function Login() {
       setEmail={setEmail}
       setPassword={setPassword}
       handleSubmit={handleSubmit}
+      handlePassword={handlePassword}
       navigate={navigate}
     />
   );

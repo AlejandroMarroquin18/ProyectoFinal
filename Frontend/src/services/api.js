@@ -5,6 +5,7 @@
  * La función centraliza la lógica de manejo de peticiones y se utiliza en el frontend para interactuar con el backend de la aplicación.
  */
 
+//const API_URL = "http://localhost:3000"
 const API_URL = "https://smartsetup-b69u.onrender.com";
 
 /**
