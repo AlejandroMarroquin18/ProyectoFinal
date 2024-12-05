@@ -33,7 +33,7 @@ function Busqueda({ setResultados }) {
     };
 
     try {
-      console.log("busqueda")
+    
       const response = await request("/recommendation/recommend-pc", "POST", requestBody, null)
  
       const data = await response.json();

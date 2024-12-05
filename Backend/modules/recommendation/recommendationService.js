@@ -25,7 +25,7 @@ const generateRecommendation = async (maxBudget, category, preferredBrand) => {
   Proporciona una recomendación específica basada en estas necesidades. Responde de manera clara y profesional de máximo 100 palabras. Si el usuario solicita algo que no esté relacionado con computadoras, responde: "No tengo respuesta a tu petición". Usa un lenguaje amigable.
   `;
 
-  console.log('Prompt enviado:', prompt);
+  //console.log('Prompt enviado:', prompt);
 
   try {
     const result = await model.generateContent(prompt);

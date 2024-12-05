@@ -17,7 +17,7 @@ const API_URL = "http://localhost:3000";
  * @returns {Promise<object>} - La respuesta del servidor en formato JSON.
  */
 const request = async (endpoint, method, body = null, token = null) => {
-  console.log("INGRESO REQUEST");
+  
   const headers = { "Content-Type": "application/json", };
   if (token) { headers["Authorization"] = `Bearer ${token}`; }
 
