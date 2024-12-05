@@ -1,17 +1,10 @@
-/**
- * @file Busqueda.jsx
- * @description Componente para gestionar la búsqueda de productos según criterios definidos por el usuario, como presupuesto, categoría y marca preferida.
- * Permite a los usuarios establecer sus preferencias y obtener recomendaciones desde el backend.
- */
-
 import React, { useState } from "react";
 import { inputStyle, buttonStyle } from "./styles";
-import request from "../../services/api";
 
 /**
  * Componente funcional Busqueda
- * @description Este componente permite al usuario definir criterios de búsqueda (presupuesto máximo, categoría y marca preferida) 
- * para recibir recomendaciones de productos. Los datos son enviados al backend a través de una solicitud POST.
+ * @description Este componente permite al usuario definir criterios de búsqueda (presupuesto máximo, categoría y marca preferida)
+ * para recibir recomendaciones de productos.
  * @param {Function} setResultados - Función para actualizar los resultados mostrados, generalmente en el componente padre.
  * @returns {JSX.Element} - El JSX que representa el formulario de búsqueda con los campos de entrada para presupuesto, categoría y marca preferida.
  */
@@ -26,28 +19,40 @@ function Busqueda({ setResultados }) {
       return;
     }
 
-    const requestBody = {
-      maxBudget: Number(maxBudget),
-      category,
-      preferredBrand,
-    };
+    // Simulación de productos (debería ser reemplazada por la conexión al backend)
+    const productosSimulados = [
+      {
+        nombre: "Laptop HP 15",
+        precio: 350,
+        enlaceCompra: "https://www.tienda.com/laptop-hp-15",
+        imagen: "https://via.placeholder.com/100",
+        tienda: "Tienda A",
+      },
+      {
+        nombre: "Smartphone Samsung Galaxy S22",
+        precio: 750,
+        enlaceCompra: "https://www.tienda.com/samsung-galaxy-s22",  
+        imagen: "https://via.placeholder.com/100",
+        tienda: "Tienda B",
+      },
+      {
+        nombre: "Monitor Dell 24",
+        precio: 200,
+        enlaceCompra: "https://www.tienda.com/dell-monitor-24",
+        imagen: "https://via.placeholder.com/100",
+        tienda: "Tienda C",
+      },
+    ];
 
-    try {
-    
-      const response = await request("/recommendation/recommend-pc", "POST", requestBody, null)
- 
-      const data = await response.json();
-      setResultados(data.message);
-    } catch (error) {
-      console.error("Error:", error);
-      setResultados("Hubo un problema al procesar la solicitud.");
-    }
+    setResultados(productosSimulados);
   };
 
   return (
     <div className="busqueda">
       <h2>Criterios de búsqueda</h2>
-      <p style={{ marginBottom: "10px" }}>Define tus preferencias para encontrar la mejor opción</p>
+      <p style={{ marginBottom: "10px" }}>
+        Define tus preferencias para encontrar la mejor opción
+      </p>
       <input
         type="number"
         placeholder="Presupuesto máximo"
@@ -65,13 +70,18 @@ function Busqueda({ setResultados }) {
         <option value="" disabled>
           Selecciona una categoría
         </option>
-        <option value="computadoras">Computadoras y laptops</option>
-        <option value="smartphones">Smartphones</option>
-        <option value="tablets">Tablets</option>
-        <option value="monitores">Monitores</option>
-        <option value="accesorios">Accesorios</option>
-        <option value="componentes">Componentes de PC</option>
-        <option value="gadgets">Gadgets</option>
+        <option value="computadoras">Computadoras y laptops</option>{" "}
+        <option value="smartphones">Smartphones</option>{" "}
+        <option value="tablets">Tablets</option>{" "}
+        <option value="monitores">Monitores</option>{" "}
+        <option value="accesorios">Accesorios</option>{" "}
+        <option value="ram">Memoria RAM</option>{" "}
+        <option value="cpu">Procesador</option>{" "}
+        <option value="gpu">Tarjeta Gráfica</option>{" "}
+        <option value="psu">Fuente de poder</option>{" "}
+        <option value="gabinete">Gabinete</option>{" "}
+        <option value="board">Placa Base</option>{" "}
+        <option value="gadgets">Gadgets</option>{" "}
         <option value="redes">Redes</option>
       </select>
       <input
