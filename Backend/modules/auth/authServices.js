@@ -15,7 +15,7 @@ const { auth } = require('../../config/firebaseConfig');
  * @param {string} password - La contraseña del usuario.
  * @returns {Object} - Información del usuario creado.
  */
-async function createUser (displayName, email, password) {
+const createUser = async (displayName, email, password) => {
   try {
     const userRecord = await auth.createUser({
       email: email,
@@ -38,7 +38,7 @@ async function createUser (displayName, email, password) {
  * @param {string} idToken - El token de ID de Firebase a verificar.
  * @returns {Object} - El token decodificado con la información del usuario.
  */
-async function verifyToken(idToken) {
+const verifyToken = async (idToken) => {
   try {
     const decodedToken = await auth.verifyIdToken(idToken);
     return decodedToken;  // Si el token es válido, retorna los datos decodificados
