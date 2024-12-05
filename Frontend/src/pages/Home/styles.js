@@ -43,3 +43,56 @@ export const inputStyle = {
   borderRadius: "4px",         /* Bordes redondeados */
   border: "1px solid #ccc",    /* Borde gris claro */
 };
+
+/**
+ * Estilo para las tarjetas de productos.
+ * Contiene la imagen del producto, nombre, precio y tienda.
+ */
+export const productCardStyle = {
+  padding: "1rem",               /* Relleno interno de la tarjeta */
+  borderRadius: "8px",           /* Bordes redondeados */
+  backgroundColor: "#FFFFFFFF",  /* Fondo gris claro */
+  marginBottom: "1.5rem",        /* Espacio debajo de la tarjeta */
+  border: "1px solid #007bff",   /* Borde de color azul */
+  display: "flex",               /* Usamos flex para organizar los elementos */
+  flexDirection: "row",          /* Dirección horizontal (imagen y texto en fila) */
+  justifyContent: "flex-start",  /* Alinear los elementos al inicio */
+  alignItems: "center",          /* Centrar los elementos verticalmente */
+  width: "auto",                 /* Ancho automático para la tarjeta */
+  textAlign: "left",             /* Alineación del texto a la izquierda */
+  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", /* Sombra sutil para profundidad */
+};
+
+/**
+ * Estilo para la imagen del producto.
+ * Limita el tamaño de la imagen para que se vea bien dentro de la tarjeta.
+ */
+export const productImageStyle = {
+  width: "40%",                 /* Ocupa el 40% del ancho de la tarjeta */
+  height: "150px",              /* Altura fija para la imagen */
+  objectFit: "cover",           /* Recorta la imagen para ajustarla sin distorsionar */
+  borderRadius: "8px",          /* Bordes redondeados */
+  marginRight: "1rem",          /* Espacio a la derecha de la imagen */
+};
+
+/**
+ * Estilo para la información del producto (nombre, precio, tienda).
+ */
+export const productInfoStyle = {
+  margin: "0.5rem 0",            /* Espacio entre los elementos */
+  fontSize: "1rem",              /* Tamaño de fuente estándar */
+  color: "#333",                 /* Color de texto oscuro */
+};
+
+/**
+ * Estilo para el enlace de compra.
+ * Se asegura de que el enlace se vea como un botón.
+ */
+export const productLinkStyle = {
+  marginTop: "1rem",             /* Espacio en la parte superior */
+  color: "#007bff",              /* Color azul para el enlace */
+  textDecoration: "none",        /* Sin subrayado */
+  fontWeight: "bold",            /* Hacer el texto en negrita */
+  cursor: "pointer",            /* Cambiar el cursor a puntero */
+  fontSize: "1.1rem",            /* Aumentar un poco el tamaño de la fuente */
+};
