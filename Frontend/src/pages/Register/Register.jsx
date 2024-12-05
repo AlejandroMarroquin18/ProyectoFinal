@@ -54,7 +54,7 @@ function Register() {
 
     try {
       const response = request("/auth/create-user", "POST", requestBody, null)
-      
+      console.log(response)
     } catch (error) {
       console.error("Error:", error.message);
     }

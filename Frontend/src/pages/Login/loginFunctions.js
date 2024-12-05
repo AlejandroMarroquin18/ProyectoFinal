@@ -8,7 +8,7 @@
 
 import { auth } from "../../../config/firebaseConfigF";
 import { GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth"; 
+import { signInWithEmailAndPassword, signInWithPopup, sendPasswordResetEmail } from "firebase/auth"; 
 import request from "../../services/api";
 
 /**
@@ -65,6 +65,23 @@ async function handleFacebookLogin() {
 
 
 /**
+ * Función para enviar un correo de recuperación de cuenta.
+ * @param {string} email - El correo electrónico del usuario.
+ * @returns {Promise<void>} - Devuelve una promesa que se resuelve cuando el correo de recuperación se ha enviado correctamente.
+ */
+async function handlePasswordRecovery(email) {
+  try {
+    await sendPasswordResetEmail(auth, email);
+    console.log('Correo de recuperación enviado correctamente a:', email);
+    alert('Te hemos enviado un correo para restablecer tu contraseña');
+  } catch (error) {
+    console.error('Error al enviar el correo de recuperación:', error.message);
+    alert('Hubo un error al enviar el correo. Por favor, verifica el correo ingresado y vuelve a intentarlo.');
+  }
+}
+
+
+/**
  * Función para enviar el token de autenticación al backend para validarlo.
  * @param {string} idToken - El token de identificación del usuario, obtenido desde Firebase.
  */
@@ -82,4 +99,5 @@ async function sendTokenToBackend(idToken) {
   }
 }
 
-export default { handleEmailLogin, handleGoogleLogin, handleFacebookLogin, sendTokenToBackend};
+
+export default { handleEmailLogin, handleGoogleLogin, handleFacebookLogin, handlePasswordRecovery, sendTokenToBackend};

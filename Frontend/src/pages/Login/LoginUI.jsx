@@ -20,7 +20,7 @@ import styles from "./Login.module.css";  // Estilos específicos de Login
  * @param {function} props.navigate - Función de navegación de react-router-dom.
  * @returns {JSX.Element} Interfaz de usuario para el inicio de sesión.
  */
-function LoginUI({ email, password, error, setEmail, setPassword, handleSubmit, navigate }) {
+function LoginUI({ email, password, error, setEmail, setPassword, handleSubmit, handlePassword, navigate }) {
   return (
     <div className={styles.container}>
       <img src={Icono} alt="Asistente Virtual Icono" className={styles.icon} />
@@ -64,6 +64,7 @@ function LoginUI({ email, password, error, setEmail, setPassword, handleSubmit, 
         <button
           type="button"
           className={styles.forgotPasswordButton}
+          onClick={() => handlePassword(email)}
         >
           ¿Olvidaste tu contraseña?
         </button>

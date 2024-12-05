@@ -28,12 +28,21 @@ function Login() {
     const idToken = await loginFunctions.handleEmailLogin(email, password);
     //const idToken = await loginFunctions.handleGoogleLogin();
     //const idToken = await loginFunctions.handleFacebookLogin();
-
+    
     if (idToken) {
       loginFunctions.sendTokenToBackend(idToken);
       navigate("/home");
     }
     setError("");
+  };
+
+  const handlePassword = async (e) => {
+    try {
+      await loginFunctions.handlePasswordRecovery(email);
+    } catch (error) {
+      console.error('Error en recuperación de contraseña:', error.message);
+      setError('No se pudo enviar el correo de recuperación');
+    }
   };
 
   return (
@@ -44,6 +53,7 @@ function Login() {
       setEmail={setEmail}
       setPassword={setPassword}
       handleSubmit={handleSubmit}
+      handlePassword={handlePassword}
       navigate={navigate}
     />
   );
