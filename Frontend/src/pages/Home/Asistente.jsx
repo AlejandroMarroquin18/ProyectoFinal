@@ -1,25 +1,53 @@
-/**
- * @file Asistente.jsx
- * @description Componente de asistente virtual para interactuar con los usuarios, permitiéndoles enviar mensajes y recibir respuestas automáticas.
- * La conversación se maneja mediante un flujo de mensajes entre el usuario y el asistente (bot), mostrando los mensajes en una interfaz de chat.
- */
-
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { inputStyle, buttonStyle } from "./styles";
+import { FaMicrophone, FaStop } from "react-icons/fa"; 
 
 /**
  * Componente funcional Asistente
- * @description Este componente permite a los usuarios interactuar con un asistente virtual a través de un chat. Los usuarios pueden escribir un mensaje y el asistente responderá con un mensaje automatizado. 
+ * @description Este componente permite a los usuarios interactuar con un asistente virtual a través de un chat. Los usuarios pueden escribir un mensaje, enviar mensajes de audio y el asistente responderá con un mensaje automatizado. 
  * El estado del chat se maneja con el hook `useState`, y la respuesta del bot se simula con un retardo utilizando `setTimeout`.
- * @returns {JSX.Element} - El JSX que representa el chat entre el usuario y el asistente virtual, incluyendo los campos de entrada y el botón para enviar los mensajes.
+ * @returns {JSX.Element} - El JSX que representa el chat entre el usuario y el asistente virtual, incluyendo los campos de entrada, los botones de "Enviar" y "Grabar Audio".
  */
 function Asistente() {
   const [messages, setMessages] = useState([
     { sender: "bot", message: "¡Hola! Soy tu asistente virtual. ¿En qué puedo ayudarte hoy?" },
   ]);
-
+  
   const [input, setInput] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
+  const [audioUrl, setAudioUrl] = useState(null);
+
+  const mediaRecorderRef = useRef(null);
+  const audioChunksRef = useRef([]);
+
+  /**
+   * Efecto que maneja la grabación de audio. Al iniciar la grabación, solicita permiso para acceder al micrófono del usuario.
+   * Si la grabación está activa, comienza a grabar y almacena los fragmentos de audio.
+   * Cuando la grabación se detiene, se genera un archivo de audio que puede ser reproducido.
+   */
+  useEffect(() => {
+    if (isRecording) {
+      navigator.mediaDevices
+        .getUserMedia({ audio: true })
+        .then((stream) => {
+          mediaRecorderRef.current = new MediaRecorder(stream);
+          mediaRecorderRef.current.ondataavailable = (event) => {
+            audioChunksRef.current.push(event.data);
+          };
+          mediaRecorderRef.current.onstop = () => {
+            const audioBlob = new Blob(audioChunksRef.current, { type: "audio/wav" });
+            const audioUrl = URL.createObjectURL(audioBlob);
+            setAudioUrl(audioUrl);
+            audioChunksRef.current = [];
+          };
+          mediaRecorderRef.current.start();
+        })
+        .catch((error) => console.error("Error al acceder al micrófono:", error));
+    } else if (mediaRecorderRef.current) {
+      mediaRecorderRef.current.stop();
+    }
+  }, [isRecording]);
 
   /**
    * Función que maneja el envío del mensaje del usuario y la respuesta del asistente.
@@ -29,11 +57,12 @@ function Asistente() {
    * Luego, se simula que el asistente está procesando la solicitud y después de un retardo, se envía la respuesta del asistente.
    */
   const handleSendMessage = async () => {
-    if (!input.trim()) return;  // Evita el envío de mensajes vacíos
-    const userMessage = { sender: "user", message: input };
-    setMessages((prevMessages) => [...prevMessages, userMessage]);  // Agregar mensaje del usuario
-    setInput("");  // Limpiar el campo de entrada
-    setIsProcessing(true);  // Establecer estado de procesamiento
+    if (!input.trim() && !audioUrl) return;  
+    const userMessage = { sender: "user", message: input, audioUrl };
+    setMessages((prevMessages) => [...prevMessages, userMessage]);  
+    setInput("");  
+    setAudioUrl(null); 
+    setIsProcessing(true);  
 
     // Simular la respuesta del bot
     setMessages((prevMessages) => [
@@ -42,14 +71,33 @@ function Asistente() {
     ]);
     setTimeout(() => {
       const botResponse = "¡Aquí está la información que buscas! ¿Necesitas algo más?";
-
-      // Actualizar el historial con la respuesta del bot
       setMessages((prevMessages) => [
-        ...prevMessages.slice(0, -1),  // Eliminar mensaje de procesamiento
+        ...prevMessages.slice(0, -1),  
         { sender: "bot", message: botResponse },
       ]);
-      setIsProcessing(false);  // Terminar el estado de procesamiento
+      setIsProcessing(false);  
     }, 2000);
+  };
+
+  /**
+   * Función para manejar la tecla "Enter" al escribir en el campo de texto.
+   * @function handleKeyPress
+   * @description Permite enviar el mensaje cuando el usuario presiona la tecla "Enter".
+   * @param {Event} e - El evento de teclado.
+   */
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSendMessage();
+    }
+  };
+
+  /**
+   * Función que maneja la acción de grabar o detener la grabación de audio.
+   * @function handleRecordClick
+   * @description Activa o desactiva la grabación del audio en función del estado actual de grabación.
+   */
+  const handleRecordClick = () => {
+    setIsRecording((prev) => !prev);
   };
 
   return (
@@ -66,21 +114,41 @@ function Asistente() {
               }}
             >
               {msg.message}
+              {msg.audioUrl && (
+                <audio controls>
+                  <source src={msg.audioUrl} type="audio/wav" />
+                  Tu navegador no soporta la etiqueta de audio.
+                </audio>
+              )}
             </p>
           </div>
         ))}
       </div>
-      {/* Contenedor para el cuadro de texto y el botón de enviar */}
+
       <div style={{ display: "flex", gap: "1rem" }}>
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyPress}
           style={{ padding: "1rem", borderRadius: "5px", width: "100%" }}
           placeholder="Escribe tu mensaje..."
         />
+        
         <button onClick={handleSendMessage} style={{ ...buttonStyle, width: "auto" }}>
           Enviar
+        </button>
+        
+        <button
+          onClick={handleRecordClick}
+          style={{
+            ...buttonStyle,
+            width: "auto",
+            backgroundColor: isRecording ? "red" : "#007bff",
+            color: "white",
+          }}
+        >
+          {isRecording ? <FaStop /> : <FaMicrophone />}
         </button>
       </div>
     </div>
