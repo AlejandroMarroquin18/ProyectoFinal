@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 3000;
 
 // Cors
 app.use(cors({
-    origin: "https://test-smartsetup.vercel.app/",
+    origin: "https://test-smartsetup-yxor.vercel.app/",
     methods: ["GET", "POST", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
 }));
