@@ -19,7 +19,7 @@ const PORT = 3000;
 
 // Cors
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: "https://test-smartsetup.vercel.app/",
     methods: ["GET", "POST", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
 }));
