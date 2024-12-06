@@ -96,3 +96,31 @@ export const productLinkStyle = {
   cursor: "pointer",            /* Cambiar el cursor a puntero */
   fontSize: "1.1rem",            /* Aumentar un poco el tamaño de la fuente */
 };
+export const productTableStyle = {
+  width: "100%",
+  borderCollapse: "collapse",
+  marginTop: "1rem",
+};
+
+export const tableHeaderStyle = {
+  backgroundColor: "#f2f2f2",
+};
+
+export const tableRowStyle = {
+  borderBottom: "1px solid #ddd",
+};
+
+export const tableCellStyle = {
+  padding: "8px",
+  textAlign: "left",
+};
+
+export const deleteButtonStyle = {
+  backgroundColor: "red",
+  color: "white",
+  border: "none",
+  padding: "5px 10px",
+  cursor: "pointer",
+  borderRadius: "5px",
+  fontSize: "14px",
+};
