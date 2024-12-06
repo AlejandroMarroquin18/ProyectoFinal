@@ -6,6 +6,8 @@ import { signOut } from "firebase/auth";
 import Asistente from "./Asistente";
 import Busqueda from "./Busqueda";
 import Historial from "./Historial";
+import Comparacion from "./Comparacion"; // Importa el componente de comparación
+import { FaCheckCircle } from "react-icons/fa"; // Ícono de check de react-icons
 import {
   buttonStyle,
   cardStyle,
@@ -18,18 +20,71 @@ import {
 /**
  * Componente funcional Home
  * @description Este componente es la página de inicio del asistente virtual, donde los usuarios pueden buscar productos, 
- * ver su historial de búsquedas previas o cerrar sesión. Se gestionan dos vistas: Búsqueda y Historial.
+ * ver su historial de búsquedas previas o comparar productos. Se gestionan tres vistas: Búsqueda, Historial y Comparación.
  * @returns {JSX.Element} - El JSX que representa el interfaz de usuario del Home, incluyendo los botones para alternar entre 
- * la búsqueda y el historial, los resultados de la búsqueda, y la opción para cerrar sesión.
+ * la búsqueda, historial y comparación, los resultados de la búsqueda, y la opción para cerrar sesión.
  */
 function Home() {
-  const [showBusqueda, setShowBusqueda] = useState(true);
+  const [showBusqueda, setShowBusqueda] = useState(true); // Estado para mostrar la vista de búsqueda
+  const [showComparacion, setShowComparacion] = useState(false); // Estado para mostrar la vista de comparación
+  const [showHistorial, setShowHistorial] = useState(false); // Estado para mostrar la vista de historial
   const [resultados, setResultados] = useState([]);
+  const [productosSeleccionados, setProductosSeleccionados] = useState([]); // Para los productos seleccionados en comparación
+  const [productosAñadidos, setProductosAñadidos] = useState([]); // Estado para productos añadidos
   const navigate = useNavigate();
 
   const CerrarSesion = async () => {
     await signOut(auth);
     navigate("/");
+  };
+
+  // Función para alternar entre vistas
+  const mostrarBusqueda = () => {
+    setShowBusqueda(true);
+    setShowComparacion(false);
+    setShowHistorial(false);
+  };
+
+  const mostrarComparacion = () => {
+    setShowBusqueda(false);
+    setShowComparacion(true);
+    setShowHistorial(false);
+  };
+
+  const mostrarHistorial = () => {
+    setShowBusqueda(false);
+    setShowComparacion(false);
+    setShowHistorial(true);
+  };
+
+  /**
+   * Redirige a la página de producto.
+   * @param {string} enlace - El enlace del producto al que redirigir.
+   */
+  const verProducto = (enlace) => {
+    window.open(enlace, "_blank");
+  };
+
+  /**
+   * Agrega un producto a la lista de productos seleccionados para comparación.
+   * @param {Object} producto - El producto a agregar.
+   */
+  const agregarAComparacion = (producto) => {
+    // Verifica si el producto ya está en la lista de comparación para evitar duplicados
+    setProductosSeleccionados((prevProductos) => {
+      if (!prevProductos.some((p) => p.id === producto.id)) {
+        return [...prevProductos, producto];
+      }
+      return prevProductos;
+    });
+
+    // Agrega a los productos añadidos para visualización
+    setProductosAñadidos((prevProductos) => {
+      if (!prevProductos.some((p) => p.id === producto.id)) {
+        return [...prevProductos, producto];
+      }
+      return prevProductos;
+    });
   };
 
   return (
@@ -71,10 +126,13 @@ function Home() {
 
       <div style={cardStyle}>
         <div style={{ display: "flex", justifyContent: "center", gap: "2rem" }}>
-          <button onClick={() => setShowBusqueda(true)} style={buttonStyle}>
+          <button onClick={mostrarBusqueda} style={buttonStyle}>
             Búsqueda
           </button>
-          <button onClick={() => setShowBusqueda(false)} style={buttonStyle}>
+          <button onClick={mostrarComparacion} style={buttonStyle}>
+            Comparación
+          </button>
+          <button onClick={mostrarHistorial} style={buttonStyle}>
             Historial
           </button>
         </div>
@@ -101,16 +159,16 @@ function Home() {
                   display: "flex",
                   flexDirection: "column",
                   gap: "1rem",
+                  overflowY: "auto", 
+                  maxHeight: "500px", 
                 }}
               >
                 {resultados.length > 0 ? (
                   resultados.map((producto, index) => (
-                    <a
+                    <div
                       key={index}
-                      href={producto.enlaceCompra}
-                      target="_blank"
-                      rel="noopener noreferrer"
                       style={productCardStyle}
+                      onClick={() => agregarAComparacion(producto)} 
                     >
                       <img
                         src={producto.imagen}
@@ -125,9 +183,20 @@ function Home() {
                         <p>
                           <strong>Tienda:</strong> {producto.tienda}
                         </p>
-                        <p style={productLinkStyle}>Ver producto</p>
+                        <span
+                          onClick={() => verProducto(producto.enlaceCompra)}
+                          style={productLinkStyle}
+                        >
+                          Ver producto
+                        </span>
+                        {/* Mostrar el ícono de confirmación si el producto está añadido */}
+                        {productosAñadidos.some((p) => p.id === producto.id) && (
+                          <FaCheckCircle
+                            style={{ color: "green", marginLeft: "10px", fontSize: "1.2rem" }}
+                          />
+                        )}
                       </div>
-                    </a>
+                    </div>
                   ))
                 ) : (
                   <p>No se han encontrado productos.</p>
@@ -138,17 +207,22 @@ function Home() {
         </div>
       )}
 
-      {showBusqueda && (
+      {showComparacion && (
         <div style={cardStyle}>
-          <p>Espacio reservado para la IA</p>
-          <h2>Asistente Virtual</h2>
-          <Asistente />
+          <Comparacion productosSeleccionados={productosSeleccionados} />
         </div>
       )}
 
-      {!showBusqueda && (
+      {showHistorial && (
         <div style={cardStyle}>
           <Historial />
+        </div>
+      )}
+
+      {showBusqueda && (
+        <div style={cardStyle}>
+          <h2>Asistente Virtual</h2>
+          <Asistente />
         </div>
       )}
     </div>
