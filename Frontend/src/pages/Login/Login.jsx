@@ -21,19 +21,64 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
 
+  // Función para mostrar errores como pop-ups
+  const displayError = (message) => {
+    setError(message);
+    setShowPopup(true);
+    setTimeout(() => setShowPopup(false), 3000); // El pop-up desaparece tras 3 segundos
+  };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    const idToken = await loginFunctions.handleEmailLogin(email, password);
-    //const idToken = await loginFunctions.handleGoogleLogin();
-    //const idToken = await loginFunctions.handleFacebookLogin();
-    
-    if (idToken) {
-      loginFunctions.sendTokenToBackend(idToken);
-      navigate("/home");
+    setLoading(true);
+
+    try {
+      const idToken = await loginFunctions.handleEmailLogin(email, password);
+      if (idToken) {
+        loginFunctions.sendTokenToBackend(idToken);
+        navigate("/home");
+      } else {
+        displayError("Credenciales incorrectas. Por favor, intenta de nuevo.");
+      }
+    } catch (err) {
+      displayError("Ocurrió un error al iniciar sesión.");
     }
-    setError("");
+    setLoading(false);
+  };
+
+  const handleGoogleLogin = async () => {
+    setLoading(true);
+    try {
+      const idToken = await loginFunctions.handleGoogleLogin();
+      if (idToken) {
+        loginFunctions.sendTokenToBackend(idToken);
+        navigate("/home");
+      } else {
+        displayError("No se pudo iniciar sesión con Google.");
+      }
+    } catch (err) {
+      displayError("Error al iniciar sesión con Google.");
+    }
+    setLoading(false);
+  };
+
+  const handleFacebookLogin = async () => {
+    setLoading(true);
+    try {
+      const idToken = await loginFunctions.handleFacebookLogin();
+      if (idToken) {
+        loginFunctions.sendTokenToBackend(idToken);
+        navigate("/home");
+      } else {
+        displayError("No se pudo iniciar sesión con Facebook.");
+      }
+    } catch (err) {
+      displayError("Error al iniciar sesión con Facebook.");
+    }
+    setLoading(false);
   };
 
   const handlePassword = async (e) => {
@@ -42,6 +87,7 @@ function Login() {
     } catch (error) {
       console.error('Error en recuperación de contraseña:', error.message);
       setError('No se pudo enviar el correo de recuperación');
+      displayError("No se pudo enviar el correo de recuperación.");
     }
   };
 
@@ -50,9 +96,13 @@ function Login() {
       email={email}
       password={password}
       error={error}
+      showPopup={showPopup}
+      loading={loading}
       setEmail={setEmail}
       setPassword={setPassword}
       handleSubmit={handleSubmit}
+      handleGoogleLogin={handleGoogleLogin}
+      handleFacebookLogin={handleFacebookLogin}
       handlePassword={handlePassword}
       navigate={navigate}
     />
