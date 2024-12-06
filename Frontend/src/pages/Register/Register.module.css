@@ -81,3 +81,13 @@
   cursor: pointer;                /* Muestra un cursor de tipo puntero */
   width: 100%;                    /* Ancho completo del botón */
 }
+
+.success {
+  color: green;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+}
+
+.inputError {
+  border: 2px solid red;
+}
