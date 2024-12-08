@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { inputStyle, buttonStyle } from "./styles";
+import { Player } from "@lottiefiles/react-lottie-player";
+import LoadingAnimation from "../../assets/animations/loading.json";
 
 /**
  * Componente funcional Busqueda
@@ -163,6 +165,31 @@ function Busqueda({ setResultados }) {
       >
         {loading ? "Buscando..." : "Buscar"}
       </button>
+
+      {/* Mostrar animación de carga cuando loading esté activo */}
+      {loading && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 1000,
+          }}
+        >
+          <Player
+            autoplay
+            loop
+            src={LoadingAnimation}
+            style={{ height: "150px", width: "150px" }}
+          />
+        </div>
+      )}
 
       {resultados.length > 0 && !loading && (
         <div style={{ marginTop: "20px" }}>
