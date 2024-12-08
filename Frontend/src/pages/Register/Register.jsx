@@ -26,6 +26,8 @@ function Register() {
 
   const [error, setError] = useState("");
 
+  const [successMessage, setSuccessMessage] = useState("");
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -34,8 +36,11 @@ function Register() {
     }));
   };
 
+  const [fieldErrors, setFieldErrors] = useState({});
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const errors = {};
 
     // Verificar si las contraseñas coinciden
     if (formData.password !== formData.confirmPassword) {
@@ -43,8 +48,28 @@ function Register() {
       return;
     }
 
+    if (!formData.fullName.trim()) {
+      setError("El nombre completo es obligatorio.");
+      return;
+    }
+    
+    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      setError("El correo electrónico no es válido.");
+      return;
+    }
+    
+    if (formData.password.length < 8) {
+      setError("La contraseña debe tener al menos 8 caracteres.");
+      return;
+    }
+
+    setFieldErrors(errors);
+
+
+    if (Object.keys(errors).length > 0) return;
     // Limpiar el error si las contraseñas coinciden
     setError("");
+    setFieldErrors({});
 
     const requestBody = {
       displayName: formData.fullName,
@@ -53,17 +78,28 @@ function Register() {
     };
 
     try {
-      const response = request("/auth/create-user", "POST", requestBody, null)
-      console.log(response)
-    } catch (error) {
-      console.error("Error:", error.message);
+      const response = await request("/auth/create-user", "POST", requestBody, null)
+
+      if (response.ok) {
+      setSuccessMessage("Registro exitoso. Redirigiendo al inicio de sesión...");
+      setTimeout(() => {
+        navigate("/"); // Redirige al login tras 3 segundos
+      }, 3000);
+    } else {
+      const data = await response.json();
+      setError(data.message || "Ocurrió un error durante el registro.");
     }
-  };
+  } catch (error) {
+    setError("Error de red: " + error.message);
+  }
+};
 
   return (
     <RegisterUI
       formData={formData}
       error={error}
+      successMessage={successMessage}
+      fieldErrors={fieldErrors}
       handleChange={handleChange}
       handleSubmit={handleSubmit}
       navigate={navigate}
