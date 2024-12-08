@@ -170,23 +170,14 @@ function Busqueda({ setResultados }) {
       {loading && (
         <div
           style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            zIndex: 1000,
+            display: "flex", justifyContent: "center", alignItems: "center", width: "100%"
           }}
         >
           <Player
             autoplay
             loop
             src={LoadingAnimation}
-            style={{ height: "150px", width: "150px" }}
+            style={{ height: "auto", width: "50%", maxWidth: "300px" }}
           />
         </div>
       )}
