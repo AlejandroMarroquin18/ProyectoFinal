@@ -20,6 +20,7 @@ const router = express.Router()
  * @param {number} req.query.amount - Número de productos a obtener.
  * @param {Object} res - Objeto de respuesta de Express.
  * @returns {Object} Lista de productos obtenidos de las fuentes de scraping.
+ * @example GET /get-products?nameSearch=smartphone&amount=10
  */
 router.get('/get-products', scrapingController.getProductsController);
 
@@ -32,6 +33,7 @@ router.get('/get-products', scrapingController.getProductsController);
  * @param {string} req.query.nameSearch - Nombre o palabra clave del producto a buscar.
  * @param {Object} res - Objeto de respuesta de Express.
  * @returns {Object} Lista de filtros disponibles para el producto.
+ * @example GET /get-filters?nameSearch=smartphone
  */
 router.get('/get-filters', scrapingController.getFiltersController)
 

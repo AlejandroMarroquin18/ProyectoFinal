@@ -28,7 +28,7 @@ const scrapeProductAlkosto = async (nameSearch, amount) => {
     const page = await browser.newPage();
     await page.goto('https://www.alkosto.com', {waitUntil: 'domcontentloaded'});
     
-    await page.waitForSelector('#autocomplete-0-input');
+    await page.waitForSelector('#autocomplete-0-input', { timeout: 60000 });
     await page.type('#autocomplete-0-input', nameSearch);
 
     await page.keyboard.press('Enter');
