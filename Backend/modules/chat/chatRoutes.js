@@ -39,7 +39,7 @@ router.get('/get-chat', chatController.getChatController);
  * @param {Object} req - Objeto de solicitud de Express.
  * @param {Object} req.body - Contiene los datos enviados en la solicitud.
  * @param {string} req.body.chatName - Nombre del chat a actualizar.
- * @param {string|Object} req.body.message - Mensaje a agregar al chat.
+ * @param {string} req.body.message - Mensaje enviado por el usuario.
  * @param {Object} res - Objeto de respuesta de Express.
  */
 router.post('/update-chat', chatController.updateChatController);

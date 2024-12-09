@@ -14,16 +14,21 @@ const model = require('../../config/geminiConfig');
  * @param {string} [preferredBrand] - Marca preferida del usuario (opcional).
  * @returns {Promise<string>} Respuesta generada por el modelo, con una recomendación clara y profesional.
  */
-const generateRecommendation = async (maxBudget, category, preferredBrand) => {
+const generateRecommendation = async (message) => {
   console.log("GENERATE RECOMMENDATION")
   const prompt = `
   Toma el rol de un experto en computadores. Tu objetivo es ayudar a los usuarios a encontrar un PC adecuado según las siguientes especificaciones:
 
-  - Presupuesto máximo: ${maxBudget} USD.
-  - Categoría: ${category}.
-  - Marca preferida: ${preferredBrand || 'Sin preferencia'}.
+  - El presupuesto debe estar en COP (PESOS COLOMBIANOS). Ninguna otra moneda es aceptada.
+  - Responde de manera clara y profesional de máximo 100 palabras. 
+  - Si el usuario solicita algo que no esté relacionado con computadoras, responde: "No tengo respuesta a tu petición". ESTO ES MUY IMPORTANTE. 
+  - Usa un lenguaje amigable para el usuario.
 
-  Proporciona una recomendación específica basada en estas necesidades. Responde de manera clara y profesional de máximo 100 palabras. Si el usuario solicita algo que no esté relacionado con computadoras, responde: "No tengo respuesta a tu petición". Usa un lenguaje amigable.
+  La solicitud enviada por el usuario es la siguiente:
+
+  "${message}"
+
+  Proporciona una recomendación específica basada en estas necesidades TOMANDO EN CUENTA TODO LO DICHO ANTERIORMENTE. 
   `;
 
   //console.log('Prompt enviado:', prompt);

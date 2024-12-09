@@ -1,13 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { inputStyle, buttonStyle } from "./styles";
 import { FaMicrophone, FaStop } from "react-icons/fa"; 
+import axios from "axios"; 
 
-/**
- * Componente funcional Asistente
- * @description Este componente permite a los usuarios interactuar con un asistente virtual a través de un chat. Los usuarios pueden escribir un mensaje, enviar mensajes de audio y el asistente responderá con un mensaje automatizado. 
- * El estado del chat se maneja con el hook `useState`, y la respuesta del bot se simula con un retardo utilizando `setTimeout`.
- * @returns {JSX.Element} - El JSX que representa el chat entre el usuario y el asistente virtual, incluyendo los campos de entrada, los botones de "Enviar" y "Grabar Audio".
- */
 function Asistente() {
   const [messages, setMessages] = useState([
     { sender: "bot", message: "¡Hola! Soy tu asistente virtual. ¿En qué puedo ayudarte hoy?" },
@@ -21,11 +16,6 @@ function Asistente() {
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
 
-  /**
-   * Efecto que maneja la grabación de audio. Al iniciar la grabación, solicita permiso para acceder al micrófono del usuario.
-   * Si la grabación está activa, comienza a grabar y almacena los fragmentos de audio.
-   * Cuando la grabación se detiene, se genera un archivo de audio que puede ser reproducido.
-   */
   useEffect(() => {
     if (isRecording) {
       navigator.mediaDevices
@@ -49,53 +39,64 @@ function Asistente() {
     }
   }, [isRecording]);
 
-  /**
-   * Función que maneja el envío del mensaje del usuario y la respuesta del asistente.
-   * @async
-   * @function handleSendMessage
-   * @description Cuando el usuario escribe un mensaje y lo envía, el mensaje se agrega al historial de conversación.
-   * Luego, se simula que el asistente está procesando la solicitud y después de un retardo, se envía la respuesta del asistente.
-   */
   const handleSendMessage = async () => {
-    if (!input.trim() && !audioUrl) return;  
+    if (!input.trim() && !audioUrl) return;
+  
     const userMessage = { sender: "user", message: input, audioUrl };
-    setMessages((prevMessages) => [...prevMessages, userMessage]);  
-    setInput("");  
-    setAudioUrl(null); 
-    setIsProcessing(true);  
-
-    // Simular la respuesta del bot
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      { sender: "bot", message: "Estoy buscando la información..." }
-    ]);
-    setTimeout(() => {
-      const botResponse = "¡Aquí está la información que buscas! ¿Necesitas algo más?";
+  
+    setMessages((prevMessages) => [...prevMessages, userMessage]);
+    setInput("");
+    setAudioUrl(null);
+    setIsProcessing(true);
+  
+    try {
+      // Crear chat si es la primera vez que se envía un mensaje
+      const chatName = input.split(" ").slice(0, 5).join(" "); 
+      
+      // Verificar si el chat ya existe, si no, crear uno
+      const chatResponse = await axios.post("http://localhost:3000/chat/create-chat", { chatName });
+      console.log(chatResponse.data);
+  
+      // Enviar el mensaje al backend para actualizar el chat
+      const response = await axios.post("http://localhost:3000/chat/update-chat", {
+        chatName,
+        message: input,
+      });
+  
+      // Verificar el contenido de botResponse
+      const botResponse = response.data.botResponse ? response.data.botResponse.content : "No se pudo obtener la respuesta";
+  
+      if (response.data.success === true) {
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { sender: "bot", message: botResponse },
+        ]);
+      } else {
+        console.log("Se entra al bloque ELSE");
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { sender: "bot", message: "Hubo un problema procesando tu mensaje." },
+        ]);
+      }
+  
+      setIsProcessing(false);
+    } catch (error) {
+      console.error("Error al enviar el mensaje al backend:", error);
+      setIsProcessing(false);
       setMessages((prevMessages) => [
-        ...prevMessages.slice(0, -1),  
-        { sender: "bot", message: botResponse },
+        ...prevMessages,
+        { sender: "bot", message: "Hubo un error al procesar tu solicitud." },
       ]);
-      setIsProcessing(false);  
-    }, 2000);
+    }
   };
-
-  /**
-   * Función para manejar la tecla "Enter" al escribir en el campo de texto.
-   * @function handleKeyPress
-   * @description Permite enviar el mensaje cuando el usuario presiona la tecla "Enter".
-   * @param {Event} e - El evento de teclado.
-   */
+  
+  
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       handleSendMessage();
     }
   };
 
-  /**
-   * Función que maneja la acción de grabar o detener la grabación de audio.
-   * @function handleRecordClick
-   * @description Activa o desactiva la grabación del audio en función del estado actual de grabación.
-   */
   const handleRecordClick = () => {
     setIsRecording((prev) => !prev);
   };
