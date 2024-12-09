@@ -7,6 +7,7 @@ import {
   cardStyle,
   buttonStyle,
 } from "./styles";
+import { useTranslation } from "react-i18next";
 
 /**
  * Componente funcional Comparacion
@@ -17,6 +18,7 @@ import {
 function Comparacion({ productosSeleccionados }) {
   const [ordenarPor, setOrdenarPor] = useState("precio"); // Estado para el criterio de ordenación
   const [productosOrdenados, setProductosOrdenados] = useState([]);
+  const { t, i18n } = useTranslation();
 
   // Función para ordenar los productos
   const ordenarProductos = (criterio) => {
@@ -42,7 +44,7 @@ function Comparacion({ productosSeleccionados }) {
 
   return (
     <div>
-      <h2>Tabla Comparativa de Productos</h2>
+      <h2>{t("comparison.title")}</h2>
 
       <div style={cardStyle}>
         <div
@@ -51,20 +53,19 @@ function Comparacion({ productosSeleccionados }) {
             justifyContent: "center",
             gap: "1rem",
             marginBottom: "1rem",
-
           }}
         >
           <button onClick={() => setOrdenarPor("precio")} style={buttonStyle}>
-            Ordenar por Precio
+            {t("comparison.sort_by_price")}
           </button>
           <button
             onClick={() => setOrdenarPor("calificaciones")}
             style={buttonStyle}
           >
-            Ordenar por Calificación
+            {t("comparison.sort_by_rating")}
           </button>
           <button onClick={() => setOrdenarPor("envio")} style={buttonStyle}>
-            Ordenar por Tiempo de Envío
+            {t("comparison.sort_by_shipping_time")}
           </button>
         </div>
       </div>
@@ -73,10 +74,10 @@ function Comparacion({ productosSeleccionados }) {
         <table style={productTableStyle}>
           <thead>
             <tr style={tableHeaderStyle}>
-              <th style={tableCellStyle}>Nombre</th>
-              <th style={tableCellStyle}>Precio</th>
-              <th style={tableCellStyle}>Características</th>
-              <th style={tableCellStyle}>Tienda</th>
+              <th style={tableCellStyle}>{t("comparison.name")}</th>
+              <th style={tableCellStyle}>{t("comparison.price")}</th>
+              <th style={tableCellStyle}>{t("comparison.features")}</th>
+              <th style={tableCellStyle}>{t("comparison.store")}</th>
             </tr>
           </thead>
           <tbody>
@@ -92,7 +93,7 @@ function Comparacion({ productosSeleccionados }) {
             ) : (
               <tr>
                 <td colSpan="4" style={tableCellStyle}>
-                  No hay productos seleccionados.
+                  {t("comparison.no_products_selected")}{" "}
                 </td>
               </tr>
             )}

@@ -6,9 +6,9 @@
 
 import React from "react";
 import Icono from "../../assets/images/icon.png";
-import styles from "./Login.module.css";  // Estilos específicos de Login
-import PropTypes from 'prop-types';
-
+import styles from "./Login.module.css"; // Estilos específicos de Login
+import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 
 /**
  * Componente que renderiza la interfaz de inicio de sesión.
@@ -22,21 +22,53 @@ import PropTypes from 'prop-types';
  * @param {function} props.navigate - Función de navegación de react-router-dom.
  * @returns {JSX.Element} Interfaz de usuario para el inicio de sesión.
  */
-function LoginUI({ email, password, error, showPopup, loading, setEmail, setPassword, handleSubmit, handleGoogleLogin, handleFacebookLogin, handlePassword, navigate }) {
+function LoginUI({
+  email,
+  password,
+  error,
+  showPopup,
+  loading,
+  setEmail,
+  setPassword,
+  handleSubmit,
+  handleGoogleLogin,
+  handleFacebookLogin,
+  handlePassword,
+  navigate,
+}) {
+  const { t, i18n } = useTranslation();
+
+  const changeLanguage = (lang) => {
+    i18n.changeLanguage(lang); // Cambia el idioma dinámicamente
+  };
   return (
     <div className={styles.container}>
+      <div className={styles.languageButtons}>
+        <button
+          onClick={() => changeLanguage("es")}
+          className={styles.languageButton}
+        >
+          ES
+        </button>
+        <button
+          onClick={() => changeLanguage("en")}
+          className={styles.languageButton}
+        >
+          EN
+        </button>
+      </div>
       <img src={Icono} alt="Asistente Virtual Icono" className={styles.icon} />
-      
+
       {/* Card */}
       <div className={styles.card}>
-        <h1 className={styles.title}>Iniciar Sesión</h1>
+        <h1 className={styles.title}>{t("login.loginTitle")}</h1>
 
         {/* Formulario */}
         <form className="login-form" onSubmit={handleSubmit}>
           {/* Correo electrónico */}
           <input
             type="email"
-            placeholder="Correo electrónico"
+            placeholder={t("login.emailPlaceholder")}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className={styles.input}
@@ -46,7 +78,7 @@ function LoginUI({ email, password, error, showPopup, loading, setEmail, setPass
           {/* Contraseña */}
           <input
             type="password"
-            placeholder="Contraseña"
+            placeholder={t("login.passwordPlaceholder")}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className={styles.input}
@@ -54,7 +86,7 @@ function LoginUI({ email, password, error, showPopup, loading, setEmail, setPass
           />
 
           {/* Mensaje de error */}
-          {error && showPopup &&(
+          {error && showPopup && (
             <div className={styles.popup}>
               <p>{error}</p>
             </div>
@@ -62,7 +94,11 @@ function LoginUI({ email, password, error, showPopup, loading, setEmail, setPass
 
           {/* Botón Iniciar Sesión */}
           <button type="submit" className={styles.button} disabled={loading}>
-            {loading ? <div className={styles.spinner}></div> : "Iniciar Sesión"}
+            {loading ? (
+              <div className={styles.spinner}></div>
+            ) : (
+              t("login.loginButton")
+            )}
           </button>
         </form>
 
@@ -73,16 +109,24 @@ function LoginUI({ email, password, error, showPopup, loading, setEmail, setPass
           onClick={handleGoogleLogin}
           disabled={loading}
         >
-          {loading ? <div className={styles.spinner}></div> : "Iniciar con Google"}
+          {loading ? (
+            <div className={styles.spinner}></div>
+          ) : (
+            t("login.googleLoginButton")
+          )}
         </button>
-        
+
         <button
           type="button"
           className={styles.facebookButton}
           onClick={handleFacebookLogin}
           disabled={loading}
         >
-          {loading ? <div className={styles.spinner}></div> : "Iniciar con Facebook"}
+          {loading ? (
+            <div className={styles.spinner}></div>
+          ) : (
+            t("login.facebookLoginButton")
+          )}
         </button>
 
         {/* ¿Olvidaste tu contraseña? */}
@@ -91,18 +135,18 @@ function LoginUI({ email, password, error, showPopup, loading, setEmail, setPass
           className={styles.forgotPasswordButton}
           onClick={() => handlePassword(email)}
         >
-          ¿Olvidaste tu contraseña?
+          {t("login.forgotPassword")}
         </button>
 
         {/* Registrarse */}
         <div className={styles.registerRedirect}>
-          <p>¿No tienes cuenta?</p>
+          <p>{t("login.noAccount")}</p>
           <button
             type="button"
             onClick={() => navigate("/register")}
             className={styles.redirectButton}
           >
-            Regístrate
+            {t("login.register")}
           </button>
         </div>
       </div>
