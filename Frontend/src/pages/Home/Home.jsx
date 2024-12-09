@@ -16,15 +16,17 @@ import {
   productInfoStyle,
   productLinkStyle,
 } from "./styles";
+import { useTranslation } from "react-i18next";
 
 /**
  * Componente funcional Home
- * @description Este componente es la página de inicio del asistente virtual, donde los usuarios pueden buscar productos, 
+ * @description Este componente es la página de inicio del asistente virtual, donde los usuarios pueden buscar productos,
  * ver su historial de búsquedas previas o comparar productos. Se gestionan tres vistas: Búsqueda, Historial y Comparación.
- * @returns {JSX.Element} - El JSX que representa el interfaz de usuario del Home, incluyendo los botones para alternar entre 
+ * @returns {JSX.Element} - El JSX que representa el interfaz de usuario del Home, incluyendo los botones para alternar entre
  * la búsqueda, historial y comparación, los resultados de la búsqueda, y la opción para cerrar sesión.
  */
 function Home() {
+  const { t, i18n } = useTranslation();
   const [showBusqueda, setShowBusqueda] = useState(true); // Estado para mostrar la vista de búsqueda
   const [showComparacion, setShowComparacion] = useState(false); // Estado para mostrar la vista de comparación
   const [showHistorial, setShowHistorial] = useState(false); // Estado para mostrar la vista de historial
@@ -36,6 +38,10 @@ function Home() {
   const CerrarSesion = async () => {
     await signOut(auth);
     navigate("/");
+  };
+
+  const cambiarIdioma = (lang) => {
+    i18n.changeLanguage(lang);
   };
 
   // Función para alternar entre vistas
@@ -114,12 +120,29 @@ function Home() {
           </h1>
         </div>
 
+        <div
+          style={{
+            position: "absolute",
+            top: "1rem",
+            right: "1rem",
+            display: "flex",
+            gap: "1rem",
+          }}
+        >
+          <button onClick={() => cambiarIdioma("es")} style={buttonStyle}>
+            ES
+          </button>
+          <button onClick={() => cambiarIdioma("en")} style={buttonStyle}>
+            EN
+          </button>
+        </div>
+
         <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
           <span style={{ fontSize: "1rem", whiteSpace: "nowrap" }}>
-            Bienvenido usuario
+            {t("welcome_user")}
           </span>
           <button onClick={CerrarSesion} style={buttonStyle}>
-            Cerrar sesión
+            {t("logout")}
           </button>
         </div>
       </div>
@@ -127,13 +150,13 @@ function Home() {
       <div style={cardStyle}>
         <div style={{ display: "flex", justifyContent: "center", gap: "2rem" }}>
           <button onClick={mostrarBusqueda} style={buttonStyle}>
-            Búsqueda
+            {t("search1")}
           </button>
           <button onClick={mostrarComparacion} style={buttonStyle}>
-            Comparación
+            {t("comparison1")}
           </button>
           <button onClick={mostrarHistorial} style={buttonStyle}>
-            Historial
+            {t("history")}
           </button>
         </div>
       </div>
@@ -152,15 +175,15 @@ function Home() {
                 paddingLeft: "1rem",
               }}
             >
-              <h2>Resultados</h2>
-              <p>Las mejores opciones según tus criterios:</p>
+              <h2>{t("best_options")}</h2>
+
               <div
                 style={{
                   display: "flex",
                   flexDirection: "column",
                   gap: "1rem",
-                  overflowY: "auto", 
-                  maxHeight: "500px", 
+                  overflowY: "auto",
+                  maxHeight: "500px",
                 }}
               >
                 {resultados.length > 0 ? (
@@ -168,7 +191,7 @@ function Home() {
                     <div
                       key={index}
                       style={productCardStyle}
-                      onClick={() => agregarAComparacion(producto)} 
+                      onClick={() => agregarAComparacion(producto)}
                     >
                       <img
                         src={producto.imagen}
@@ -178,28 +201,34 @@ function Home() {
                       <div style={productInfoStyle}>
                         <h3>{producto.nombre}</h3>
                         <p>
-                          <strong>Precio:</strong> ${producto.precio}
+                          <strong>{t("price")}:</strong> ${producto.precio}
                         </p>
                         <p>
-                          <strong>Tienda:</strong> {producto.tienda}
+                          <strong>{t("store")}:</strong> {producto.tienda}
                         </p>
                         <span
                           onClick={() => verProducto(producto.enlaceCompra)}
                           style={productLinkStyle}
                         >
-                          Ver producto
+                          {t("view_product")}
                         </span>
                         {/* Mostrar el ícono de confirmación si el producto está añadido */}
-                        {productosAñadidos.some((p) => p.id === producto.id) && (
+                        {productosAñadidos.some(
+                          (p) => p.id === producto.id
+                        ) && (
                           <FaCheckCircle
-                            style={{ color: "green", marginLeft: "10px", fontSize: "1.2rem" }}
+                            style={{
+                              color: "green",
+                              marginLeft: "10px",
+                              fontSize: "1.2rem",
+                            }}
                           />
                         )}
                       </div>
                     </div>
                   ))
                 ) : (
-                  <p>No se han encontrado productos.</p>
+                  <p>{t("no_products_found")}</p>
                 )}
               </div>
             </div>
@@ -221,7 +250,7 @@ function Home() {
 
       {showBusqueda && (
         <div style={cardStyle}>
-          <h2>Asistente Virtual</h2>
+          <h2>{t("virtual_assistant")}</h2>
           <Asistente />
         </div>
       )}

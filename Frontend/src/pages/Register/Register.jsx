@@ -8,7 +8,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RegisterUI from "./RegisterUI";
-import request from "../../services/api"
+import request from "../../services/api";
+import { useTranslation } from "react-i18next";
 
 /**
  * Componente funcional Register
@@ -44,27 +45,26 @@ function Register() {
 
     // Verificar si las contraseñas coinciden
     if (formData.password !== formData.confirmPassword) {
-      setError("Las contraseñas no coinciden");
+      setError(t("register.passwordMismatch"));
       return;
     }
 
     if (!formData.fullName.trim()) {
-      setError("El nombre completo es obligatorio.");
+      setError(t("register.nameRequired"));
       return;
     }
-    
+
     if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      setError("El correo electrónico no es válido.");
+      setError(t("register.invalidEmail"));
       return;
     }
-    
+
     if (formData.password.length < 8) {
-      setError("La contraseña debe tener al menos 8 caracteres.");
+      setError(t("register.passwordLength"));
       return;
     }
 
     setFieldErrors(errors);
-
 
     if (Object.keys(errors).length > 0) return;
     // Limpiar el error si las contraseñas coinciden
@@ -78,21 +78,26 @@ function Register() {
     };
 
     try {
-      const response = await request("/auth/create-user", "POST", requestBody, null)
+      const response = await request(
+        "/auth/create-user",
+        "POST",
+        requestBody,
+        null
+      );
 
       if (response.ok) {
-      setSuccessMessage("Registro exitoso. Redirigiendo al inicio de sesión...");
-      setTimeout(() => {
-        navigate("/"); // Redirige al login tras 3 segundos
-      }, 3000);
-    } else {
-      const data = await response.json();
-      setError(data.message || "Ocurrió un error durante el registro.");
+        setSuccessMessage(t("register.successMessage"));
+        setTimeout(() => {
+          navigate("/"); // Redirige al login tras 3 segundos
+        }, 3000);
+      } else {
+        const data = await response.json();
+        setError(data.message || t("register.errorGeneral"));
+      }
+    } catch (error) {
+      setError(t("register.networkError") + error.message);
     }
-  } catch (error) {
-    setError("Error de red: " + error.message);
-  }
-};
+  };
 
   return (
     <RegisterUI

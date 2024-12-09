@@ -1,18 +1,20 @@
 import React, { useState, useRef, useEffect } from "react";
 import { inputStyle, buttonStyle } from "./styles";
-import { FaMicrophone, FaStop } from "react-icons/fa"; 
+import { FaMicrophone, FaStop } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 /**
  * Componente funcional Asistente
- * @description Este componente permite a los usuarios interactuar con un asistente virtual a través de un chat. Los usuarios pueden escribir un mensaje, enviar mensajes de audio y el asistente responderá con un mensaje automatizado. 
+ * @description Este componente permite a los usuarios interactuar con un asistente virtual a través de un chat. Los usuarios pueden escribir un mensaje, enviar mensajes de audio y el asistente responderá con un mensaje automatizado.
  * El estado del chat se maneja con el hook `useState`, y la respuesta del bot se simula con un retardo utilizando `setTimeout`.
  * @returns {JSX.Element} - El JSX que representa el chat entre el usuario y el asistente virtual, incluyendo los campos de entrada, los botones de "Enviar" y "Grabar Audio".
  */
 function Asistente() {
+  const { t } = useTranslation(); // Hook de traducción
   const [messages, setMessages] = useState([
-    { sender: "bot", message: "¡Hola! Soy tu asistente virtual. ¿En qué puedo ayudarte hoy?" },
+    { sender: "bot", message: t("assistant.welcome_message") },
   ]);
-  
+
   const [input, setInput] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
@@ -36,14 +38,18 @@ function Asistente() {
             audioChunksRef.current.push(event.data);
           };
           mediaRecorderRef.current.onstop = () => {
-            const audioBlob = new Blob(audioChunksRef.current, { type: "audio/wav" });
+            const audioBlob = new Blob(audioChunksRef.current, {
+              type: "audio/wav",
+            });
             const audioUrl = URL.createObjectURL(audioBlob);
             setAudioUrl(audioUrl);
             audioChunksRef.current = [];
           };
           mediaRecorderRef.current.start();
         })
-        .catch((error) => console.error("Error al acceder al micrófono:", error));
+        .catch((error) =>
+          console.error("Error al acceder al micrófono:", error)
+        );
     } else if (mediaRecorderRef.current) {
       mediaRecorderRef.current.stop();
     }
@@ -57,25 +63,25 @@ function Asistente() {
    * Luego, se simula que el asistente está procesando la solicitud y después de un retardo, se envía la respuesta del asistente.
    */
   const handleSendMessage = async () => {
-    if (!input.trim() && !audioUrl) return;  
+    if (!input.trim() && !audioUrl) return;
     const userMessage = { sender: "user", message: input, audioUrl };
-    setMessages((prevMessages) => [...prevMessages, userMessage]);  
-    setInput("");  
-    setAudioUrl(null); 
-    setIsProcessing(true);  
+    setMessages((prevMessages) => [...prevMessages, userMessage]);
+    setInput("");
+    setAudioUrl(null);
+    setIsProcessing(true);
 
     // Simular la respuesta del bot
     setMessages((prevMessages) => [
       ...prevMessages,
-      { sender: "bot", message: "Estoy buscando la información..." }
+      { sender: "bot", message: t("assistant.processing") },
     ]);
     setTimeout(() => {
-      const botResponse = "¡Aquí está la información que buscas! ¿Necesitas algo más?";
+      const botResponse = t("assistant.response");
       setMessages((prevMessages) => [
-        ...prevMessages.slice(0, -1),  
+        ...prevMessages.slice(0, -1),
         { sender: "bot", message: botResponse },
       ]);
-      setIsProcessing(false);  
+      setIsProcessing(false);
     }, 2000);
   };
 
@@ -104,7 +110,10 @@ function Asistente() {
     <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
       <div style={{ overflowY: "auto", height: "300px" }}>
         {messages.map((msg, index) => (
-          <div key={index} style={{ textAlign: msg.sender === "user" ? "right" : "left" }}>
+          <div
+            key={index}
+            style={{ textAlign: msg.sender === "user" ? "right" : "left" }}
+          >
             <p
               style={{
                 margin: "5px",
@@ -117,7 +126,7 @@ function Asistente() {
               {msg.audioUrl && (
                 <audio controls>
                   <source src={msg.audioUrl} type="audio/wav" />
-                  Tu navegador no soporta la etiqueta de audio.
+                  {t("assistant.audio_not_supported")}
                 </audio>
               )}
             </p>
@@ -132,13 +141,16 @@ function Asistente() {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyPress}
           style={{ padding: "1rem", borderRadius: "5px", width: "100%" }}
-          placeholder="Escribe tu mensaje..."
+          placeholder={t("assistant.type_message")}
         />
-        
-        <button onClick={handleSendMessage} style={{ ...buttonStyle, width: "auto" }}>
-          Enviar
+
+        <button
+          onClick={handleSendMessage}
+          style={{ ...buttonStyle, width: "auto" }}
+        >
+          {t("assistant.send")}{" "}
         </button>
-        
+
         <button
           onClick={handleRecordClick}
           style={{
