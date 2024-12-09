@@ -28,7 +28,7 @@ const scrapeProductML = async (nameSearch, amount) => {
     const page = await browser.newPage();
     await page.goto('https://www.mercadolibre.com.co', {waitUntil: 'domcontentloaded'});
     
-    await page.waitForSelector('input.nav-search-input');
+    await page.waitForSelector('input.nav-search-input', { timeout: 60000 });
     await page.type('input.nav-search-input', nameSearch);
   
     await page.keyboard.press('Enter');

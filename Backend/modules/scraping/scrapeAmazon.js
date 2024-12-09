@@ -28,7 +28,7 @@ const scrapeProductAmazon = async (nameSearch, amount) => {
     const page = await browser.newPage();
     await page.goto('https://www.amazon.com', {waitUntil: 'domcontentloaded'});
     
-    await page.waitForSelector('#twotabsearchtextbox');
+    await page.waitForSelector('#twotabsearchtextbox', { timeout: 60000 });
     await page.type('#twotabsearchtextbox', nameSearch);
 
     await page.keyboard.press('Enter');
