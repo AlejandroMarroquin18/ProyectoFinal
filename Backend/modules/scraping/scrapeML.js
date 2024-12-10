@@ -4,7 +4,7 @@
  * @requires puppeteer Dependencia para manejar la automatización del navegador y realizar el scraping.
  */
 
-const puppeteer = require('puppeteer')
+const puppeteer = require('puppeteer-core')
 
 /**
  * Realiza un scraping de productos en el sitio web de Mercado Libre.
@@ -29,7 +29,7 @@ const scrapeProductML = async (nameSearch, amount) => {
   const search = `${formattedQuery}#D[A:${encodedQuery}]`;
 
   try {
-    const browser = await puppeteer.launch({ executablePath: '/usr/bin/google-chrome', headless: true, args: ['--no-sandbox', '--disable-gpu', '--disable-software-rasterizer'] });
+    const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-gpu', '--disable-software-rasterizer'] });
 
     const page = await browser.newPage();
     await page.goto(`https://listado.mercadolibre.com.co/${search}`, {waitUntil: 'domcontentloaded'});
