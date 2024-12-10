@@ -24,7 +24,15 @@ const Asistente = () => {
 
   const mediaRecorderRef = useRef(null);
 
-/**
+  const messagesEndRef = useRef(null);
+
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
+
+  /**
    * Función que empieza y detiene grabaciones en el chat.
    * @function handleSendMessage
    * @description Tiene el Hook personalizado para iniciar una grabación, detenerla y procesarla.
@@ -65,43 +73,46 @@ const Asistente = () => {
     }
   };
 
-/**
+  /**
    * Función envía el audio para ser procesado y transcrito.
    * @function handleSendMessage
    * @description Interactua con el Google-Speech-to-Text para transcribir las peticiones por audio.
    */
   const sendAudioToBackend = async (audioBlob) => {
-
     const formData = new FormData();
     formData.append("audio", audioBlob, "audio.ogg");
 
     try {
-        const transcriptionResponse = await axios.post("http://localhost:3000/speech/transcribe", formData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        });
+      const transcriptionResponse = await axios.post(
+        "http://localhost:3000/speech/transcribe",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
-        const transcriptionText = transcriptionResponse.data.transcription || "No se pudo transcribir el audio";
+      const transcriptionText =
+        transcriptionResponse.data.transcription ||
+        "No se pudo transcribir el audio";
 
-        setInput(transcriptionText);
-
+      setInput(transcriptionText);
     } catch (error) {
-        console.error("Error al enviar el audio al backend:", error);
-        setMessages((prevMessages) => [
-            ...prevMessages,
-            { sender: "bot", message: "Hubo un error al procesar tu solicitud." },
-        ]);
+      console.error("Error al enviar el audio al backend:", error);
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { sender: "bot", message: "Hubo un error al procesar tu solicitud." },
+      ]);
     }
-};
+  };
 
-/**
+  /**
    * Función que crea y actualiza los chats.
    * @function handleSendMessage
    * @description Interactua con el Backend para enviar los mensajes del chat y procesarlos con Gemini.
    */
   const handleSendMessage = async () => {
-
     if (!input.trim() && !audioBlob) return;
 
     const userMessage = { sender: "user", message: input };
@@ -158,7 +169,7 @@ const Asistente = () => {
     }
   };
 
-/**
+  /**
    * Función para manejar la tecla "Enter" al escribir en el campo de texto.
    * @function handleKeyPress
    * @description Permite enviar el mensaje cuando el usuario presiona la tecla "Enter".
@@ -189,15 +200,15 @@ const Asistente = () => {
               {msg.message}
               {msg.audioUrl && (
                 <audio controls>
-
                   <source src={msg.audioUrl} type="audio/ogg" />
                   {t("assistant.audio_not_supported")}
-
                 </audio>
               )}
             </p>
           </div>
         ))}
+        <div ref={messagesEndRef} />
+        <div ref={messagesEndRef} />
       </div>
 
       <div style={{ display: "flex", gap: "1rem" }}>
@@ -212,7 +223,6 @@ const Asistente = () => {
 
         <button
           onClick={handleSendMessage}
-
           style={{
             padding: "10px 20px",
             backgroundColor: "#007bff",
@@ -222,8 +232,7 @@ const Asistente = () => {
             cursor: "pointer",
           }}
         >
-          Enviar
-
+          {t("assistant.send")}
         </button>
 
         <button
