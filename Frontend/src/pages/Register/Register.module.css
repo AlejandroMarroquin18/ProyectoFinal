@@ -64,11 +64,16 @@
   font-size: 1em;                  /* Tamaño de fuente */
   margin-bottom: 1.5rem;          /* Espacio debajo del botón */
 }
+.button:hover {
+  transform: scale(1.1);
+}
+
 
 /* Estilos para la sección que redirige al login */
 .loginRedirect {
   margin-top: 1.5rem;  /* Espacio superior */
 }
+
 
 /* Estilo para el botón que redirige al login */
 .redirectButton {
@@ -81,6 +86,10 @@
   cursor: pointer;                /* Muestra un cursor de tipo puntero */
   width: 100%;                    /* Ancho completo del botón */
 }
+.redirectButton:hover {
+  transform: scale(1.1);
+}
+
 
 .success {
   color: green;

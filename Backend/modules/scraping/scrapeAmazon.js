@@ -24,40 +24,43 @@ const scrapeProductAmazon = async (nameSearch, amount) => {
   console.log("AMAZON")
   try {
     const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-gpu', '--disable-software-rasterizer'] });
-
     const page = await browser.newPage();
-    await page.goto('https://www.amazon.com', {waitUntil: 'domcontentloaded'});
-    
-    await page.waitForSelector('#twotabsearchtextbox', { timeout: 60000 });
-    await page.type('#twotabsearchtextbox', nameSearch);
+    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36');
 
+    await page.goto('https://www.amazon.com', {waitUntil: 'domcontentloaded'});
+
+    await page.waitForSelector('#twotabsearchtextbox');
+    await page.type('#twotabsearchtextbox', nameSearch);
     await page.keyboard.press('Enter');
-    await page.waitForNavigation({ waitUntil: 'domcontentloaded' });
+
+    await page.waitForNavigation({ waitUntil: 'load' });
     
     const products = await page.evaluate((amount) => {
       const productList = document.querySelectorAll('div[data-component-type="s-search-result"]');
       const result = [];
-
+      
       for (let i = 0; i < productList.length && result.length < amount; i++) {
         const product = productList[i];
-        const link = product.querySelector('h2 a.a-link-normal.s-link-style.a-text-normal')?.href || null;
-        const title = product.querySelector('h2 a.a-link-normal.s-link-style.a-text-normal span')?.innerText.trim() || null;
-        const image = product.querySelector('img.s-image')?.src || null;
-        const price = parseFloat(product.querySelector('.a-price .a-offscreen')?.innerText.trim().match(/[\d,]+(\.\d+)?/)) || null;
-        const rating = parseFloat(product.querySelector('.a-icon-alt')?.innerText.trim().match(/^(\d+(\.\d+)?)/)) || 'Sin calificación';
-        const nRating = parseInt(product.querySelector('.s-csa-instrumentation-wrapper span')?.innerText.trim().replace(',','')) || 'Sin calificación';
+        const enlaceCompra = product.querySelector('h2 a.a-link-normal.s-link-style.a-text-normal')?.href || null;
+        const nombre = product.querySelector('h2 a.a-link-normal.s-link-style.a-text-normal span')?.innerText.trim() || null;
+        const imagen = product.querySelector('img.s-image')?.src || null;
+        const precio = parseFloat(product.querySelector('.a-price .a-offscreen')?.innerText.trim().match(/[\d,]+(\.\d+)?/)) || null;
         
-        if (link && title && image && price) {
-          result.push({ link, title, image, price, rating, nRating }); 
+        const rat = product.querySelector('.a-icon-alt')?.innerText.trim() || '';
+        const rating = rat ? parseFloat(rat.match(/^(\d+(\.\d+)?)/)) : 'Sin calificación';
+        
+        const nRat = product.querySelector('.s-csa-instrumentation-wrapper span')?.innerText.trim() || '';
+        const nRating = nRat ? parseInt(nRat.replace(',','')) : 'Sin calificación';
+        
+        if (enlaceCompra && nombre && imagen && precio) {
+          result.push({ id: 2000+i, tienda: "Amazon", enlaceCompra, nombre, imagen, precio, rating, nRating }); 
         }
         
       }
       return result;
     }, amount);
-
     console.log("Elementos encontrados - Amazon: ", products.length)
     await browser.close();
-
     return products;
   
   } catch (error) {
