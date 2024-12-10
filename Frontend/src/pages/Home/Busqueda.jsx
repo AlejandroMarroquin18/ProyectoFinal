@@ -45,7 +45,7 @@ function Busqueda({ setResultados }) {
 
     try {
 
-      const response = await request(`/scrape/get-products?nameSearch=${category}&amount=10`, "GET", null, null)
+      const response = await request(`/scrape/get-products?nameSearch=${category}&amount=20`, "GET", null, null)
       const data = await response.json()
       
       console.log(response)
