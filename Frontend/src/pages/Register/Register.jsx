@@ -11,6 +11,7 @@ import RegisterUI from "./RegisterUI";
 import request from "../../services/api";
 import { useTranslation } from "react-i18next";
 import loginFunctions from "../Login/loginFunctions";
+import { use } from "react";
 
 /**
  * Componente funcional Register
@@ -19,6 +20,7 @@ import loginFunctions from "../Login/loginFunctions";
  */
 function Register() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
