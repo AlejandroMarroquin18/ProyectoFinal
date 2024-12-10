@@ -5,7 +5,7 @@
  * @requires ../recommendation/recommendationService Servicio para interactuar con Gemini.
  */
 
-const { createChat, getChat, updateChat, deleteChat } = require('./chatService');
+const { createChat, getAllChats, getChat, updateChat, deleteChat } = require('./chatService');
 const { generateRecommendation } = require('../recommendation/recommendationService');
 
 /**
@@ -25,6 +25,21 @@ const createChatController = async (req, res) => {
     res.status(201).json(result);
   } catch (error) {
     console.error('Error en createChatController:', error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+/**
+ * Controlador para obtener la información de todos los chats.
+ * @function getChatController
+ */
+const getAllChatsController = async (req, res) => {
+  console.log("GET ALL CHATS CONTROLLER");
+  try {
+    const chats = await getAllChats();
+    res.status(200).json(chats);
+  } catch (error) {
+    console.error('Error en getAllChatsController:', error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -122,4 +137,4 @@ const deleteChatController = async (req, res) => {
   }
 };
 
-module.exports = { createChatController, getChatController, updateChatController, deleteChatController };
+module.exports = { createChatController, getAllChatsController, getChatController, updateChatController, deleteChatController };

@@ -7,7 +7,6 @@ import Asistente from "./Asistente";
 import Busqueda from "./Busqueda";
 import Historial from "./Historial";
 import Comparacion from "./Comparacion"; // Importa el componente de comparación
-import { FaCheckCircle } from "react-icons/fa"; // Ícono de check de react-icons
 import {
   buttonStyle,
   cardStyle,
@@ -130,10 +129,16 @@ function Home() {
             gap: "1rem",
           }}
         >
-          <button onClick={() => cambiarIdioma("es")} className={styles.languageButton}>
+          <button
+            onClick={() => cambiarIdioma("es")}
+            className={styles.languageButton}
+          >
             ES
           </button>
-          <button onClick={() => cambiarIdioma("en")} className={styles.languageButton}>
+          <button
+            onClick={() => cambiarIdioma("en")}
+            className={styles.languageButton}
+          >
             EN
           </button>
         </div>
@@ -214,17 +219,23 @@ function Home() {
                           {t("view_product")}
                         </span>
                         {/* Mostrar el ícono de confirmación si el producto está añadido */}
-                        {productosAñadidos.some(
-                          (p) => p.id === producto.id
-                        ) && (
-                          <FaCheckCircle
-                            style={{
-                              color: "green",
-                              marginLeft: "10px",
-                              fontSize: "1.2rem",
-                            }}
-                          />
-                        )}
+                        <button
+                          onClick={() => agregarAComparacion(producto)}
+                          style={{
+                            marginTop: "10px",
+                            marginLeft: "10px",
+                            padding: "0.5rem 1rem",
+                            backgroundColor: "#007bff",
+                            color: "#fff",
+                            border: "none",
+                            borderRadius: "5px",
+                            cursor: "pointer",
+                          }}
+                        >
+                          {productosAñadidos.some((p) => p.id === producto.id)
+                            ? t("added_to_comparison")
+                            : t("add_to_comparison")}
+                        </button>
                       </div>
                     </div>
                   ))
@@ -239,7 +250,10 @@ function Home() {
 
       {showComparacion && (
         <div style={cardStyle}>
-          <Comparacion productosSeleccionados={productosSeleccionados} />
+          <Comparacion
+            productosSeleccionados={productosSeleccionados}
+            setProductosSeleccionados={setProductosSeleccionados}
+          />
         </div>
       )}
 
