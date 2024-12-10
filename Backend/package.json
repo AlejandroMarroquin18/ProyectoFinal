@@ -19,7 +19,11 @@
     "firebase-admin": "^13.0.1",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
+<<<<<<< HEAD
+    "puppeteer": "^23.10.1"
+=======
     "puppeteer": "^23.10.2"
+>>>>>>> cb17c065b9365f378c71d6e84c58ba80bddabd21
   },
   "devDependencies": {
     "jest": "^29.7.0"
