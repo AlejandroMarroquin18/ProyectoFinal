@@ -9,6 +9,7 @@ import Icono from "../../assets/images/icon.png";
 import styles from "./Login.module.css"; // Estilos específicos de Login
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
+import { FaGoogle, FaFacebook } from "react-icons/fa";
 
 /**
  * Componente que renderiza la interfaz de inicio de sesión.
@@ -103,31 +104,26 @@ function LoginUI({
         </form>
 
         {/* Botones Google y Facebook */}
-        <button
-          type="button"
-          className={styles.googleButton}
-          onClick={handleGoogleLogin}
-          disabled={loading}
-        >
-          {loading ? (
-            <div className={styles.spinner}></div>
-          ) : (
-            t("login.googleLoginButton")
-          )}
-        </button>
+        <div className={styles.socialButtons}>
+          <div
+            className={styles.iconButton}
+            onClick={handleGoogleLogin}
+            role="button"
+            disabled={loading}
+          >
+            <FaGoogle className={styles.socialIcon} />
+          </div>
+          <div
+            className={styles.iconButton}
+            onClick={handleFacebookLogin}
+            role="button"
+            disabled={loading}
+          >
+            <FaFacebook className={styles.socialIcon} />
+          </div>
+        </div>
 
-        <button
-          type="button"
-          className={styles.facebookButton}
-          onClick={handleFacebookLogin}
-          disabled={loading}
-        >
-          {loading ? (
-            <div className={styles.spinner}></div>
-          ) : (
-            t("login.facebookLoginButton")
-          )}
-        </button>
+
 
         {/* ¿Olvidaste tu contraseña? */}
         <button

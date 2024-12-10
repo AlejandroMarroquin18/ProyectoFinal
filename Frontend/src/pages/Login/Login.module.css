@@ -65,6 +65,9 @@
   font-size: 1em;            /* Tamaño de fuente */
   margin-bottom: 1.5rem;     /* Espacio debajo del botón */
 }
+.button:hover {
+  transform: scale(1.1);
+}
 
 /* Estilos para el botón de "Olvidé mi contraseña" */
 .forgotPasswordButton {
@@ -77,6 +80,7 @@
   border: none;              /* Sin borde */
   cursor: pointer;           /* Cursor tipo puntero al pasar por encima */
 }
+
 
 /* Estilos para la sección que redirige al registro */
 .registerRedirect {
@@ -94,6 +98,10 @@
   cursor: pointer;           /* Cursor tipo puntero */
   width: 50%;                /* Ancho del 50% */
 }
+.redirectButton:hover {
+  transform: scale(1.1);
+}
+
 
 /* Botón Google */
 .googleButton {
@@ -175,4 +183,33 @@
 
 .languageButton:hover {
   background-color: #ddd;
+}
+
+.socialButtons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.iconButton {
+  cursor: pointer;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10%;
+  background-color: #007bff;
+  box-shadow: 0px 2px 5px rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.iconButton:hover {
+  transform: scale(1.1);
+}
+
+.socialIcon {
+  color: #ffffff;
 }

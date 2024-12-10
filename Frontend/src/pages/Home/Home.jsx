@@ -17,6 +17,7 @@ import {
   productLinkStyle,
 } from "./styles";
 import { useTranslation } from "react-i18next";
+import styles from "../Login/Login.module.css";
 
 /**
  * Componente funcional Home
@@ -129,10 +130,10 @@ function Home() {
             gap: "1rem",
           }}
         >
-          <button onClick={() => cambiarIdioma("es")} style={buttonStyle}>
+          <button onClick={() => cambiarIdioma("es")} className={styles.languageButton}>
             ES
           </button>
-          <button onClick={() => cambiarIdioma("en")} style={buttonStyle}>
+          <button onClick={() => cambiarIdioma("en")} className={styles.languageButton}>
             EN
           </button>
         </div>
