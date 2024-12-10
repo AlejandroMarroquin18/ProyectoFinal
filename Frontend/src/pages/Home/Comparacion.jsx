@@ -13,12 +13,13 @@ import { useTranslation } from "react-i18next";
  * Componente funcional Comparacion
  * @description Muestra una tabla comparativa de los productos seleccionados, permitiendo al usuario ordenar por diferentes criterios.
  * @param {Array} productosSeleccionados - Los productos seleccionados para la comparación.
+ * @param {Function} setProductosSeleccionados - Función para actualizar los productos seleccionados.
  * @returns {JSX.Element} - El JSX que representa la tabla comparativa con opciones de ordenación.
  */
-function Comparacion({ productosSeleccionados }) {
-  const [ordenarPor, setOrdenarPor] = useState("precio"); // Estado para el criterio de ordenación
+function Comparacion({ productosSeleccionados, setProductosSeleccionados }) {
+  const [ordenarPor, setOrdenarPor] = useState("precio");
   const [productosOrdenados, setProductosOrdenados] = useState([]);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   // Función para ordenar los productos
   const ordenarProductos = (criterio) => {
@@ -27,19 +28,26 @@ function Comparacion({ productosSeleccionados }) {
         return a.precio - b.precio;
       }
       if (criterio === "calificaciones") {
-        return (b.calificacion || 0) - (a.calificacion || 0); // Aseguramos que las calificaciones existan
-      }
-      if (criterio === "envio") {
-        return (a.tiempoEnvio || 0) - (b.tiempoEnvio || 0); // Aseguramos que el tiempo de envío exista
+        return (b.calificacion || 0) - (a.calificacion || 0);
       }
       return 0;
     });
     return productosOrdenados;
   };
 
+  // Función para eliminar un producto de la comparación
+  const eliminarProducto = (productoId) => {
+    const nuevosProductos = productosSeleccionados.filter(
+      (producto) => producto.id !== productoId
+    );
+    setProductosSeleccionados(nuevosProductos); // Actualiza el estado en Home
+  };
+
   // UseEffect para ordenar productos cuando el criterio cambia
   useEffect(() => {
-    setProductosOrdenados(ordenarProductos(ordenarPor));
+    if (productosSeleccionados.length > 0) {
+      setProductosOrdenados(ordenarProductos(ordenarPor));
+    }
   }, [ordenarPor, productosSeleccionados]);
 
   return (
@@ -64,9 +72,6 @@ function Comparacion({ productosSeleccionados }) {
           >
             {t("comparison.sort_by_rating")}
           </button>
-          <button onClick={() => setOrdenarPor("envio")} style={buttonStyle}>
-            {t("comparison.sort_by_shipping_time")}
-          </button>
         </div>
       </div>
 
@@ -76,8 +81,8 @@ function Comparacion({ productosSeleccionados }) {
             <tr style={tableHeaderStyle}>
               <th style={tableCellStyle}>{t("comparison.name")}</th>
               <th style={tableCellStyle}>{t("comparison.price")}</th>
-              <th style={tableCellStyle}>{t("comparison.features")}</th>
               <th style={tableCellStyle}>{t("comparison.store")}</th>
+              <th style={tableCellStyle}>{t("comparison.actions")}</th>
             </tr>
           </thead>
           <tbody>
@@ -86,14 +91,28 @@ function Comparacion({ productosSeleccionados }) {
                 <tr key={index} style={tableRowStyle}>
                   <td style={tableCellStyle}>{producto.nombre}</td>
                   <td style={tableCellStyle}>${producto.precio}</td>
-                  <td style={tableCellStyle}>{producto.caracteristicas}</td>
                   <td style={tableCellStyle}>{producto.tienda}</td>
+                  <td style={tableCellStyle}>
+                    <button
+                      onClick={() => eliminarProducto(producto.id)}
+                      style={{
+                        backgroundColor: "red",
+                        color: "white",
+                        border: "none",
+                        borderRadius: "5px",
+                        padding: "0.5rem 1rem",
+                        cursor: "pointer",
+                      }}
+                    >
+                      {t("comparison.delete")}
+                    </button>
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="4" style={tableCellStyle}>
-                  {t("comparison.no_products_selected")}{" "}
+                <td colSpan="5" style={tableCellStyle}>
+                  {t("comparison.no_products_selected")}
                 </td>
               </tr>
             )}
