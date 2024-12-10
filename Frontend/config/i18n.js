@@ -102,6 +102,17 @@ const resources = {
                 networkError: "Network error: ",
               },
 
+              history1: {
+                history: "History",
+                delete: "Delete",
+                no_searches: "No searches in history.",
+                search1: "Search 1",
+                search2: "Search 2",
+                search3: "Search 3",
+                user: "User",
+                bot: "Bot",
+              }
+
         },
     },
     es: {
@@ -202,6 +213,17 @@ const resources = {
                 errorGeneral: "Ocurrió un error durante el registro.",
                 networkError: "Error de red: ",
               },
+              
+              history1: {
+                history: "Historial",
+                delete: "Eliminar",
+                no_searches: "No hay búsquedas en el historial.",
+                search1: "Búsqueda 1",
+                search2: "Búsqueda 2",
+                search3: "Búsqueda 3",
+                user: "Usuario",
+                bot: "Bot",
+              }
        
 
         },
