@@ -3,6 +3,7 @@ import { inputStyle, buttonStyle } from "./styles";
 import { Player } from "@lottiefiles/react-lottie-player";
 import LoadingAnimation from "../../assets/animations/loading.json";
 import { useTranslation } from "react-i18next";
+import request from "../../services/api";
 
 /**
  * Componente funcional Busqueda
@@ -43,33 +44,15 @@ function Busqueda({ setResultados }) {
     setDisabled(true); // Deshabilita los campos de búsqueda
 
     try {
-      // Simulación de productos (debería ser reemplazada por la conexión al backend)
-      const productosSimulados = [
-        {
-          id: 1,
-          nombre: "Laptop HP 15",
-          precio: 350,
-          enlaceCompra: "https://www.tienda.com/laptop-hp-15",
-          imagen: "https://via.placeholder.com/100",
-          tienda: "Tienda A",
-        },
-        {
-          id: 2,
-          nombre: "Smartphone Samsung Galaxy S22",
-          precio: 750,
-          enlaceCompra: "https://www.tienda.com/samsung-galaxy-s22",
-          imagen: "https://via.placeholder.com/100",
-          tienda: "Tienda B",
-        },
-        {
-          id: 3,
-          nombre: "Monitor Dell 24",
-          precio: 200,
-          enlaceCompra: "https://www.tienda.com/dell-monitor-24",
-          imagen: "https://via.placeholder.com/100",
-          tienda: "Tienda C",
-        },
-      ];
+
+      const response = await request("/scrape/get-products?nameSearch=smartphone&amount=10", "GET", null, null)
+      const data = await response.json()
+      
+      console.log(response)
+      console.log(data)
+      console.log(data.products)
+
+      const productosSimulados = data.products
 
       // Filtra los productos simulados por presupuesto y marca
       const resultadosFiltrados = productosSimulados.filter(
