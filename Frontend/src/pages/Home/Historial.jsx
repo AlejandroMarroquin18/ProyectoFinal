@@ -1,50 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import request from "../../services/api";
 
-/**
- * Componente funcional Historial
- * @description Este componente muestra un historial de búsquedas previas con traducción dinámica.
- * Los ítems del historial son clicables y permiten ver un cuadro con mensajes detallados.
- * También permite eliminar búsquedas individuales del historial.
- * @returns {JSX.Element} - El JSX que representa la lista de búsquedas previas con opciones de interacción y visualización de mensajes.
- */
 function Historial() {
-  const { t } = useTranslation(); // Hook para traducción
-
-  const [historial, setHistorial] = useState([
-    {
-      nombre: t("history1.search1"),
-      mensajes: [
-        { sender: t("history1.user"), content: t("assistant.welcome_message"), timestamp: "10:00 AM" },
-        { sender: t("history1.bot"), content: t("assistant.response"), timestamp: "10:01 AM" },
-      ],
-    },
-    {
-      nombre: t("history1.search2"),
-      mensajes: [
-        { sender: t("history1.user"), content: t("assistant.type_message"), timestamp: "11:00 AM" },
-        { sender: t("history1.bot"), content: t("assistant.processing"), timestamp: "11:02 AM" },
-      ],
-    },
-    {
-      nombre: t("history1.search3"),
-      mensajes: [
-        { sender: t("history1.user"), content: t("error.generic"), timestamp: "12:00 PM" },
-        { sender: t("history1.bot"), content: t("assistant.response"), timestamp: "12:05 PM" },
-      ],
-    },
-  ]);
-
+  const { t } = useTranslation();
+  const [historial, setHistorial] = useState([]);
   const [mensajesSeleccionados, setMensajesSeleccionados] = useState(null);
+
+  useEffect(() => {
+    const fetchHistorial = async () => {
+      try {
+        const response = await request('/chat/get-all-chats', 'GET'); 
+        const data = await response.json();
+        setHistorial(data); 
+      } catch (error) {
+        console.error("Error al cargar el historial:", error);
+      }
+    };
+
+    fetchHistorial();
+  }, []);
 
   const handleSeleccionarBusqueda = (busqueda) => {
     setMensajesSeleccionados(busqueda);
   };
 
-  const handleEliminarBusqueda = (index) => {
-    const nuevoHistorial = historial.filter((_, i) => i !== index);
-    setHistorial(nuevoHistorial);
-    setMensajesSeleccionados(null); // Cierra el cuadro si se elimina la búsqueda seleccionada
+  const handleEliminarBusqueda = async (index) => {
+    const chatName = historial[index].name;  
+    try {
+      const response = await request(`/chat/delete-chat`, 'DELETE', { chatName });
+      const data = await response.json();
+      console.log(data.message);
+
+      const nuevoHistorial = historial.filter((_, i) => i !== index);
+      setHistorial(nuevoHistorial);
+      setMensajesSeleccionados(null); 
+    } catch (error) {
+      console.error("Error al eliminar el chat:", error);
+    }
   };
 
   return (
@@ -67,7 +60,7 @@ function Historial() {
                 onClick={() => handleSeleccionarBusqueda(item)}
                 style={{ cursor: "pointer", flex: 1, textAlign: "left" }}
               >
-                {item.nombre}
+                {item.name}
               </span>
               <button
                 onClick={() => handleEliminarBusqueda(index)}
@@ -101,9 +94,9 @@ function Historial() {
             textAlign: "left",
           }}
         >
-          <h3>{mensajesSeleccionados.nombre}</h3>
+          <h3>{mensajesSeleccionados.name}</h3>  
           <ul style={{ listStyleType: "none", padding: "0" }}>
-            {mensajesSeleccionados.mensajes.map((mensaje, index) => (
+            {mensajesSeleccionados.messages && Object.values(mensajesSeleccionados.messages).map((mensaje, index) => (
               <li
                 key={index}
                 style={{
