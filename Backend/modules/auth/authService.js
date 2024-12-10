@@ -43,6 +43,7 @@ const verifyToken = async (idToken) => {
   console.log("VERIFY TOKEN")
   try {
     const decodedToken = await auth.verifyIdToken(idToken);
+    console.log(decodedToken)
     return decodedToken;  // Si el token es válido, retorna los datos decodificados
   } catch (error) {
     throw new Error('Token inválido o expirado');
