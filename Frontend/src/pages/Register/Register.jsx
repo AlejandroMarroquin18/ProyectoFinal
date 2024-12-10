@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import RegisterUI from "./RegisterUI";
 import request from "../../services/api";
 import { useTranslation } from "react-i18next";
+import loginFunctions from "../Login/loginFunctions";
 
 /**
  * Componente funcional Register
@@ -85,11 +86,11 @@ function Register() {
         null
       );
 
-      if (response.ok) {
+      if (response) {
+        loginFunctions.sendTokenToBackend(response);
+        navigate("/home");
         setSuccessMessage(t("register.successMessage"));
-        setTimeout(() => {
-          navigate("/"); // Redirige al login tras 3 segundos
-        }, 3000);
+        navigate("/home")
       } else {
         const data = await response.json();
         setError(data.message || t("register.errorGeneral"));
