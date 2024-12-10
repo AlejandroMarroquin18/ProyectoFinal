@@ -32,6 +32,31 @@ const createChat = async (chatName) => {
   }
 }
 
+/**
+ * Obtiene todos los chats de la BD
+ * @function getChat
+ * @returns {Promise<Object>} Objeto con los datos del todos los chats.
+ */
+const getAllChats = async () => {
+  console.log("Obteniendo todos los chats");
+  try {
+    const chatRef = db.ref('chats');
+    const snapshot = await chatRef.once('value');
+    
+    if (!snapshot.exists()) {
+      throw new Error('No hay chats disponibles.');
+    }
+
+    const chats = snapshot.val();
+    return Object.keys(chats).map(key => ({
+      id: key,
+      ...chats[key]
+    }));
+  } catch (error) {
+    console.error("Error en getAllChats:", error.message);
+    throw error;
+  }
+};
 
 /**
  * Obtiene la información de un chat por su nombre.
@@ -128,4 +153,4 @@ const deleteChat = async (chatName) => {
 };
 
 
-module.exports = { createChat, getChat, updateChat, deleteChat }
+module.exports = { createChat, getAllChats, getChat, updateChat, deleteChat }
