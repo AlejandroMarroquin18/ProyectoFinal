@@ -22,17 +22,17 @@ const puppeteer = require('puppeteer')
  */
 const scrapeProductML = async (nameSearch, amount) => {
   console.log("MERCADO LIBRE")
+
+  // Formateo de la busqueda para mercado libre
+  const formattedQuery = nameSearch.replace(/\s+/g, '-');
+  const encodedQuery = encodeURIComponent(nameSearch);
+  const search = `${formattedQuery}#D[A:${encodedQuery}]`;
+
   try {
     const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-gpu', '--disable-software-rasterizer'] });
 
     const page = await browser.newPage();
-    await page.goto('https://www.mercadolibre.com.co', {waitUntil: 'domcontentloaded'});
-    
-    await page.waitForSelector('input.nav-search-input', { timeout: 60000 });
-    await page.type('input.nav-search-input', nameSearch);
-  
-    await page.keyboard.press('Enter');
-    await page.waitForNavigation({ waitUntil: 'domcontentloaded' });
+    await page.goto(`https://listado.mercadolibre.com.co/${search}`, {waitUntil: 'domcontentloaded'});
     
     const products = await page.evaluate((amount) => {
       const productList = document.querySelectorAll('li.ui-search-layout__item');
@@ -40,18 +40,18 @@ const scrapeProductML = async (nameSearch, amount) => {
 
       for (let i = 0; i < productList.length && result.length < amount; i++) {
         const product = productList[i];
-        const link = product.querySelector('.poly-component__title a')?.href || null;
-        const title = product.querySelector('.poly-component__title a')?.innerText.trim() || null;
-        const image = product.querySelector('.poly-card__portada img')?.src || null;
-        const price = parseInt(product.querySelector('.poly-price__current .andes-money-amount__fraction')?.innerText.trim().replace('.', '')) || null;
+        const enlaceCompra = product.querySelector('.poly-component__title a')?.href || null;
+        const nombre = product.querySelector('.poly-component__title a')?.innerText.trim() || null;
+        const imagen = product.querySelector('.poly-card__portada img')?.src || null;
+        const precio = parseInt(product.querySelector('.poly-price__current .andes-money-amount__fraction')?.innerText.trim().replace('.', '')) || null;
         const rating = parseFloat(product.querySelector('.poly-reviews__rating')?.innerText.trim()) || 'Sin calificación';
         const nRating = parseInt(product.querySelector('.poly-reviews__total')?.innerText.trim().replace(/[()]/g, '')) || 'Sin calificación';
         
-        if (link && title && image && price) {
-          result.push({ link, title, image, price, rating, nRating }); 
+        if (enlaceCompra && nombre && imagen && precio) {
+          result.push({ id: 1000+i , tienda: "Mercado Libre", enlaceCompra, nombre, imagen, precio, rating, nRating }); 
         }
       }
-
+      
       return result;
     }, amount);
 
