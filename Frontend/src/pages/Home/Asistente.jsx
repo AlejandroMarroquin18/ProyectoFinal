@@ -3,6 +3,12 @@ import { FaMicrophone, FaStop } from "react-icons/fa";
 import "regenerator-runtime/runtime";
 import axios from "axios";
 
+/**
+ * Componente funcional Asistente
+ * @description Este componente permite a los usuarios interactuar con un asistente virtual a través de un chat. Los usuarios pueden escribir un mensaje, enviar mensajes de audio y el asistente responderá con un mensaje automatizado.
+ * El estado del chat se maneja con el hook `useState`, y la respuesta del bot se simula con un retardo utilizando `setTimeout`.
+ * @returns {JSX.Element} - El JSX que representa el chat entre el usuario y el asistente virtual, incluyendo los campos de entrada, los botones de "Enviar" y "Grabar Audio".
+ */
 const Asistente = () => {
   const [messages, setMessages] = useState([
     {
@@ -18,8 +24,12 @@ const Asistente = () => {
 
   const mediaRecorderRef = useRef(null);
 
+/**
+   * Función que empieza y detiene grabaciones en el chat.
+   * @function handleSendMessage
+   * @description Tiene el Hook personalizado para iniciar una grabación, detenerla y procesarla.
+   */
   const startListening = () => {
-    console.log("Iniciando grabación");
     navigator.mediaDevices
       .getUserMedia({ audio: true })
       .then((stream) => {
@@ -36,7 +46,6 @@ const Asistente = () => {
           const audioBlob = new Blob(audioChunks, { type: "audio/ogg" });
           setAudioBlob(audioBlob);
 
-          // Enviar el audio al backend tan pronto como se detenga la grabación
           sendAudioToBackend(audioBlob);
         };
 
@@ -49,15 +58,18 @@ const Asistente = () => {
   };
 
   const stopListening = () => {
-    console.log("Deteniendo grabación");
     if (mediaRecorderRef.current) {
       mediaRecorderRef.current.stop();
       setIsRecording(false);
     }
   };
 
+/**
+   * Función envía el audio para ser procesado y transcrito.
+   * @function handleSendMessage
+   * @description Interactua con el Google-Speech-to-Text para transcribir las peticiones por audio.
+   */
   const sendAudioToBackend = async (audioBlob) => {
-    console.log("Enviando audio al backend...");
 
     const formData = new FormData();
     formData.append("audio", audioBlob, "audio.ogg");
@@ -69,12 +81,8 @@ const Asistente = () => {
             },
         });
 
-        console.log("Respuesta del backend:", transcriptionResponse.data);
-        console.log("Transcripción recibida:", transcriptionResponse.data.transcription);
-
         const transcriptionText = transcriptionResponse.data.transcription || "No se pudo transcribir el audio";
 
-        // Solo actualiza el campo de entrada con la transcripción
         setInput(transcriptionText);
 
     } catch (error) {
@@ -86,16 +94,16 @@ const Asistente = () => {
     }
 };
 
+/**
+   * Función que crea y actualiza los chats.
+   * @function handleSendMessage
+   * @description Interactua con el Backend para enviar los mensajes del chat y procesarlos con Gemini.
+   */
   const handleSendMessage = async () => {
     if (!input.trim() && !audioBlob) return;
 
-    console.log("Enviando mensaje...");
-    console.log("Texto:", input);
-    console.log("Audio URL:", audioBlob);
-
     const userMessage = { sender: "user", message: input };
 
-    // Agregar el mensaje del usuario al historial de conversación
     setMessages((prevMessages) => [...prevMessages, userMessage]);
     setInput("");
     setIsProcessing(true);
@@ -148,6 +156,12 @@ const Asistente = () => {
     }
   };
 
+/**
+   * Función para manejar la tecla "Enter" al escribir en el campo de texto.
+   * @function handleKeyPress
+   * @description Permite enviar el mensaje cuando el usuario presiona la tecla "Enter".
+   * @param {Event} e - El evento de teclado.
+   */
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       handleSendMessage();
