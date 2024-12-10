@@ -3,7 +3,6 @@ import { FaMicrophone, FaStop } from "react-icons/fa";
 import { inputStyle, buttonStyle } from "./styles";
 import { useTranslation } from "react-i18next";
 import "regenerator-runtime/runtime";
-import axios from "axios";
 import request from "../../services/api";
 
 /**
