@@ -40,26 +40,28 @@ const createChat = async (chatName) => {
  * @returns {Promise<Object>} Objeto con los datos del chat (id, name, createdAt, messages).
  */
 const getChat = async (chatName) => {
-  console.log('GET CHAT')
+  console.log('GET CHAT');
+  if (!chatName) {
+    throw new Error('El nombre del chat es obligatorio.');
+  }
+
   try {
     const chatRef = db.ref('chats');
     const snapshot = await chatRef.orderByChild('name').equalTo(chatName).once('value');
     
-    if (!snapshot.exists()) { throw new Error('El chat no existe'); }
+    if (!snapshot.exists()) {
+      throw new Error('El chat no existe');
+    }
 
     const chatKey = Object.keys(snapshot.val())[0];
     const chatData = snapshot.val()[chatKey];
 
-    const chatFull = {
+    return {
       id: chatKey,
       name: chatData.name,
       createdAt: chatData.createdAt,
-      messages: chatData.messages || [] 
-    }
-
-    console.log(chatFull);
-    return chatFull;
-
+      messages: chatData.messages || [],
+    };
   } catch (error) {
     console.error("Error en la función getChat:", error);
     throw error;
@@ -75,25 +77,24 @@ const getChat = async (chatName) => {
  * @returns {Promise<string>} Mensaje de éxito al agregar el mensaje.
  */
 const updateChat = async (chatName, message) => {
-  console.log("UPDATE CHAT")
   try {
     const chatRef = db.ref('chats');
     const snapshot = await chatRef.orderByChild('name').equalTo(chatName).once('value');
-    
-    if (!snapshot.exists()) { throw new Error('El chat no existe'); }
+
+    if (!snapshot.exists()) {
+      throw new Error('El chat no existe.');
+    }
 
     const chatKey = Object.keys(snapshot.val())[0]; 
     const listMessageRef = chatRef.child(chatKey).child('messages'); 
     await listMessageRef.push(message);
 
-    console.log(`Mensaje agregado al chat con ID ${chatName}`);
-    return `Mensaje agregado al chat ${chatName} exitosamente.`;
+    return { success: true, message: "Mensaje agregado al chat exitosamente." };
   } catch (error) {
     console.error('Error al agregar el mensaje al chat:', error.message);
-    throw error;
+    return { success: false, message: "Hubo un error al agregar el mensaje al chat." };
   }
-}
-
+};
 
 /**
  * Elimina un chat existente por su nombre.
@@ -101,24 +102,30 @@ const updateChat = async (chatName, message) => {
  * @param {string} chatName - Nombre del chat a eliminar.
  * @returns {Promise<string>} Mensaje de éxito al eliminar el chat.
  */
-async function deleteChat(chatName) {
-  console.log("DELETE CHAT")
+const deleteChat = async (chatName) => {
+  console.log("DELETE CHAT");
+  if (!chatName) {
+    throw new Error('El nombre del chat es obligatorio.');
+  }
+
   try {
     const chatRef = db.ref('chats');
     const snapshot = await chatRef.orderByChild('name').equalTo(chatName).once('value');
-    
-    if (!snapshot.exists()) { throw new Error('El chat no existe'); }
 
-    const chatKey = Object.keys(snapshot.val())[0];
-    await chatRef.child(chatKey).remove();
+    if (!snapshot.exists()) {
+      throw new Error('El chat no existe.');
+    }
+
+    const chatKey = Object.keys(snapshot.val())[0]; // Obtiene la clave del chat
+    await chatRef.child(chatKey).remove(); // Elimina el chat usando la clave.
 
     console.log(`Chat '${chatName}' eliminado exitosamente`);
-    return `Chat '${chatName}' eliminado exitosamente`;
+    return `Chat '${chatName}' eliminado exitosamente.`;
   } catch (error) {
     console.error("Error en la función deleteChat:", error.message);
     throw error;
   }
-}
+};
 
 
 module.exports = { createChat, getChat, updateChat, deleteChat }

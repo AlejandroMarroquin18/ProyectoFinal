@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { inputStyle, buttonStyle } from "./styles";
 import { Player } from "@lottiefiles/react-lottie-player";
 import LoadingAnimation from "../../assets/animations/loading.json";
+import { useTranslation } from "react-i18next";
 
 /**
  * Componente funcional Busqueda
@@ -11,6 +12,7 @@ import LoadingAnimation from "../../assets/animations/loading.json";
  * @returns {JSX.Element} - El JSX que representa el formulario de búsqueda con los campos de entrada para presupuesto, categoría y marca preferida.
  */
 function Busqueda({ setResultados }) {
+  const { t } = useTranslation();
   const [maxBudget, setMaxBudget] = useState("");
   const [category, setCategory] = useState("");
   const [preferredBrand, setPreferredBrand] = useState("");
@@ -28,12 +30,12 @@ function Busqueda({ setResultados }) {
 
     // Validaciones
     if (!maxBudget || isNaN(maxBudget) || maxBudget <= 0) {
-      setError("Por favor, ingresa un presupuesto válido.");
+      setError(t("error.invalid_budget"));
       return;
     }
 
     if (!category) {
-      setError("Por favor, selecciona una categoría.");
+      setError(t("error.select_category"));
       return;
     }
 
@@ -86,9 +88,7 @@ function Busqueda({ setResultados }) {
       // También actualiza el estado del componente padre si es necesario
       setResultados(resultadosFiltrados);
     } catch (err) {
-      setError(
-        "Hubo un error al buscar productos. Por favor, intenta nuevamente."
-      );
+      setError(t("error.generic"));
     } finally {
       setLoading(false);
     }
@@ -106,10 +106,8 @@ function Busqueda({ setResultados }) {
 
   return (
     <div className="busqueda">
-      <h2>Criterios de búsqueda</h2>
-      <p style={{ marginBottom: "10px" }}>
-        Define tus preferencias para encontrar la mejor opción.
-      </p>
+      <h2>{t("search.title")}</h2>
+      <p style={{ marginBottom: "10px" }}>{t("search.description")}</p>
 
       {error && (
         <p style={{ color: "red", fontWeight: "bold", marginBottom: "10px" }}>
@@ -119,7 +117,7 @@ function Busqueda({ setResultados }) {
 
       <input
         type="number"
-        placeholder="Presupuesto máximo"
+        placeholder={t("search.max_budget")}
         style={inputStyle}
         value={maxBudget}
         onChange={(e) => setMaxBudget(e.target.value)}
@@ -134,25 +132,25 @@ function Busqueda({ setResultados }) {
         required
       >
         <option value="" disabled>
-          Selecciona una categoría
+          {t("search.select_category")}
         </option>
-        <option value="computadoras">Computadoras y laptops</option>
-        <option value="smartphones">Smartphones</option>
-        <option value="tablets">Tablets</option>
-        <option value="monitores">Monitores</option>
-        <option value="accesorios">Accesorios</option>
-        <option value="ram">Memoria RAM</option>
-        <option value="cpu">Procesador</option>
-        <option value="gpu">Tarjeta Gráfica</option>
-        <option value="psu">Fuente de poder</option>
-        <option value="gabinete">Gabinete</option>
-        <option value="board">Placa Base</option>
-        <option value="gadgets">Gadgets</option>
-        <option value="redes">Redes</option>
+        <option value="computadoras">{t("search.category_computers")}</option>
+        <option value="smartphones">{t("search.category_smartphones")}</option>
+        <option value="tablets">{t("search.category_tablets")}</option>
+        <option value="monitores">{t("search.category_monitors")}</option>
+        <option value="accesorios">{t("search.category_accessories")}</option>
+        <option value="ram">{t("search.category_ram")}</option>
+        <option value="cpu">{t("search.category_cpu")}</option>
+        <option value="gpu">{t("search.category_gpu")}</option>
+        <option value="psu">{t("search.category_psu")}</option>
+        <option value="gabinete">{t("search.category_case")}</option>
+        <option value="board">{t("search.category_board")}</option>
+        <option value="gadgets">{t("search.category_gadgets")}</option>
+        <option value="redes">{t("search.category_network")}</option>
       </select>
       <input
         type="text"
-        placeholder="Marca (opcional)"
+        placeholder={t("search.brand_placeholder")}
         style={inputStyle}
         value={preferredBrand}
         onChange={(e) => setPreferredBrand(e.target.value)}
@@ -163,14 +161,17 @@ function Busqueda({ setResultados }) {
         style={buttonStyle}
         disabled={loading || disabled}
       >
-        {loading ? "Buscando..." : "Buscar"}
+        {loading ? t("search.searching") : t("search.search")}
       </button>
 
       {/* Mostrar animación de carga cuando loading esté activo */}
       {loading && (
         <div
           style={{
-            display: "flex", justifyContent: "center", alignItems: "center", width: "100%"
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
           }}
         >
           <Player
@@ -185,7 +186,7 @@ function Busqueda({ setResultados }) {
       {resultados.length > 0 && !loading && (
         <div style={{ marginTop: "20px" }}>
           <button onClick={handleReset} style={buttonStyle}>
-            Realizar una nueva búsqueda
+            {t("search.reset")}
           </button>
         </div>
       )}
