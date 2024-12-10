@@ -9,6 +9,7 @@
  * @requires ./App.jsx - El componente principal de la aplicación que contiene la lógica y vista principal.
  */
 
+import 'regenerator-runtime/runtime';
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './styles/index.css'

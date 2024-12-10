@@ -23,6 +23,7 @@ const generateRecommendation = async (message) => {
   - Responde de manera clara y profesional de máximo 100 palabras. 
   - Si el usuario solicita algo que no esté relacionado con computadoras, responde: "No tengo respuesta a tu petición". ESTO ES MUY IMPORTANTE. 
   - Usa un lenguaje amigable para el usuario.
+  - Si es usuario pregunta en inglés RESPONDE EN INGLÉS
 
   La solicitud enviada por el usuario es la siguiente:
 
