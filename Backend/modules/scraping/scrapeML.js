@@ -45,7 +45,9 @@ const scrapeProductML = async (nameSearch, amount) => {
         const imagen = product.querySelector('.poly-card__portada img')?.src || null;
         const precio = parseInt(product.querySelector('.poly-price__current .andes-money-amount__fraction')?.innerText.trim().replace('.', '')) || null;
         const rating = parseFloat(product.querySelector('.poly-reviews__rating')?.innerText.trim()) || 'Sin calificación';
-        const nRating = parseInt(product.querySelector('.poly-reviews__total')?.innerText.trim().replace(/[()]/g, '')) || 'Sin calificación';
+        
+        const nRat = product.querySelector('.poly-reviews__total')?.innerText.trim() || '';
+        const nRating = nRat ? parseInt(nRat.replace(/[()]/g, '')) : 'Sin calificación';
         
         if (enlaceCompra && nombre && imagen && precio) {
           result.push({ id: 1000+i , tienda: "Mercado Libre", enlaceCompra, nombre, imagen, precio, rating, nRating }); 

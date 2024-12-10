@@ -1,6 +1,6 @@
 /**
  * @file scrapingService.js
- * @description Servicio para realizar scraping de productos desde varias fuentes (MercadoLibre, Alkosto y Amazon).
+ * @description Servicio para realizar scraping de productos desde varias fuentes (MercadoLibre, TauretComputadores y Amazon).
  * @requires puppeteer Dependencia para automatización del navegador y realizar el scraping.
  */
 
@@ -8,10 +8,10 @@ const puppeteer = require('puppeteer')
 
 const { scrapeProductML } = require('./scrapeML')
 const { scrapeProductAmazon } = require('./scrapeAmazon')
-const { scrapeProductAlkosto } = require('./scrapeAlkosto')
+const { scrapeProductTC } = require('./scrapeTC')
 
 /**
- * Realiza el scraping de productos desde múltiples fuentes (MercadoLibre, Alkosto y Amazon) de manera simultánea.
+ * Realiza el scraping de productos desde múltiples fuentes (MercadoLibre, TauretComputadores y Amazon) de manera simultánea.
  * @function scrapeProducts
  * @param {string} nameSearch - Término de búsqueda de productos.
  * @param {number} amount - Número de productos a obtener de cada fuente.
@@ -19,16 +19,13 @@ const { scrapeProductAlkosto } = require('./scrapeAlkosto')
  */
 const scrapeProducts = async (nameSearch, amount) => { 
   try {
-    const [scrapeML] = await Promise.all([
-    //const [scrapeML, scrapeAlkosto, scrapeAmazon] = await Promise.all([
+    const [scrapeML, scrapeTC,scrapeAmazon] = await Promise.all([
       scrapeProductML(nameSearch, amount),
-      //scrapeProductAlkosto(nameSearch, amount),
-      //scrapeProductAmazon(nameSearch, amount)
+      scrapeProductTC(nameSearch, amount),
+      scrapeProductAmazon(nameSearch, amount)
     ]);
     
-    //const products = [...scrapeML, ...scrapeAlkosto, ...scrapeAmazon]
-    const products = [...scrapeML]
-    console.log(products)
+    const products = [...scrapeML, ...scrapeTC, ...scrapeAmazon]
     return products;
 
   } catch (error) {
