@@ -17,6 +17,8 @@ const resources = {
             loading: "Loading...",
             virtual_assistant: "Virtual Assistant",
             view_product: "View Product",
+            add_to_comparison: "Add to comparison",
+            added_to_comparison: "Added to comparison",
 
 
             comparison: {
@@ -28,7 +30,9 @@ const resources = {
                 price: "Price",
                 features: "Features",
                 store: "Store",
-                no_products_selected: "No products selected."
+                no_products_selected: "No products selected.",
+                delete: "Delete",
+                actions: "Actions",
             },
             search: {
                 title: "Search Criteria",
@@ -67,7 +71,7 @@ const resources = {
                 audio_not_supported: "Your browser does not support the audio tag.",
             },
 
-            login:{
+            login: {
                 loginTitle: 'Login',
                 emailPlaceholder: 'Email',
                 passwordPlaceholder: 'Password',
@@ -82,9 +86,9 @@ const resources = {
                 errorGoogle: 'Failed to login with Google.',
                 errorFacebook: 'Failed to login with Facebook.',
                 errorRecovery: 'Failed to send recovery email.',
-              },
+            },
 
-              register: {
+            register: {
                 title: 'Register',
                 fullName: 'Full Name',
                 email: 'Email',
@@ -100,9 +104,9 @@ const resources = {
                 successMessage: "Registration successful. Redirecting to login...",
                 errorGeneral: "An error occurred during registration.",
                 networkError: "Network error: ",
-              },
+            },
 
-              history1: {
+            history1: {
                 history: "History",
                 delete: "Delete",
                 no_searches: "No searches in history.",
@@ -111,7 +115,7 @@ const resources = {
                 search3: "Search 3",
                 user: "User",
                 bot: "Bot",
-              }
+            }
 
         },
     },
@@ -129,6 +133,8 @@ const resources = {
             loading: "Cargando...",
             virtual_assistant: "Asistente Virtual",
             view_product: "Ver producto",
+            add_to_comparison: "Agregar a comparación",
+            added_to_comparison: "Añadido a comparación",
 
             comparison: {
                 title: "Tabla Comparativa de Productos",
@@ -139,7 +145,9 @@ const resources = {
                 price: "Precio",
                 features: "Características",
                 store: "Tienda",
-                no_products_selected: "No hay productos seleccionados."
+                no_products_selected: "No hay productos seleccionados.",
+                delete: "Eliminar",
+                actions: "Acciones",
             },
             search: {
                 title: "Criterios de búsqueda",
@@ -194,9 +202,9 @@ const resources = {
                 errorGoogle: 'No se pudo iniciar sesión con Google.',
                 errorFacebook: 'No se pudo iniciar sesión con Facebook.',
                 errorRecovery: 'No se pudo enviar el correo de recuperación.',
-              },
-            
-              register: {
+            },
+
+            register: {
                 title: 'Registro',
                 fullName: 'Nombre Completo',
                 email: 'Correo Electrónico',
@@ -212,9 +220,9 @@ const resources = {
                 successMessage: "Registro exitoso. Redirigiendo al inicio de sesión...",
                 errorGeneral: "Ocurrió un error durante el registro.",
                 networkError: "Error de red: ",
-              },
-              
-              history1: {
+            },
+
+            history1: {
                 history: "Historial",
                 delete: "Eliminar",
                 no_searches: "No hay búsquedas en el historial.",
@@ -223,8 +231,8 @@ const resources = {
                 search3: "Búsqueda 3",
                 user: "Usuario",
                 bot: "Bot",
-              }
-       
+            }
+
 
         },
     },
