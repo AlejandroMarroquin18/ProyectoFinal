@@ -22,6 +22,14 @@ const router = express.Router();
 router.post('/create-chat', chatController.createChatController);
 
 /**
+* GET /get-all-chats
+* @description Ruta para traer todos los chats.
+* @access Público
+*/
+router.get('/get-all-chats', chatController.getAllChatsController);
+
+
+/**
  * GET /get-chat
  * @description Ruta para obtener la información de un chat.
  * @access Público
