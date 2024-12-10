@@ -3,7 +3,7 @@ import { FaMicrophone, FaStop } from "react-icons/fa";
 import { inputStyle, buttonStyle } from "./styles";
 import { useTranslation } from "react-i18next";
 import "regenerator-runtime/runtime";
-import axios from "axios";
+import request from "../../services/api";
 
 /**
  * Componente funcional Asistente
@@ -83,21 +83,13 @@ const Asistente = () => {
     formData.append("audio", audioBlob, "audio.ogg");
 
     try {
-      const transcriptionResponse = await axios.post(
-        "http://localhost:3000/speech/transcribe",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+        const response = await request("/speech/transcribe", "POST", formData, null)
+        const data = await response.json()
+        const transcriptionText = data.transcription || "No se pudo transcribir el audio";
 
-      const transcriptionText =
-        transcriptionResponse.data.transcription ||
-        "No se pudo transcribir el audio";
+        console.log(transcriptionText);
+        setInput(transcriptionText);
 
-      setInput(transcriptionText);
     } catch (error) {
       console.error("Error al enviar el audio al backend:", error);
       setMessages((prevMessages) => [
@@ -127,26 +119,19 @@ const Asistente = () => {
       if (!chatName) {
         currentChatName = input.split(" ").slice(0, 5).join(" ");
         setChatName(currentChatName);
-
-        await axios.post("http://localhost:3000/chat/create-chat", {
-          chatName: currentChatName,
-        });
+        await request("/chat/create-chat", "POST", { chatName: currentChatName }, null)
         console.log("Chat creado con el nombre:", currentChatName);
       }
 
-      const response = await axios.post(
-        "http://localhost:3000/chat/update-chat",
-        {
-          chatName: currentChatName,
-          message: input,
-        }
-      );
+      const requestBody = { chatName: currentChatName, message: input }
+      const response = await request("/chat/update-chat", "POST", requestBody, null)
 
-      const botResponse = response.data.botResponse
-        ? response.data.botResponse.content
+      const data = await response.json()
+      const botResponse = data.botResponse
+        ? data.botResponse.content
         : "No se pudo obtener la respuesta";
 
-      if (response.data.success === true) {
+      if (data.success === true) {
         setMessages((prevMessages) => [
           ...prevMessages,
           { sender: "bot", message: botResponse },

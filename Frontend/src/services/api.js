@@ -18,12 +18,16 @@ const API_URL = "https://smartsetup-b69u.onrender.com";
  * @returns {Promise<object>} - La respuesta del servidor en formato JSON.
  */
 const request = async (endpoint, method, body = null, token = null) => {
-  
-  const headers = { "Content-Type": "application/json", };
-  if (token) { headers["Authorization"] = `Bearer ${token}`; }
+  const headers = {};
+
+  const isFormData = body instanceof FormData;
+
+  if (!isFormData) { headers['Content-Type'] = 'application/json'; }
+
+  if (token) { headers['Authorization'] = `Bearer ${token}`; }
 
   const config = { method, headers, };
-  if (body) { config.body = JSON.stringify(body); }
+  if (body) { config.body = isFormData ? body : JSON.stringify(body); }
 
   try {
     const response = await fetch(`${API_URL}${endpoint}`, config);
