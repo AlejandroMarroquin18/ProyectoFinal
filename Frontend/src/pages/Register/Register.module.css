@@ -81,3 +81,35 @@
   cursor: pointer;                /* Muestra un cursor de tipo puntero */
   width: 100%;                    /* Ancho completo del botón */
 }
+
+.success {
+  color: green;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+}
+
+.inputError {
+  border: 2px solid red;
+}
+
+.languageButtons {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.languageButton {
+  background-color: #007bff;
+  border: 1px solid #ddd;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.languageButton:hover {
+  background-color: #ddd;
+}

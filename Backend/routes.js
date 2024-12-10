@@ -16,6 +16,7 @@ const chatRoutes = require('./modules/chat/chatRoutes');
 const listRoutes = require('./modules/list/listRoutes');
 const recommendationRoutes = require('./modules/recommendation/recommendationRoutes');
 const speechRoutes = require('./modules/speech/speechRoutes');
+const scrapingRoutes = require('./modules/scraping/scrapingRoutes');
 
 const router = express.Router();
 
@@ -36,7 +37,7 @@ router.use('/chat', chatRoutes);
 router.use('/list', listRoutes);
 
 /**
- * Agrupa las rutas relacionadas con las recomendaciones de PCs bajo el prefijo `/gemini`.
+ * Agrupa las rutas relacionadas con las recomendaciones de PCs bajo el prefijo `/recommendation`.
  * @name /recommendation
  * @function
  * @memberof module:indexRoutes
@@ -58,5 +59,13 @@ router.use('/speech', speechRoutes);
  * @memberof module:indexRoutes
  */
 router.use('/auth', authRoutes);
+
+/**
+ * Agrupa las rutas relacionadas con webscraping bajo el prefijo `/scraping`.
+ * @name /scraping
+ * @function
+ * @memberof module:indexRoutes
+ */
+router.use('/scrape', scrapingRoutes);
 
 module.exports = router;

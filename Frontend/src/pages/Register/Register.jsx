@@ -8,7 +8,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RegisterUI from "./RegisterUI";
-import request from "../../services/api"
+import request from "../../services/api";
+import { useTranslation } from "react-i18next";
 
 /**
  * Componente funcional Register
@@ -26,6 +27,8 @@ function Register() {
 
   const [error, setError] = useState("");
 
+  const [successMessage, setSuccessMessage] = useState("");
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -34,17 +37,39 @@ function Register() {
     }));
   };
 
+  const [fieldErrors, setFieldErrors] = useState({});
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const errors = {};
 
     // Verificar si las contraseñas coinciden
     if (formData.password !== formData.confirmPassword) {
-      setError("Las contraseñas no coinciden");
+      setError(t("register.passwordMismatch"));
       return;
     }
 
+    if (!formData.fullName.trim()) {
+      setError(t("register.nameRequired"));
+      return;
+    }
+
+    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      setError(t("register.invalidEmail"));
+      return;
+    }
+
+    if (formData.password.length < 8) {
+      setError(t("register.passwordLength"));
+      return;
+    }
+
+    setFieldErrors(errors);
+
+    if (Object.keys(errors).length > 0) return;
     // Limpiar el error si las contraseñas coinciden
     setError("");
+    setFieldErrors({});
 
     const requestBody = {
       displayName: formData.fullName,
@@ -53,10 +78,24 @@ function Register() {
     };
 
     try {
-      const response = request("/auth/create-user", "POST", requestBody, null)
-      console.log(response)
+      const response = await request(
+        "/auth/create-user",
+        "POST",
+        requestBody,
+        null
+      );
+
+      if (response.ok) {
+        setSuccessMessage(t("register.successMessage"));
+        setTimeout(() => {
+          navigate("/"); // Redirige al login tras 3 segundos
+        }, 3000);
+      } else {
+        const data = await response.json();
+        setError(data.message || t("register.errorGeneral"));
+      }
     } catch (error) {
-      console.error("Error:", error.message);
+      setError(t("register.networkError") + error.message);
     }
   };
 
@@ -64,6 +103,8 @@ function Register() {
     <RegisterUI
       formData={formData}
       error={error}
+      successMessage={successMessage}
+      fieldErrors={fieldErrors}
       handleChange={handleChange}
       handleSubmit={handleSubmit}
       navigate={navigate}

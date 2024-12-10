@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FaMicrophone, FaStop } from "react-icons/fa";
+import { inputStyle, buttonStyle } from "./styles";
+import { useTranslation } from "react-i18next";
 import "regenerator-runtime/runtime";
 import axios from "axios";
 
@@ -10,11 +12,9 @@ import axios from "axios";
  * @returns {JSX.Element} - El JSX que representa el chat entre el usuario y el asistente virtual, incluyendo los campos de entrada, los botones de "Enviar" y "Grabar Audio".
  */
 const Asistente = () => {
+  const { t } = useTranslation(); // Hook de traducción
   const [messages, setMessages] = useState([
-    {
-      sender: "bot",
-      message: "¡Hola! Soy tu asistente virtual. ¿En qué puedo ayudarte hoy?",
-    },
+    { sender: "bot", message: t("assistant.welcome_message") }, // Mensaje traducido
   ]);
   const [input, setInput] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
@@ -29,6 +29,7 @@ const Asistente = () => {
    * @function handleSendMessage
    * @description Tiene el Hook personalizado para iniciar una grabación, detenerla y procesarla.
    */
+
   const startListening = () => {
     navigator.mediaDevices
       .getUserMedia({ audio: true })
@@ -100,6 +101,7 @@ const Asistente = () => {
    * @description Interactua con el Backend para enviar los mensajes del chat y procesarlos con Gemini.
    */
   const handleSendMessage = async () => {
+
     if (!input.trim() && !audioBlob) return;
 
     const userMessage = { sender: "user", message: input };
@@ -187,8 +189,10 @@ const Asistente = () => {
               {msg.message}
               {msg.audioUrl && (
                 <audio controls>
+
                   <source src={msg.audioUrl} type="audio/ogg" />
-                  Tu navegador no soporta la etiqueta de audio.
+                  {t("assistant.audio_not_supported")}
+
                 </audio>
               )}
             </p>
@@ -203,11 +207,12 @@ const Asistente = () => {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyPress}
           style={{ padding: "1rem", borderRadius: "5px", width: "100%" }}
-          placeholder="Escribe tu mensaje..."
+          placeholder={t("assistant.type_message")}
         />
 
         <button
           onClick={handleSendMessage}
+
           style={{
             padding: "10px 20px",
             backgroundColor: "#007bff",
@@ -218,6 +223,7 @@ const Asistente = () => {
           }}
         >
           Enviar
+
         </button>
 
         <button

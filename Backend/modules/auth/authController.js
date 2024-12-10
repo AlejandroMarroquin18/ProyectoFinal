@@ -4,7 +4,7 @@
  * @requires ./authServices Servicio para la gestión de usuarios en Firebase Authentication.
  */
 
-const { createUser, verifyToken } = require('./authServices')
+const { createUser, verifyToken } = require('./authService')
 
 /**
  * Controlador para crear un nuevo usuario.

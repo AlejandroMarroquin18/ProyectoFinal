@@ -1,22 +1,24 @@
 /**
  * @file Login.jsx
  * @description Componente que gestiona la lógica del inicio de sesión de usuarios.
- * Este componente maneja el estado del formulario, la autenticación mediante Firebase, 
+ * Este componente maneja el estado del formulario, la autenticación mediante Firebase,
  * y la validación de usuario en el backend. Utiliza el componente `LoginUI` para renderizar la interfaz gráfica.
  */
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LoginUI from "./LoginUI"; 
+import LoginUI from "./LoginUI";
 import loginFunctions from "./loginFunctions";
+import { useTranslation } from "react-i18next";
 
 /**
  * Componente funcional Login
- * @description Gestiona la lógica del formulario de inicio de sesión, incluyendo la autenticación con Firebase y 
+ * @description Gestiona la lógica del formulario de inicio de sesión, incluyendo la autenticación con Firebase y
  * la validación del token en el backend. Si la autenticación es exitosa, redirige al usuario a la página de inicio.
  * @returns {JSX.Element} - El JSX que representa el componente de inicio de sesión con la lógica aplicada.
  */
 function Login() {
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,7 +32,7 @@ function Login() {
     setShowPopup(true);
     setTimeout(() => setShowPopup(false), 3000); // El pop-up desaparece tras 3 segundos
   };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -41,10 +43,10 @@ function Login() {
         loginFunctions.sendTokenToBackend(idToken);
         navigate("/home");
       } else {
-        displayError("Credenciales incorrectas. Por favor, intenta de nuevo.");
+        displayError(t("login.errorLogin"));
       }
     } catch (err) {
-      displayError("Ocurrió un error al iniciar sesión.");
+      displayError(t("login.errorGeneral"));
     }
     setLoading(false);
   };
@@ -57,10 +59,10 @@ function Login() {
         loginFunctions.sendTokenToBackend(idToken);
         navigate("/home");
       } else {
-        displayError("No se pudo iniciar sesión con Google.");
+        displayError(t("login.errorGoogle"));
       }
     } catch (err) {
-      displayError("Error al iniciar sesión con Google.");
+      displayError(t("login.errorGoogle"));
     }
     setLoading(false);
   };
@@ -73,10 +75,10 @@ function Login() {
         loginFunctions.sendTokenToBackend(idToken);
         navigate("/home");
       } else {
-        displayError("No se pudo iniciar sesión con Facebook.");
+        displayError(t("login.errorFacebook"));
       }
     } catch (err) {
-      displayError("Error al iniciar sesión con Facebook.");
+      displayError(t("login.errorFacebook"));
     }
     setLoading(false);
   };
@@ -85,9 +87,9 @@ function Login() {
     try {
       await loginFunctions.handlePasswordRecovery(email);
     } catch (error) {
-      console.error('Error en recuperación de contraseña:', error.message);
-      setError('No se pudo enviar el correo de recuperación');
-      displayError("No se pudo enviar el correo de recuperación.");
+      console.error("Error en recuperación de contraseña:", error.message);
+      setError(t("login.errorRecovery"));
+      displayError(t("login.errorRecovery"));
     }
   };
 
