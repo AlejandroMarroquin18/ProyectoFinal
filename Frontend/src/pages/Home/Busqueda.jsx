@@ -7,24 +7,22 @@ import request from "../../services/api";
 
 /**
  * Componente funcional Busqueda
- * @description Este componente permite al usuario definir criterios de búsqueda (presupuesto máximo, categoría y marca preferida)
- * para recibir recomendaciones de productos.
+ * @description Este componente permite al usuario definir criterios de búsqueda (presupuesto máximo, categoría, marca preferida, o un producto específico).
  * @param {Function} setResultados - Función para actualizar los resultados mostrados, generalmente en el componente padre.
- * @returns {JSX.Element} - El JSX que representa el formulario de búsqueda con los campos de entrada para presupuesto, categoría y marca preferida.
+ * @returns {JSX.Element} - El JSX que representa el formulario de búsqueda.
  */
 function Busqueda({ setResultados }) {
   const { t } = useTranslation();
   const [maxBudget, setMaxBudget] = useState("");
   const [category, setCategory] = useState("");
-  const [preferredBrand, setPreferredBrand] = useState("");
+  const [singleProduct, setSingleProduct] = useState(""); // Estado para un producto específico
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [resultados, setResultadosLocal] = useState([]); // Estado local para resultados
-  const [disabled, setDisabled] = useState(false); // Estado para habilitar/deshabilitar los campos
+  const [resultados, setResultadosLocal] = useState([]);
+  const [disabled, setDisabled] = useState(false); // Estado para habilitar/deshabilitar campos
 
   /**
-   * Función para manejar la búsqueda de productos.
-   * @async
+   * Maneja la búsqueda de productos.
    */
   const handleBuscar = async () => {
     setError("");
@@ -35,55 +33,56 @@ function Busqueda({ setResultados }) {
       return;
     }
 
-    if (!category) {
-      setError(t("error.select_category"));
+    if (!singleProduct && !category) {
+      setError(t("error.select_category_or_product"));
       return;
     }
 
     setLoading(true);
-    setDisabled(true); // Deshabilita los campos de búsqueda
+    setDisabled(true);
 
     try {
-
-      const response = await request(`/scrape/get-products?nameSearch=${category}&amount=20`, "GET", null, null)
-      const data = await response.json()
-      
-      console.log(response)
-      console.log(data)
-      console.log(data.products)
-
-      const productosSimulados = data.products
-
-      // Filtra los productos simulados por presupuesto y marca
-      const resultadosFiltrados = productosSimulados.filter(
-        (producto) =>
-          producto.precio <= maxBudget &&
-          (preferredBrand
-            ? producto.nombre
-                .toLowerCase()
-                .includes(preferredBrand.toLowerCase())
-            : true)
+      const response = await request(
+        `/scrape/get-products?nameSearch=${singleProduct || category}&amount=20`,
+        "GET",
+        null,
+        null
       );
+      const data = await response.json();
 
-      // Actualiza el estado local de los resultados
+      const productosSimulados = data.products;
+
+      // Filtra los productos por presupuesto, marca y producto específico
+      const resultadosFiltrados = productosSimulados.filter((producto) => {
+        const matchesBudget = producto.precio <= maxBudget;
+
+        const matchesSingleProduct = singleProduct
+          ? producto.nombre.toLowerCase().includes(singleProduct.toLowerCase())
+          : true;
+
+        return matchesBudget && matchesSingleProduct;
+      });
+
       setResultadosLocal(resultadosFiltrados);
-
-      // También actualiza el estado del componente padre si es necesario
       setResultados(resultadosFiltrados);
     } catch (err) {
       setError(t("error.generic"));
     } finally {
       setLoading(false);
+      setDisabled(false);
     }
   };
 
+  /**
+   * Restablece los campos del formulario.
+   */
   const handleReset = () => {
     setMaxBudget("");
     setCategory("");
-    setPreferredBrand("");
-    setResultadosLocal([]); // Limpiar resultados locales
-    setResultados([]); // Limpiar los resultados en el componente padre
-    setDisabled(false); // Vuelve a habilitar los campos de búsqueda
+    setSingleProduct("");
+    setResultadosLocal([]);
+    setResultados([]);
+    setDisabled(false);
     setError("");
   };
 
@@ -107,12 +106,19 @@ function Busqueda({ setResultados }) {
         disabled={disabled}
         required
       />
+      <input
+        type="text"
+        placeholder={t("search.single_product")}
+        style={inputStyle}
+        value={singleProduct}
+        onChange={(e) => setSingleProduct(e.target.value)}
+        disabled={disabled}
+      />
       <select
         style={inputStyle}
         value={category}
         onChange={(e) => setCategory(e.target.value)}
-        disabled={disabled}
-        required
+        disabled={disabled || singleProduct}
       >
         <option value="" disabled>
           {t("search.select_category")}
@@ -131,14 +137,6 @@ function Busqueda({ setResultados }) {
         <option value="gadgets">{t("search.category_gadgets")}</option>
         <option value="redes">{t("search.category_network")}</option>
       </select>
-      <input
-        type="text"
-        placeholder={t("search.brand_placeholder")}
-        style={inputStyle}
-        value={preferredBrand}
-        onChange={(e) => setPreferredBrand(e.target.value)}
-        disabled={disabled}
-      />
       <button
         onClick={handleBuscar}
         style={buttonStyle}
@@ -147,7 +145,14 @@ function Busqueda({ setResultados }) {
         {loading ? t("search.searching") : t("search.search")}
       </button>
 
-      {/* Mostrar animación de carga cuando loading esté activo */}
+      {resultados.length > 0 && !loading && (
+        <div style={{ marginTop: "20px" }}>
+          <button onClick={handleReset} style={buttonStyle}>
+            {t("search.reset")}
+          </button>
+        </div>
+      )}
+
       {loading && (
         <div
           style={{
@@ -163,14 +168,6 @@ function Busqueda({ setResultados }) {
             src={LoadingAnimation}
             style={{ height: "auto", width: "50%", maxWidth: "300px" }}
           />
-        </div>
-      )}
-
-      {resultados.length > 0 && !loading && (
-        <div style={{ marginTop: "20px" }}>
-          <button onClick={handleReset} style={buttonStyle}>
-            {t("search.reset")}
-          </button>
         </div>
       )}
     </div>

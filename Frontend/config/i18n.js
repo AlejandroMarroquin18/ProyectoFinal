@@ -37,11 +37,11 @@ const resources = {
             search: {
                 title: "Search Criteria",
                 description: "Define your preferences to find the best option.",
-                max_budget: "Max Budget",
+                max_budget: "Max Budget (COP)",
                 select_category: "Select a category",
-                category_computers: "Computers and Laptops",
-                category_smartphones: "Smartphones",
-                category_tablets: "Tablets",
+                category_computers: "Computer and Laptop",
+                category_smartphones: "Smartphone",
+                category_tablets: "Tablet",
                 category_monitors: "Monitors",
                 category_accessories: "Accessories",
                 category_ram: "RAM Memory",
@@ -56,11 +56,14 @@ const resources = {
                 searching: "Searching...",
                 search: "Search",
                 reset: "Start a New Search",
+                single_product: "Search for a specific product",
             },
             error: {
                 invalid_budget: "Please enter a valid budget.",
                 select_category: "Please select a category.",
                 generic: "There was an error while searching for products. Please try again.",
+                select_category_or_product: "Please select a category or search for a specific product."
+
             },
             assistant: {
                 welcome_message: "Hello! I'm your virtual assistant. How can I help you today?",
@@ -152,30 +155,32 @@ const resources = {
             search: {
                 title: "Criterios de búsqueda",
                 description: "Define tus preferencias para encontrar la mejor opción.",
-                max_budget: "Presupuesto máximo",
+                max_budget: "Presupuesto máximo (COP)",
                 select_category: "Selecciona una categoría",
-                category_computers: "Computadoras y laptops",
-                category_smartphones: "Smartphones",
-                category_tablets: "Tablets",
-                category_monitors: "Monitores",
-                category_accessories: "Accesorios",
+                category_computers: "Computadora y laptop",
+                category_smartphones: "Smartphone",
+                category_tablets: "Tablet",
+                category_monitors: "Monitor",
+                category_accessories: "Accesorio",
                 category_ram: "Memoria RAM",
                 category_cpu: "Procesador",
                 category_gpu: "Tarjeta Gráfica",
                 category_psu: "Fuente de poder",
                 category_case: "Gabinete",
                 category_board: "Placa Base",
-                category_gadgets: "Gadgets",
-                category_network: "Redes",
+                category_gadgets: "Gadget",
+                category_network: "Red",
                 brand_placeholder: "Marca (opcional)",
                 searching: "Buscando...",
                 search: "Buscar",
                 reset: "Realizar una nueva búsqueda",
+                single_product: "Buscar un producto específico"
             },
             error: {
                 invalid_budget: "Por favor, ingresa un presupuesto válido.",
                 select_category: "Por favor, selecciona una categoría.",
                 generic: "Hubo un error al buscar productos. Por favor, intenta nuevamente.",
+                select_category_or_product: "Por favor, selecciona una categoría o busca un producto específico."
             },
 
             assistant: {

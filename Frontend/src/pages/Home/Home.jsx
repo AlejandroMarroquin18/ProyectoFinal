@@ -76,7 +76,7 @@ function Home() {
    * @param {Object} producto - El producto a agregar.
    */
   const agregarAComparacion = (producto) => {
-    // Verifica si el producto ya está en la lista de comparación para evitar duplicados
+    // Evita duplicados en productos seleccionados
     setProductosSeleccionados((prevProductos) => {
       if (!prevProductos.some((p) => p.id === producto.id)) {
         return [...prevProductos, producto];
@@ -84,7 +84,7 @@ function Home() {
       return prevProductos;
     });
 
-    // Agrega a los productos añadidos para visualización
+    // Evita duplicados en productos añadidos
     setProductosAñadidos((prevProductos) => {
       if (!prevProductos.some((p) => p.id === producto.id)) {
         return [...prevProductos, producto];
@@ -225,7 +225,11 @@ function Home() {
                             marginTop: "10px",
                             marginLeft: "10px",
                             padding: "0.5rem 1rem",
-                            backgroundColor: "#007bff",
+                            backgroundColor: productosAñadidos.some(
+                              (p) => p.id === producto.id
+                            )
+                              ? "green"
+                              : "#007bff",
                             color: "#fff",
                             border: "none",
                             borderRadius: "5px",

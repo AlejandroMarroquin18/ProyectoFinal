@@ -30,7 +30,6 @@ const scrapeProductML = async (nameSearch, amount) => {
 
   try {
     const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-gpu', '--disable-software-rasterizer'] });
-
     const page = await browser.newPage();
     await page.goto(`https://listado.mercadolibre.com.co/${search}`, {waitUntil: 'domcontentloaded'});
     
