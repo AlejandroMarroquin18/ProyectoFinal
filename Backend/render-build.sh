@@ -2,12 +2,14 @@
 # exit on errors
 set -o errexit
 
+# Configurar XDG_CACHE_HOME si no está definido
+export XDG_CACHE_HOME=${XDG_CACHE_HOME:-$HOME/.cache}
+
+# Instalar dependencias y Puppeteer
 npm install
 npx puppeteer install chrome
 
-# npm run build # Uncomment if required
-
-# Store/pull Puppeteer cache with build cache
+# Manejo del caché de Puppeteer
 if [[ -d "$XDG_CACHE_HOME/puppeteer" ]]; then 
   echo "...Copying Puppeteer Cache from Build Cache"
   mkdir -p "$PUPPETEER_CACHE_DIR"
