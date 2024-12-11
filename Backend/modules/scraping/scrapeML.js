@@ -29,7 +29,7 @@ const scrapeProductML = async (nameSearch, amount) => {
   const search = `${formattedQuery}#D[A:${encodedQuery}]`;
 
   try {
-    const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-gpu', '--disable-software-rasterizer'] });
+    const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-gpu', '--disable-software-rasterizer', '--disable-dev-shm-usage'] });
     const page = await browser.newPage();
     await page.goto(`https://listado.mercadolibre.com.co/${search}`, {waitUntil: 'domcontentloaded'});
     
