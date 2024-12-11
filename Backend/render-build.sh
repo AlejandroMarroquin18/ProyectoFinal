@@ -3,9 +3,11 @@
 set -o errexit
 
 npm install
+npx puppeteer install chrome
+
 # npm run build # Uncomment if required
 
-# Ensure Puppeteer cache directories exist
+# Store/pull Puppeteer cache with build cache
 if [[ -d "$XDG_CACHE_HOME/puppeteer" ]]; then 
   echo "...Copying Puppeteer Cache from Build Cache"
   mkdir -p "$PUPPETEER_CACHE_DIR"
