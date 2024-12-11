@@ -210,6 +210,7 @@ const Asistente = () => {
 
         <button
           onClick={handleSendMessage}
+          id="sendButton"
           style={{
             padding: "10px 20px",
             backgroundColor: "#007bff",
@@ -224,6 +225,7 @@ const Asistente = () => {
 
         <button
           onClick={() => (isRecording ? stopListening() : startListening())}
+          id="micButton"
           style={{
             padding: "10px 20px",
             backgroundColor: isRecording ? "red" : "#007bff",

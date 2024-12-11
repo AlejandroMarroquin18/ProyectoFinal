@@ -161,7 +161,7 @@ function Home() {
           <button onClick={mostrarComparacion} style={buttonStyle}>
             {t("comparison1")}
           </button>
-          <button onClick={mostrarHistorial} style={buttonStyle}>
+          <button onClick={mostrarHistorial} style={buttonStyle} id="historialButton">
             {t("history")}
           </button>
         </div>
