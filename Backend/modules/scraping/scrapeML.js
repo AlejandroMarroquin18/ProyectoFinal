@@ -5,7 +5,6 @@
  */
 
 const puppeteer = require('puppeteer')
-require("dotenv").config();
 
 /**
  * Realiza un scraping de productos en el sitio web de Mercado Libre.
@@ -30,14 +29,7 @@ const scrapeProductML = async (nameSearch, amount) => {
   const search = `${formattedQuery}#D[A:${encodedQuery}]`;
 
   try {
-    const browser = await puppeteer.launch({
-      args: [ "--disable-setuid-sandbox", "--no-sandbox", "--single-process", "--no-zygote" ],
-      executablePath:
-        process.env.NODE_ENV === "production"
-          ? process.env.PUPPETEER_EXECUTABLE_PATH
-          : puppeteer.executablePath(),
-    });
-
+    const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-gpu', '--disable-software-rasterizer'] });
     const page = await browser.newPage();
     await page.goto(`https://listado.mercadolibre.com.co/${search}`, {waitUntil: 'domcontentloaded'});
     
