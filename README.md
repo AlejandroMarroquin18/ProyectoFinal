@@ -4,6 +4,10 @@
 
 SmartSetup es una herramienta que combina tecnologías de inteligencia artificial para asistir a los usuarios en la búsqueda y selección de productos según sus necesidades y presupuesto. El proceso comienza con la interacción del usuario con un asistente virtual, quien se encarga de recopilar los criterios de búsqueda específicos. Estos criterios pueden incluir parámetros como rango de precios, especificaciones técnicas, marcas preferidas y otras restricciones particulares.
 
+## Despliegue
+
+https://smart-setup.vercel.app
+
 ## Instalación y Ejecución
 
 ### Backend
