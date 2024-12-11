@@ -44,15 +44,19 @@ function Busqueda({ setResultados }) {
     setDisabled(true); // Deshabilita los campos de búsqueda
 
     try {
+      const response = await request(
+        `/scrape/get-products?nameSearch=${category}&amount=20`,
+        "GET",
+        null,
+        null
+      );
+      const data = await response.json();
 
-      const response = await request(`/scrape/get-products?nameSearch=${category}&amount=20`, "GET", null, null)
-      const data = await response.json()
-      
-      console.log(response)
-      console.log(data)
-      console.log(data.products)
+      console.log(response);
+      console.log(data);
+      console.log(data.products);
 
-      const productosSimulados = data.products
+      const productosSimulados = data.products;
 
       // Filtra los productos simulados por presupuesto y marca
       const resultadosFiltrados = productosSimulados.filter(
@@ -138,6 +142,14 @@ function Busqueda({ setResultados }) {
       >
         {loading ? t("search.searching") : t("search.search")}
       </button>
+
+      {error && (
+        <div style={{ marginTop: "20px" }}>
+          <button onClick={handleReset} style={buttonStyle}>
+            {t("search.reset")}
+          </button>
+        </div>
+      )}
 
       {/* Mostrar animación de carga cuando loading esté activo */}
       {loading && (
