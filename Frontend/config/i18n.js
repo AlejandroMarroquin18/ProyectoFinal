@@ -56,11 +56,14 @@ const resources = {
                 searching: "Searching...",
                 search: "Search",
                 reset: "Start a New Search",
+                single_product: "Search for a specific product",
             },
             error: {
                 invalid_budget: "Please enter a valid budget.",
                 select_category: "Please select a category.",
                 generic: "There was an error while searching for products. Please try again.",
+                select_category_or_product: "Please select a category or search for a specific product."
+
             },
             assistant: {
                 welcome_message: "Hello! I'm your virtual assistant. How can I help you today?",
@@ -171,11 +174,13 @@ const resources = {
                 searching: "Buscando...",
                 search: "Buscar",
                 reset: "Realizar una nueva búsqueda",
+                single_product: "Buscar un producto específico"
             },
             error: {
                 invalid_budget: "Por favor, ingresa un presupuesto válido.",
                 select_category: "Por favor, selecciona una categoría.",
                 generic: "Hubo un error al buscar productos. Por favor, intenta nuevamente.",
+                select_category_or_product: "Por favor, selecciona una categoría o busca un producto específico."
             },
 
             assistant: {
