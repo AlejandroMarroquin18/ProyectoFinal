@@ -131,14 +131,6 @@ function Busqueda({ setResultados }) {
         <option value="gadgets">{t("search.category_gadgets")}</option>
         <option value="redes">{t("search.category_network")}</option>
       </select>
-      <input
-        type="text"
-        placeholder={t("search.brand_placeholder")}
-        style={inputStyle}
-        value={preferredBrand}
-        onChange={(e) => setPreferredBrand(e.target.value)}
-        disabled={disabled}
-      />
       <button
         onClick={handleBuscar}
         style={buttonStyle}
