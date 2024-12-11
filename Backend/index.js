@@ -21,7 +21,8 @@ const PORT = process.env.PORT || 3000;
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://smart-setup.vercel.app"
+    "https://smart-setup.vercel.app",
+    "http://localhost:5175"
   ],  
   methods: ["GET", "POST", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
