@@ -4,7 +4,7 @@
  * @requires puppeteer Dependencia para manejar la automatización del navegador y realizar el scraping.
  */
 
-const puppeteer = require('puppeteer-core')
+const puppeteer = require('puppeteer')
 
 /**
  * Realiza un scraping de productos en el sitio web de Amazon.
