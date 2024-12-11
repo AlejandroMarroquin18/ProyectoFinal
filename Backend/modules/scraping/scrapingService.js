@@ -19,14 +19,14 @@ const { scrapeProductTC } = require('./scrapeTC')
  */
 const scrapeProducts = async (nameSearch, amount) => { 
   try {
-    const [scrapeML, scrapeTC] = await Promise.all([
-    //const [scrapeML, scrapeTC, scrapeAmazon] = await Promise.all([
+    const [scrapeML, scrapeAmazon, scrapeTC] = await Promise.all([
       scrapeProductML(nameSearch, amount),
       scrapeProductTC(nameSearch, amount),
-      //scrapeProductAmazon(nameSearch, amount)
+      scrapeProductAmazon(nameSearch, amount)
     ]);
     
-    const products = [...scrapeML, ...scrapeTC]
+    const products = [...scrapeML, ...scrapeAmazon, ...scrapeTC]
+    console.log(products)
     return products;
 
   } catch (error) {

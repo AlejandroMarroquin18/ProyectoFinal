@@ -22,27 +22,29 @@ const puppeteer = require('puppeteer')
  */
 const scrapeProductAmazon = async (nameSearch, amount) => {
   console.log("AMAZON")
+  //const search = nameSearch.replace(/\s+/g, '+');
+
   try {
     const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-gpu', '--disable-software-rasterizer'] });
     const page = await browser.newPage();
     await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36');
 
-    await page.goto('https://www.amazon.com', {waitUntil: 'domcontentloaded'});
+    await page.goto('https://www.amazon.com/', {waitUntil: 'domcontentloaded'});
 
     await page.waitForSelector('#twotabsearchtextbox');
     await page.type('#twotabsearchtextbox', nameSearch);
     await page.keyboard.press('Enter');
 
-    await page.waitForNavigation({ waitUntil: 'load' });
-    
+    await page.waitForNavigation({ waitUntil: 'load' }); 
+
     const products = await page.evaluate((amount) => {
       const productList = document.querySelectorAll('div[data-component-type="s-search-result"]');
       const result = [];
       
       for (let i = 0; i < productList.length && result.length < amount; i++) {
         const product = productList[i];
-        const enlaceCompra = product.querySelector('h2 a.a-link-normal.s-link-style.a-text-normal')?.href || null;
-        const nombre = product.querySelector('h2 a.a-link-normal.s-link-style.a-text-normal span')?.innerText.trim() || null;
+        const enlaceCompra = product.querySelector('.s-title-instructions-style a')?.href || null;
+        const nombre = product.querySelector('.s-title-instructions-style a h2 span')?.innerText.trim() || null;
         const imagen = product.querySelector('img.s-image')?.src || null;
         const precio = parseFloat(product.querySelector('.a-price .a-offscreen')?.innerText.trim().match(/[\d,]+(\.\d+)?/)) || null;
         
