@@ -68,8 +68,8 @@ export const productCardStyle = {
  * Limita el tamaño de la imagen para que se vea bien dentro de la tarjeta.
  */
 export const productImageStyle = {
-  width: "40%",                 /* Ocupa el 40% del ancho de la tarjeta */
-  height: "150px",              /* Altura fija para la imagen */
+  width: "100px",                 /* Ocupa el 40% del ancho de la tarjeta */
+  height: "100px",              /* Altura fija para la imagen */
   objectFit: "cover",           /* Recorta la imagen para ajustarla sin distorsionar */
   borderRadius: "8px",          /* Bordes redondeados */
   marginRight: "1rem",          /* Espacio a la derecha de la imagen */
