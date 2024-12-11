@@ -25,9 +25,11 @@ const Asistente = () => {
 
   const messagesEndRef = useRef(null);
 
+  const chatContainerRef = useRef(null);
+
   useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    if (messagesEndRef.current && chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
   }, [messages]);
 
@@ -167,7 +169,8 @@ const Asistente = () => {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-      <div style={{ overflowY: "auto", height: "300px" }}>
+      <div style={{ overflowY: "auto", height: "300px" }}
+      ref={chatContainerRef}>
         {messages.map((msg, index) => (
           <div
             key={index}
