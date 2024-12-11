@@ -33,6 +33,17 @@ const scrapeProductML = async (nameSearch, amount) => {
     const page = await browser.newPage();
     await page.goto(`https://listado.mercadolibre.com.co/${search}`, {waitUntil: 'domcontentloaded'});
     
+    // Realiza scroll hasta el final, esto debido a que las imagenes no se cargaban en su totalidad
+    let lastHeight = await page.evaluate('document.body.scrollHeight');
+    let scrollPosition = 0;
+    
+    while (true) {
+      scrollPosition += 500;
+      await page.evaluate(scrollPosition => window.scrollTo(0, scrollPosition), scrollPosition);
+      await page.waitForSelector('body')
+      if (scrollPosition >= lastHeight) { break;}
+    }
+
     const products = await page.evaluate((amount) => {
       const productList = document.querySelectorAll('li.ui-search-layout__item');
       const result = [];
@@ -42,7 +53,7 @@ const scrapeProductML = async (nameSearch, amount) => {
         const enlaceCompra = product.querySelector('.poly-component__title a')?.href || null;
         const nombre = product.querySelector('.poly-component__title a')?.innerText.trim() || null;
         const imagen = product.querySelector('.poly-card__portada img')?.src || null;
-        const precio = parseInt(product.querySelector('.poly-price__current .andes-money-amount__fraction')?.innerText.trim().replace('.', '')) || null;
+        const precio = parseInt(product.querySelector('.poly-price__current .andes-money-amount__fraction')?.innerText.trim().replace(/\./g, '')) || null;
         const rating = parseFloat(product.querySelector('.poly-reviews__rating')?.innerText.trim()) || 'Sin calificación';
         
         const nRat = product.querySelector('.poly-reviews__total')?.innerText.trim() || '';

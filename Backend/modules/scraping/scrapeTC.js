@@ -49,7 +49,7 @@ const scrapeProductTC = async (nameSearch, amount) => {
         const nRating = nRat ? parseInt(nRat.replace(/[^\d]/g, ''), 10) : 'Sin calificación';
 
         if (enlaceCompra && nombre && imagen && precio) {
-          result.push({ id: 3000+1, tienda: "Tauret Computadores", enlaceCompra, nombre, imagen, precio, rating, nRating });
+          result.push({ id: 3000+i, tienda: "Tauret Computadores", enlaceCompra, nombre, imagen, precio, rating, nRating });
         }
       }
     
