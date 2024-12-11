@@ -5,6 +5,7 @@
  */
 
 const puppeteer = require('puppeteer')
+require("dotenv").config();
 
 /**
  * Realiza un scraping de productos en el sitio web de Mercado Libre.
