@@ -6,12 +6,12 @@
 
 module.exports = {
   verbose: true,
-  testEnvironment: 'node', 
+  testEnvironment: 'node',
   rootDir: '../',
-  testMatch: ['<rootDir>/test/**/*.test.js'],
+  testMatch: ['<rootDir>/modules/tests/*.test.js'],
   moduleFileExtensions: ['js', 'json', 'jsx', 'ts', 'tsx', 'node'],
   testPathIgnorePatterns: ['/node_modules/', '/dist/'],
   collectCoverage: true,
-  coverageDirectory: '../coverage',
-  coverageReporters: ['text', 'lcov'], 
+  coverageDirectory: 'coverage',
+  coverageReporters: ['text', 'lcov'],
 };

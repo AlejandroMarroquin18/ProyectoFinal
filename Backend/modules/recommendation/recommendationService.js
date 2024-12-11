@@ -49,7 +49,7 @@ const generateRecommendation = async (message) => {
     return responseMessage || 'Respuesta no generada.';
   } catch (error) {
     console.error('Error al generar la respuesta:', error.message);
-    throw new Error('Error al generar la respuesta. Intenta nuevamente más tarde.');
+    throw new Error(error.message || 'Error al generar la respuesta. Intenta nuevamente más tarde.');
   }
 }
 
