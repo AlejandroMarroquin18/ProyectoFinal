@@ -96,7 +96,14 @@ function Busqueda({ setResultados }) {
           {error}
         </p>
       )}
-
+      <input
+        type="text"
+        placeholder={t("search.single_product")}
+        style={inputStyle}
+        value={singleProduct}
+        onChange={(e) => setSingleProduct(e.target.value)}
+        disabled={disabled}
+      />
       <input
         type="number"
         placeholder={t("search.max_budget")}
@@ -105,14 +112,6 @@ function Busqueda({ setResultados }) {
         onChange={(e) => setMaxBudget(e.target.value)}
         disabled={disabled}
         required
-      />
-      <input
-        type="text"
-        placeholder={t("search.single_product")}
-        style={inputStyle}
-        value={singleProduct}
-        onChange={(e) => setSingleProduct(e.target.value)}
-        disabled={disabled}
       />
       <select
         style={inputStyle}
@@ -124,7 +123,6 @@ function Busqueda({ setResultados }) {
           {t("search.select_category")}
         </option>
         <option value="computadoras">{t("search.category_computers")}</option>
-        <option value="smartphones">{t("search.category_smartphones")}</option>
         <option value="tablets">{t("search.category_tablets")}</option>
         <option value="monitores">{t("search.category_monitors")}</option>
         <option value="accesorios">{t("search.category_accessories")}</option>

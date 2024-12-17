@@ -5,10 +5,10 @@
  * La función centraliza la lógica de manejo de peticiones y se utiliza en el frontend para interactuar con el backend de la aplicación.
  */
 
-//const API_URL = "http://localhost:3000"
+const API_URL = "http://localhost:3000"
 //const API_URL = "https://smartsetup-production.up.railway.app"
 //const API_URL="https://smartsetup-tuy6.onrender.com"
-const API_URL="https://smartsetup-production-9309.up.railway.app"
+//const API_URL="https://smartsetup-production-9309.up.railway.app"
 
 /**
  * Función que maneja las solicitudes HTTP al backend.

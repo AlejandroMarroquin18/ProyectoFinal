@@ -7,7 +7,7 @@
 const puppeteer = require('puppeteer')
 
 const { scrapeProductML } = require('./scrapeML')
-const { scrapeProductAmazon } = require('./scrapeAmazon')
+//const { scrapeProductAmazon } = require('./scrapeAmazon')
 const { scrapeProductTC } = require('./scrapeTC')
 
 /**
