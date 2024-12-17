@@ -16,7 +16,7 @@ import { useTranslation } from "react-i18next";
  * @param {Function} setProductosSeleccionados - Función para actualizar los productos seleccionados.
  * @returns {JSX.Element} - El JSX que representa la tabla comparativa con opciones de ordenación.
  */
-function Comparacion({ productosSeleccionados, setProductosSeleccionados }) {
+function Comparacion({ productosSeleccionados, setProductosSeleccionados, setProductosAñadidos }) {
   const [ordenarPor, setOrdenarPor] = useState("precio");
   const [productosOrdenados, setProductosOrdenados] = useState([]);
   const { t } = useTranslation();
@@ -41,6 +41,7 @@ function Comparacion({ productosSeleccionados, setProductosSeleccionados }) {
       (producto) => producto.id !== productoId
     );
     setProductosSeleccionados(nuevosProductos); // Actualiza el estado en Home
+    setProductosAñadidos(nuevosProductos); // Actualiza el estado en Home
   };
 
   // UseEffect para ordenar productos cuando el criterio cambia

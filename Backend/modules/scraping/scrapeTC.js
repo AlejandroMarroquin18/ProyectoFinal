@@ -34,7 +34,7 @@ const scrapeProductTC = async (nameSearch, amount) => {
     const products = await page.evaluate((amount) => {
       const productList = document.querySelectorAll('li .card');
       const result = [];
-    
+      const fecha = new Date().toISOString();
       for (let i = 0; i < productList.length && result.length < amount; i++) {
         const product = productList[i];
         const enlaceCompra = product.querySelector('.imagen-container a')?.href || null; 
@@ -49,7 +49,7 @@ const scrapeProductTC = async (nameSearch, amount) => {
         const nRating = nRat ? parseInt(nRat.replace(/[^\d]/g, ''), 10) : 'Sin calificación';
 
         if (enlaceCompra && nombre && imagen && precio) {
-          result.push({ id: 3000+i, tienda: "Tauret Computadores", enlaceCompra, nombre, imagen, precio, rating, nRating });
+          result.push({ id: fecha+i, tienda: "Tauret Computadores", enlaceCompra, nombre, imagen, precio, rating, nRating });
         }
       }
     

@@ -76,22 +76,25 @@ function Home() {
    * @param {Object} producto - El producto a agregar.
    */
   const agregarAComparacion = (producto) => {
-    // Evita duplicados en productos seleccionados
     setProductosSeleccionados((prevProductos) => {
-      if (!prevProductos.some((p) => p.id === producto.id)) {
-        return [...prevProductos, producto];
+      // Si el producto ya existe, lo quita de la lista
+      if (prevProductos.some((p) => p.id === producto.id)) {
+        return prevProductos.filter((p) => p.id !== producto.id);
       }
-      return prevProductos;
+      // Si no existe, lo agrega a la lista
+      return [...prevProductos, producto];
     });
-
-    // Evita duplicados en productos añadidos
+  
     setProductosAñadidos((prevProductos) => {
-      if (!prevProductos.some((p) => p.id === producto.id)) {
-        return [...prevProductos, producto];
+      // Si el producto ya existe, lo quita de la lista
+      if (prevProductos.some((p) => p.id === producto.id)) {
+        return prevProductos.filter((p) => p.id !== producto.id);
       }
-      return prevProductos;
+      // Si no existe, lo agrega a la lista
+      return [...prevProductos, producto];
     });
   };
+  
 
   return (
     <div style={{ padding: "5%" }}>
@@ -257,6 +260,7 @@ function Home() {
           <Comparacion
             productosSeleccionados={productosSeleccionados}
             setProductosSeleccionados={setProductosSeleccionados}
+            setProductosAñadidos={setProductosAñadidos}
           />
         </div>
       )}

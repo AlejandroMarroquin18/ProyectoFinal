@@ -40,7 +40,7 @@ const scrapeProductAmazon = async (nameSearch, amount) => {
     const products = await page.evaluate((amount) => {
       const productList = document.querySelectorAll('div[data-component-type="s-search-result"]');
       const result = [];
-      
+      const fecha = new Date().toISOString();
       for (let i = 0; i < productList.length && result.length < amount; i++) {
         const product = productList[i];
         const enlaceCompra = product.querySelector('.s-title-instructions-style a')?.href || null;
@@ -55,7 +55,7 @@ const scrapeProductAmazon = async (nameSearch, amount) => {
         const nRating = nRat ? parseInt(nRat.replace(',','')) : 'Sin calificación';
         
         if (enlaceCompra && nombre && imagen && precio) {
-          result.push({ id: 2000+i, tienda: "Amazon", enlaceCompra, nombre, imagen, precio, rating, nRating }); 
+          result.push({ id: fecha+i, tienda: "Amazon", enlaceCompra, nombre, imagen, precio, rating, nRating }); 
         }
         
       }

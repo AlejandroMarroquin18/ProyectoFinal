@@ -65,6 +65,7 @@ function Busqueda({ setResultados }) {
 
       setResultadosLocal(resultadosFiltrados);
       setResultados(resultadosFiltrados);
+      console.log(resultadosFiltrados)
     } catch (err) {
       setError(t("error.generic"));
     } finally {
@@ -96,7 +97,28 @@ function Busqueda({ setResultados }) {
           {error}
         </p>
       )}
-
+      <select
+        style={inputStyle}
+        value={category}
+        onChange={(e) => setCategory(e.target.value)}
+        disabled={disabled || singleProduct}
+      >
+        <option value="" disabled>
+          {t("search.select_category")}
+        </option>
+        <option value="computadoras">{t("search.category_computers")}</option>
+        <option value="tablets">{t("search.category_tablets")}</option>
+        <option value="monitor">{t("search.category_monitors")}</option>
+        <option value="accesorio pc">{t("search.category_accessories")}</option>
+        <option value="memoria ram">{t("search.category_ram")}</option>
+        <option value="cpu">{t("search.category_cpu")}</option>
+        <option value="gpu">{t("search.category_gpu")}</option>
+        <option value="psu">{t("search.category_psu")}</option>
+        <option value="gabinete">{t("search.category_case")}</option>
+        <option value="board">{t("search.category_board")}</option>
+        <option value="gadgets">{t("search.category_gadgets")}</option>
+        <option value="redes">{t("search.category_network")}</option>
+      </select>
       <input
         type="number"
         placeholder={t("search.max_budget")}
@@ -114,29 +136,7 @@ function Busqueda({ setResultados }) {
         onChange={(e) => setSingleProduct(e.target.value)}
         disabled={disabled}
       />
-      <select
-        style={inputStyle}
-        value={category}
-        onChange={(e) => setCategory(e.target.value)}
-        disabled={disabled || singleProduct}
-      >
-        <option value="" disabled>
-          {t("search.select_category")}
-        </option>
-        <option value="computadoras">{t("search.category_computers")}</option>
-        <option value="smartphones">{t("search.category_smartphones")}</option>
-        <option value="tablets">{t("search.category_tablets")}</option>
-        <option value="monitores">{t("search.category_monitors")}</option>
-        <option value="accesorios">{t("search.category_accessories")}</option>
-        <option value="ram">{t("search.category_ram")}</option>
-        <option value="cpu">{t("search.category_cpu")}</option>
-        <option value="gpu">{t("search.category_gpu")}</option>
-        <option value="psu">{t("search.category_psu")}</option>
-        <option value="gabinete">{t("search.category_case")}</option>
-        <option value="board">{t("search.category_board")}</option>
-        <option value="gadgets">{t("search.category_gadgets")}</option>
-        <option value="redes">{t("search.category_network")}</option>
-      </select>
+      
       <button
         onClick={handleBuscar}
         style={buttonStyle}
