@@ -47,7 +47,7 @@ const scrapeProductML = async (nameSearch, amount) => {
     const products = await page.evaluate((amount) => {
       const productList = document.querySelectorAll('li.ui-search-layout__item');
       const result = [];
-
+      const fecha = new Date().toISOString();
       for (let i = 0; i < productList.length && result.length < amount; i++) {
         const product = productList[i];
         const enlaceCompra = product.querySelector('.poly-component__title a')?.href || null;
@@ -60,7 +60,7 @@ const scrapeProductML = async (nameSearch, amount) => {
         const nRating = nRat ? parseInt(nRat.replace(/[()]/g, '')) : 'Sin calificación';
         
         if (enlaceCompra && nombre && imagen && precio) {
-          result.push({ id: 1000+i , tienda: "Mercado Libre", enlaceCompra, nombre, imagen, precio, rating, nRating }); 
+          result.push({ id: fecha+i , tienda: "Mercado Libre", enlaceCompra, nombre, imagen, precio, rating, nRating }); 
         }
       }
       

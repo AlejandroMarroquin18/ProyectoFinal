@@ -65,6 +65,7 @@ function Busqueda({ setResultados }) {
 
       setResultadosLocal(resultadosFiltrados);
       setResultados(resultadosFiltrados);
+      console.log(resultadosFiltrados)
     } catch (err) {
       setError(t("error.generic"));
     } finally {
@@ -96,23 +97,6 @@ function Busqueda({ setResultados }) {
           {error}
         </p>
       )}
-      <input
-        type="text"
-        placeholder={t("search.single_product")}
-        style={inputStyle}
-        value={singleProduct}
-        onChange={(e) => setSingleProduct(e.target.value)}
-        disabled={disabled}
-      />
-      <input
-        type="number"
-        placeholder={t("search.max_budget")}
-        style={inputStyle}
-        value={maxBudget}
-        onChange={(e) => setMaxBudget(e.target.value)}
-        disabled={disabled}
-        required
-      />
       <select
         style={inputStyle}
         value={category}
@@ -124,9 +108,9 @@ function Busqueda({ setResultados }) {
         </option>
         <option value="computadoras">{t("search.category_computers")}</option>
         <option value="tablets">{t("search.category_tablets")}</option>
-        <option value="monitores">{t("search.category_monitors")}</option>
-        <option value="accesorios">{t("search.category_accessories")}</option>
-        <option value="ram">{t("search.category_ram")}</option>
+        <option value="monitor">{t("search.category_monitors")}</option>
+        <option value="accesorio pc">{t("search.category_accessories")}</option>
+        <option value="memoria ram">{t("search.category_ram")}</option>
         <option value="cpu">{t("search.category_cpu")}</option>
         <option value="gpu">{t("search.category_gpu")}</option>
         <option value="psu">{t("search.category_psu")}</option>
@@ -135,6 +119,24 @@ function Busqueda({ setResultados }) {
         <option value="gadgets">{t("search.category_gadgets")}</option>
         <option value="redes">{t("search.category_network")}</option>
       </select>
+      <input
+        type="number"
+        placeholder={t("search.max_budget")}
+        style={inputStyle}
+        value={maxBudget}
+        onChange={(e) => setMaxBudget(e.target.value)}
+        disabled={disabled}
+        required
+      />
+      <input
+        type="text"
+        placeholder={t("search.single_product")}
+        style={inputStyle}
+        value={singleProduct}
+        onChange={(e) => setSingleProduct(e.target.value)}
+        disabled={disabled}
+      />
+      
       <button
         onClick={handleBuscar}
         style={buttonStyle}
